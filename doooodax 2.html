@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/css-loader/3.3.3/loader-music.css" integrity="sha512-ewkg54H/c+6/4hepT+E9ZL7jhfMSABFR0gpRKUYO5oC2GlQkSqWY0i6L9PhhN/WfEjP42pIotOFY0U4OnHBS6Q==" crossorigin="anonymous" />
+    <title>doooodax</title>
+    <style>
+      .base {
+        display: none;
+      }
+      html {
+       font-size:14px;
+      }
+    </style>
+
+</head>
+<body>
+
+    <body class="bg-light">
+        <div class="container">
+         <div class="py-3 text-center">
+        <h1>doooodax!!</h1>
+      </div>
+      <div class="row">
+        <div class="col-md-12 order-md-1">
+          <form id="formulario" class="needs-validation" novalidate>
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <div class="input-group input-group-lg">
+
+                <input type="text" class="form-control" id="search" placeholder="Qué buscamos?" value="" required>
+                <div class="input-group-append">
+                    <button class="btn btn-dark btn-lg" type="submit" id="button-addon2">Buscar</button>
+                  </div>
+                <div class="invalid-feedback">
+                  Debe introducir un término de búsqueda
+                </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="noresult alert alert-primary" style="display: none;" role="alert">
+        No se han encontrado resultados
+      </div>
+      <div class="row resultados">
+        <div class="base col-md-3 mb-3 col-xs-6"> 
+            <div class="card-deck mb-3 text-center">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                      <img src="#src#" class="cover ">
+                      <ul class="list-group list-group-flush">
+                        <li class="title list-group-item">#title#</li>
+                        <li class="from list-group-item">#from#</li>
+                        <li class="type list-group-item">#type#</li>
+                      </ul>
+                    </div>
+                    <div class="card-footer">
+                      <div class="row">
+                      </div>
+                      </div>
+                    </div>  
+                  </div>
+            </div>
+        </div> 
+        <div class="loader loader-music" data-hey-oh></div>
+       </div>
+    </div> 
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script>
+        
+       const showSpinner = function (show) {
+          if (show)
+           $("div.loader").addClass("is-active");
+          else
+           $("div.loader").removeClass("is-active");
+       }
+
+        var urlsDodax = [
+                  {text: "DE" , url: "https://www.dodax.de", params: "/de-de/search/?s="}
+                 ,{text: "ES" , url: "https://www.dodax.es", params: "/es-es/search/?s="}
+                 ,{text: "AT" , url: "https://www.dodax.at", params: "/de-at/search/?s=" }
+                 ,{text: "UK" , url: "https://www.dodax.co.uk", params:"/en-gb/search/?s="} 
+                 ,{text: "IT" , url: "https://www.dodax.it", params:"/it-it/search/?s="}
+                 ,{text: "FR" , url: "https://www.dodax.fr", params: "/fr-fr/search/?s="} 
+                 ,{text: "PL" , url: "https://www.dodax.pl", params: "/pl-pl/search/?s="} 
+                 ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} 
+
+            ]
+
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+        const ownerDocument = document.implementation.createHTMLDocument('virtual');
+
+        //Devuelve la información de los albums de una url de Dodax.
+        const getDodaxAlbums = async (url) => {
+
+          console.log("Conectando:" + url);
+          let response = await fetch(url); 
+          let data = await response.text();
+          return data;
+
+        }
+
+        //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
+        const getDodaxSitesAlbums = async(urls, cadenaBusqueda, items) => {
+            
+            const requests = urls.map((urlDodax) => {
+
+                if (urlDodax.text === "ES")
+                  cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINYL", "VINILO");
+                else
+                  cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINILO", "VINYL");
+
+                const urlCompleta = proxyurl +  urlDodax.url + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" + items
+                return getDodaxAlbums(urlCompleta)
+                  .then((salida) => {
+
+                    const $lineas = $(salida, ownerDocument).find("div.product");
+                    urlDodax.html = $lineas;
+
+                    return urlDodax;
+                })
+            })
+            return Promise.all(requests)
+        }
+        var discos = []
+        var limiteAlcanzado = false;
+
+        const getAlbums = function(urlsDodax, cadenaBusqueda, items) {
+
+          getDodaxSitesAlbums(urlsDodax, cadenaBusqueda, items)
+            .then(content => {
+
+                var nextUrlDodax = [];
+
+                //content es un array con el resultado de cada web.
+                content.forEach(resultado => {
+
+                  if (resultado.html.length == 12 && !limiteAlcanzado){
+                        //Seguimos obteniendo resultados de esa web.
+                        nextUrlDodax.push(resultado);
+                  }
+
+                  resultado.html.each(function() {
+
+                        var obj = {};
+                        var idAlbum = $(this).find('a.js-product').attr('id');
+
+                        //buscamos el idAlbum en el array de resultados que ya tenemos.
+                        var encontrado = false;
+                        var indexEncontrado = -1;
+                       
+                        $.each(discos, function(index,value){
+                            if (value.id == idAlbum){
+                               indexEncontrado = index;
+                               encontrado = true;
+                               return false;
+                            }
+                        });
+
+                        if (encontrado){
+                          discos[indexEncontrado].prices.push({url :  resultado.url + $(this).find('a.js-product').attr('href'), price : $(this).find('a.buy-button span').text(), text: resultado.text});
+                        }
+                        else{
+
+                          obj.id = idAlbum;
+                          obj.image = $(this).find('img').attr('src');
+                          obj.title = $(this).find('p.product_title').text();
+                          obj.from = $(this).find('p.product_from').text();
+                          obj.type = $(this).find('p.product_type').text();
+                          obj.prices = []
+                          obj.prices.push({url :  resultado.url + $(this).find('a.js-product').attr('href'), price : $(this).find('a.buy-button span').text(), text: resultado.text})
+                          discos.push(obj);
+                        
+                        }
+                  });
+                 
+                });
+
+                limiteAlcanzado = discos.length > 100;
+
+                if (nextUrlDodax.length > 0){
+                  getAlbums(nextUrlDodax, cadenaBusqueda, items + 12);
+                }
+                else {
+                  if (discos.length == 0)
+                    $("div.noresult").show();
+                  else {
+                    $("div.noresult").hide();
+                    //En el array discos ya tenemos todo para mostrar.
+                    $.each(discos, function(index, value){
+                        var $base = $(".base").clone().removeClass("base").addClass("resultados-items");
+                        $base.find("li.title").html("<b>" + value.title + "</b>");
+                              $base.find("li.from").text(value.from);
+                              $base.find("li.type").text(value.type);
+                              $base.find("img.cover").attr("src", value.image);
+                              $.each(value.prices, function(index, value2){
+                                $base.find("div.card-footer div.row").append("<div class='col-md-6'><a target='_blank' href='"+ value2.url + "'>" + value2.text + " " + value2.price + "</a></div>");
+                                $(".resultados").append($base);
+                              });
+                    });
+                  }
+                  showSpinner(false);             
+                }
+
+            });
+        }
+        $("#formulario").submit(function( event ) {
+
+            var cadenaBusqueda = $("#search").val().replace(/ /g, '+');
+
+            //Como mínimo 6 caracteres de búsqueda.
+            if (cadenaBusqueda.length < 6)
+              return false;
+
+            showSpinner(true);
+            $(".resultados").hide();
+            $(".resultados-items").remove();
+            discos = [];
+            limiteAlcanzado = false;
+            getAlbums(urlsDodax, cadenaBusqueda, 0);
+    
+            $(".resultados").show();
+            event.preventDefault();
+        });
+
+    </script>
+</body>
