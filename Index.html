@@ -102,18 +102,17 @@
 
         var urlsDodax = [
                   {text: "DE" , url: "https://www.dodax.de", params: "/de-de/search/?s="}
-               /*  ,{text: "ES" , url: "https://www.dodax.es", params: "/es-es/search/?s="}
+                ,{text: "ES" , url: "https://www.dodax.es", params: "/es-es/search/?s="}
                  ,{text: "AT" , url: "https://www.dodax.at", params: "/de-at/search/?s=" }
                  ,{text: "UK" , url: "https://www.dodax.co.uk", params:"/en-gb/search/?s="} 
                  ,{text: "IT" , url: "https://www.dodax.it", params:"/it-it/search/?s="}
                  ,{text: "FR" , url: "https://www.dodax.fr", params: "/fr-fr/search/?s="} 
                  ,{text: "PL" , url: "https://www.dodax.pl", params: "/pl-pl/search/?s="} 
-                 ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} */
-
+                 ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} 
             ]
 
-        //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const proxyurl = "https://thingproxy.freeboard.io/fetch/";
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        //const proxyurl = "https://thingproxy.freeboard.io/fetch/";
         //const proxyurl = "https://yacdn.org/proxy/";
         
         const ownerDocument = document.implementation.createHTMLDocument('virtual');
@@ -122,15 +121,7 @@
         const getDodaxAlbums = async (url) => {
 
           console.log("Conectando:" + url);
-          /*var request = new Request(url, {
-              mode: 'no-cors'
-          });*/
-          let response = await fetch(url, {
-              mode: 'cors',
-              headers: {
-    'Access-Control-Allow-Origin':'*'
-  }
-          }); 
+          let response = await fetch(url); 
           let data = await response.text();
           return data;
 
