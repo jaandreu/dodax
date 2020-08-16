@@ -113,8 +113,8 @@
             ]
 
         //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        //const proxyurl = "https://thingproxy.freeboard.io/fetch/";
-        const proxyurl = "https://crossorigin.me/";
+        const proxyurl = "https://thingproxy.freeboard.io/fetch/";
+        //const proxyurl = "https://yacdn.org/proxy/";
         
         const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
@@ -122,10 +122,10 @@
         const getDodaxAlbums = async (url) => {
 
           console.log("Conectando:" + url);
-          var request = new Request(url, {
+          /*var request = new Request(url, {
               mode: 'no-cors'
-          });
-          let response = await fetch(request); 
+          });*/
+          let response = await fetch(url); 
           let data = await response.text();
           return data;
 
