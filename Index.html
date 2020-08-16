@@ -11,12 +11,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/css-loader/3.3.3/loader-music.css" integrity="sha512-ewkg54H/c+6/4hepT+E9ZL7jhfMSABFR0gpRKUYO5oC2GlQkSqWY0i6L9PhhN/WfEjP42pIotOFY0U4OnHBS6Q==" crossorigin="anonymous" />
     <title>doooodax</title>
     <style>
+
       .base {
         display: none;
       }
+
       html {
-       font-size:14px;
+       font-size:16px;
       }
+
+      /* ajuste del tamaño de las imágenes*/
+      .cover{
+        max-width: 100%;
+        max-height: 100%;
+      }
+
     </style>
 
 </head>
@@ -54,8 +63,10 @@
         <div class="base col-md-3 mb-3 col-xs-6"> 
             <div class="card-deck mb-3 text-center">
                 <div class="card mb-4 shadow-sm">
-                  <img src="#src#" class="card-img-top cover" alt="...">
-                    <div class="card-body">
+                  <div class="card-header">
+                    <img src="#src#" class="cover" alt="...">
+                  </div> 
+                  <div class="card-body">
                       <!--<img src="#src#" class="cover ">-->
                       <ul class="list-group list-group-flush">
                         <li class="title list-group-item">#title#</li>
