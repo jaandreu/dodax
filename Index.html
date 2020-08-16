@@ -125,7 +125,12 @@
           /*var request = new Request(url, {
               mode: 'no-cors'
           });*/
-          let response = await fetch(url); 
+          let response = await fetch(url, {
+              mode: 'cors',
+              headers: {
+    'Access-Control-Allow-Origin':'*'
+  }
+          }); 
           let data = await response.text();
           return data;
 
