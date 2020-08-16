@@ -112,7 +112,8 @@
 
             ]
 
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        //const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const proxyurl = "http://www.whateverorigin.org/get?url='";
 
         const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
@@ -136,7 +137,7 @@
                 else
                   cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINILO", "VINYL");
 
-                const urlCompleta = proxyurl +  urlDodax.url + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" + items
+                const urlCompleta = proxyurl +  encodeURIComponent(urlDodax.url) + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" + items + "'";
                 return getDodaxAlbums(urlCompleta)
                   .then((salida) => {
 
@@ -221,6 +222,7 @@
                               $base.find("img.cover").attr("src", value.image);
                               $.each(value.prices, function(index, value2){
                                 $base.find("div.card-footer div.row").append("<div class='col-md-6'><a target='_blank' href='"+ value2.url + "'>" + value2.text + " " + value2.price + "</a></div>");
+                                
                                 $(".resultados").append($base);
                               });
                     });
