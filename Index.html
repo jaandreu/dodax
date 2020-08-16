@@ -102,19 +102,20 @@
 
         var urlsDodax = [
                   {text: "DE" , url: "https://www.dodax.de", params: "/de-de/search/?s="}
-                 ,{text: "ES" , url: "https://www.dodax.es", params: "/es-es/search/?s="}
+               /*  ,{text: "ES" , url: "https://www.dodax.es", params: "/es-es/search/?s="}
                  ,{text: "AT" , url: "https://www.dodax.at", params: "/de-at/search/?s=" }
                  ,{text: "UK" , url: "https://www.dodax.co.uk", params:"/en-gb/search/?s="} 
                  ,{text: "IT" , url: "https://www.dodax.it", params:"/it-it/search/?s="}
                  ,{text: "FR" , url: "https://www.dodax.fr", params: "/fr-fr/search/?s="} 
                  ,{text: "PL" , url: "https://www.dodax.pl", params: "/pl-pl/search/?s="} 
-                 ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} 
+                 ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} */
 
             ]
 
         //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const proxyurl = "https://thingproxy.freeboard.io/fetch/";
-
+        //const proxyurl = "https://thingproxy.freeboard.io/fetch/";
+        const proxyurl = "https://crossorigin.me/";
+        
         const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
         //Devuelve la información de los albums de una url de Dodax.
@@ -122,8 +123,8 @@
 
           console.log("Conectando:" + url);
           var request = new Request(url, {
+              //mode: 'no-cors'
           });
-
           let response = await fetch(request); 
           let data = await response.text();
           return data;
@@ -141,6 +142,7 @@
                   cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINILO", "VINYL");
 
                 const urlCompleta = proxyurl +  urlDodax.url + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" + items;
+
                 return getDodaxAlbums(urlCompleta)
                   .then((salida) => {
 
@@ -148,6 +150,8 @@
                     urlDodax.html = $lineas;
 
                     return urlDodax;
+                }).catch(function(error){
+                    console.log(error);
                 })
             })
             return Promise.all(requests)
@@ -208,7 +212,7 @@
 
                 limiteAlcanzado = discos.length > 100;
 
-                if (nextUrlDodax.length > 0){
+                if (nextUrlDodax.length > 0 && false){
                   getAlbums(nextUrlDodax, cadenaBusqueda, items + 12);
                 }
                 else {
