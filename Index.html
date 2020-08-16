@@ -123,7 +123,7 @@
 
           console.log("Conectando:" + url);
           var request = new Request(url, {
-              //mode: 'no-cors'
+              mode: 'no-cors'
           });
           let response = await fetch(request); 
           let data = await response.text();
