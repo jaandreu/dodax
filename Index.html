@@ -111,10 +111,8 @@
                  ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} 
             ]
 
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        //const proxyurl = "https://thingproxy.freeboard.io/fetch/";
-        //const proxyurl = "https://yacdn.org/proxy/";
-        
+        //const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const proxyurl = "https://dodax-proxy.herokuapp.com/";
         const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
         //Devuelve la información de los albums de una url de Dodax.
@@ -146,10 +144,9 @@
                     urlDodax.html = $lineas;
 
                     return urlDodax;
-                }).catch(function(error){
-                    console.log(error);
-                })
+                });
             })
+
             return Promise.all(requests)
         }
         var discos = []
