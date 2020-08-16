@@ -113,7 +113,7 @@
             ]
 
         //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const proxyurl = "";
+        const proxyurl = "https://thingproxy.freeboard.io/";
 
         const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
@@ -122,8 +122,8 @@
 
           console.log("Conectando:" + url);
           var request = new Request(url, {
-              mode:'no-cors'
           });
+
           let response = await fetch(request); 
           let data = await response.text();
           return data;
