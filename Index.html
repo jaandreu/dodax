@@ -113,7 +113,7 @@
             ]
 
         //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const proxyurl = "http://www.whateverorigin.org/get?url='";
+        const proxyurl = "";
 
         const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
@@ -137,7 +137,7 @@
                 else
                   cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINILO", "VINYL");
 
-                const urlCompleta = proxyurl +  encodeURIComponent(urlDodax.url) + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" + items + "'";
+                const urlCompleta = proxyurl +  urlDodax.url + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" + items;
                 return getDodaxAlbums(urlCompleta)
                   .then((salida) => {
 
