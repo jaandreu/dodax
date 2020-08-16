@@ -121,7 +121,10 @@
         const getDodaxAlbums = async (url) => {
 
           console.log("Conectando:" + url);
-          let response = await fetch(url); 
+          var request = new Request(url, {
+              mode:'no-cors'
+          });
+          let response = await fetch(request); 
           let data = await response.text();
           return data;
 
