@@ -24,6 +24,7 @@
         background-color: black;
         opacity: 70%;
       }
+  
     </style>
 
 </head>
@@ -39,7 +40,7 @@
             <div class="field">
               <p class="control has-icons-left">
                 <input class="input is-large is-info " id="search" type="text" placeholder="Qué buscamos?">
-                <span class="icon is-left">
+                <span class="icon is-left has-text-info	">
                   <i class="fas fa-search"></i>
                 </span>
               </p>
@@ -90,18 +91,28 @@
 
         var urlsDodax = [
                   {text: "DE" , url: "https://www.dodax.de", params: "/de-de/search/?s="}
-                 ,{text: "ES" , url: "https://www.dodax.es", params: "/es-es/search/?s="}
-                 ,{text: "AT" , url: "https://www.dodax.at", params: "/de-at/search/?s=" }
-                 ,{text: "UK" , url: "https://www.dodax.co.uk", params:"/en-gb/search/?s="} 
-                 ,{text: "IT" , url: "https://www.dodax.it", params:"/it-it/search/?s="}
-                 ,{text: "FR" , url: "https://www.dodax.fr", params: "/fr-fr/search/?s="} 
-                 ,{text: "PL" , url: "https://www.dodax.pl", params: "/pl-pl/search/?s="} 
-                 ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} 
+                  ,{text: "AT" , url: "https://www.dodax.at", params: "/de-at/search/?s=" }
+                  ,{text: "FR" , url: "https://www.dodax.fr", params: "/fr-fr/search/?s="} 
+                  ,{text: "UK" , url: "https://www.dodax.co.uk", params:"/en-gb/search/?s="} 
+                  ,{text: "ES" , url: "https://www.dodax.es", params: "/es-es/search/?s="}
+                  ,{text: "IT" , url: "https://www.dodax.it", params:"/it-it/search/?s="}
+                  ,{text: "PL" , url: "https://www.dodax.pl", params: "/pl-pl/search/?s="} 
+                  ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} 
             ]
 
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        //const proxyurl = "https://dodax-proxy.herokuapp.com/";
+        //const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const proxyurl = "https://dodax-proxy.herokuapp.com/";
         const ownerDocument = document.implementation.createHTMLDocument('virtual');
+
+        const getCurrencyRates = async (url) => {
+
+          let response = await fetch("https://api.exchangeratesapi.io/latest"); 
+          let data = await response.json();
+          return data;
+
+        }
+
+       
 
         //Devuelve la información de los albums de una url de Dodax.
         const getDodaxAlbums = async (url) => {
@@ -112,6 +123,26 @@
           return data;
 
         }
+        const getPrice = function (price, codigo){
+          if (rates != null){
+
+            switch (codigo){
+              case "UK":
+                salida = (parseFloat(price.replace(",", ".")) * (1/rates.rates["GBP"])).toFixed(2);
+                break;
+              case "PL":
+                salida = (parseFloat(price.replace(",", ".")) * (1/rates.rates["PLN"])).toFixed(2);
+                break;
+              default:
+                salida = parseFloat(price.replace(",", ".")).toFixed(2);
+            }
+          }
+          else{
+            salida = parseFloat(price.replace(",", ".")).toFixed(2);
+          }
+          return salida;
+        }
+
         const getCurrency = function(codigo){
           var salida = "€";
           switch (codigo){
@@ -154,6 +185,7 @@
             return Promise.all(requests)
         }
         var discos = []
+        var rates = null;
         var limiteAlcanzado = false;
 
         const getAlbums = function(urlsDodax, cadenaBusqueda, items) {
@@ -193,16 +225,16 @@
 
                         var precioObj = {
                             url: resultado.url + $(this).find('a.js-product').attr('href')
-                           ,price: precio
-                           ,priceInt: parseFloat(precio.replace(",", "."))
-                           ,currency: getCurrency(resultado.text)
+                           ,price: getPrice(precio, resultado.text)
+                           ,priceInt: getPrice(precio, resultado.text)
+                           ,currency: "€"
                            ,text: resultado.text
                         };
 
                         if (encontrado){
                           discos[indexEncontrado].prices.push(precioObj);
 
-                          if (discos[indexEncontrado].minPrice > precioObj.priceInt){
+                          if (parseFloat(discos[indexEncontrado].minPrice) > parseFloat(precioObj.priceInt)){
                             discos[indexEncontrado].minPrice = precioObj.priceInt;
                           }
 
@@ -234,13 +266,14 @@
                     $("div.noresult").show();
                   else {
                     $("div.noresult").hide();
+                    debugger;
                     $.each(discos, function(index, value){
                         var $base = $(".base").clone().removeClass("base").addClass("resultados-items");
                               $base.find("p.album").html("<span style='padding-right:4px;'>" + value.title + "</span>" + (value.type !== "" ? "<span class='tag is-info is-rounded'>"+ value.type + "</span>" : ""));
                               $base.find("p.artist").text(value.from);
                               $base.find("img.cover").attr("src", value.image);
                               $.each(value.prices, function(index, value2){
-                                $base.find("table tbody").append("<tr><td>" + value2.text + "</td><td><a target='_blank' href='"+ value2.url + "'>" + value2.price + " " + value2.currency + "</a></td><td>"+ (value2.priceInt === value.minPrice ? "<i class='fas fa-star'></i>": "") +"</td></div>");
+                                $base.find("table tbody").append("<tr><td>" + value2.text + "</td><td><a target='_blank' href='"+ value2.url + "'>" + value2.price + " " + value2.currency + "</a></td><td>"+ (value2.priceInt === value.minPrice ? "<i class='fas fa-star has-text-info	'></i>": "") +"</td></div>");
                               });
                               $(".resultados").append($base);
                     });
@@ -250,6 +283,15 @@
 
             });
         }
+
+        $( document ).ready(function() {
+
+          getCurrencyRates()
+          .then((salida) => {
+             rates = salida;
+          });
+        });
+
         $("#formulario").submit(function( event ) {
 
             var cadenaBusqueda = $("#search").val().replace(/ /g, '+');
