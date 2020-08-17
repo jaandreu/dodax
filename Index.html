@@ -7,31 +7,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/css-loader/3.3.3/loader-music.css" integrity="sha512-ewkg54H/c+6/4hepT+E9ZL7jhfMSABFR0gpRKUYO5oC2GlQkSqWY0i6L9PhhN/WfEjP42pIotOFY0U4OnHBS6Q==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+
     <title>doooodax</title>
     <style>
 
       .base {
         display: none;
       }
-
-      html {
-       font-size:16px;
-      }
-
-      /* ajuste del tamaño de las imágenes*/
-      .cover{
-        max-width: 100%;
-        max-height: 100%;
-      }
-
+  
     </style>
 
 </head>
 <body>
-
-    <body class="bg-light">
+  <section class="section">
+    <div class="container is-fluid">
+      <div class="columns">
+        <div class="column">
+          <form id="formulario">
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input is-large is-info " id="search" type="text" placeholder="Qué buscamos?">
+                <span class="icon is-left">
+                  <i class="fas fa-search"></i>
+                </span>
+              </p>
+            </div>
+          </form>
+      </div>
+    </div>
+    <div class="columns resultados is-multiline">
+      <div class=" base column is-one-quarter">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-4by3">
+              <img class="cover" src="" alt="Album cover">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="album title is-4">The mellon collie and the infinite sadness</p>
+                <p class="artist subtitle is-6">The Smashing Pumpkins</p>
+              </div>
+            </div>
+            <div class="content">
+              <div class="table-container">
+                <table class="table is-hoverable is-fullwidth">
+                   <tbody>
+                      <!-- Items con los precions-->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>       
+      </div>
+    </div>
+  </div>
+  </section>
+  
+ <!--    <body class="bg-light">
         <div class="container">
          <div class="py-3 text-center">
         <h1>doooodax!!</h1>
@@ -67,7 +103,6 @@
                     <img src="#src#" class="cover" alt="...">
                   </div> 
                   <div class="card-body">
-                      <!--<img src="#src#" class="cover ">-->
                       <ul class="list-group list-group-flush">
                         <li class="title list-group-item">#title#</li>
                         <li class="from list-group-item">#from#</li>
@@ -85,13 +120,13 @@
         <div class="loader loader-music" data-hey-oh></div>
        </div>
     </div> 
-
+ -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+<script>
         
        const showSpinner = function (show) {
           if (show)
@@ -111,8 +146,8 @@
                  ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} 
             ]
 
-        //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-         const proxyurl = "https://dodax-proxy.herokuapp.com/";
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        //const proxyurl = "https://dodax-proxy.herokuapp.com/";
         const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
         //Devuelve la información de los albums de una url de Dodax.
@@ -216,15 +251,13 @@
                     //En el array discos ya tenemos todo para mostrar.
                     $.each(discos, function(index, value){
                         var $base = $(".base").clone().removeClass("base").addClass("resultados-items");
-                        $base.find("li.title").html("<b>" + value.title + "</b>");
-                              $base.find("li.from").text(value.from);
-                              $base.find("li.type").text(value.type);
+                              $base.find("p.album").html("<span style='padding-right:4px;'>" + value.title + "</span>" + (value.type !== "" ? "<span class='tag is-info is-rounded'>"+ value.type + "</span>" : ""));
+                              $base.find("p.artist").text(value.from);
                               $base.find("img.cover").attr("src", value.image);
                               $.each(value.prices, function(index, value2){
-                                $base.find("div.card-footer div.row").append("<div class='col-md-6'><a target='_blank' href='"+ value2.url + "'>" + value2.text + " " + value2.price + "</a></div>");
-                                
-                                $(".resultados").append($base);
+                                $base.find("table tbody").append("<tr><td>" + value2.text + "</td><td><a target='_blank' href='"+ value2.url + "'>" + value2.price + "</a></td><td>"+ value2.price +"</td></div>");
                               });
+                              $(".resultados").append($base);
                     });
                   }
                   showSpinner(false);             
