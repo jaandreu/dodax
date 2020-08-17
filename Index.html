@@ -33,21 +33,24 @@
   <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-menu is-active">
       <div class="navbar-start">
-        <div class="navbar-item">
-        <form id="formulario">
-        <div class="field  has-addons">
-          <div class="control">
-            <input class="input is-large is-info" id="search" type="text" placeholder="last shadow puppets lp ...">
-          </div>
-          <div class="control">
-              <button type="submit" class="button is-info is-large"> <i class="fas fa-search"></i></button>
-          </div>
-        </div>
-      </form>
+       <div class="navbar-item">
+          <div class="container">
+            <div class="columns">
+              <div class="column">
+                <form id="formulario">
+                <div class="field has-addons">
+                  <div class="control">
+                    <input class="input is-large is-info" id="search" type="text" placeholder="last shadow puppets lp ...">
+                  </div>
+                  <div class="control">
+                      <button type="submit" class="button is-info is-large"> <i class="fas fa-search"></i></button>
+                  </div>
+                </div>
+              </form>
     </div>
-      </div>
-      <div class="navbar-end">
-
+    </div>
+    </div>
+    </div>
       </div>
     </div>
   </nav>
@@ -111,8 +114,8 @@
                   ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} 
             ]
 
-        const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        //const proxyurl = "https://dodax-proxy.herokuapp.com/";
+        //const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const proxyurl = "https://dodax-proxy.herokuapp.com/";
         const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
         const getCurrencyRates = async (url) => {
