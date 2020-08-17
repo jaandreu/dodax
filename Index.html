@@ -99,8 +99,8 @@
                  ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} 
             ]
 
-        //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const proxyurl = "https://dodax-proxy.herokuapp.com/";
+        const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        //const proxyurl = "https://dodax-proxy.herokuapp.com/";
         const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
         //Devuelve la información de los albums de una url de Dodax.
@@ -110,6 +110,22 @@
           let response = await fetch(url); 
           let data = await response.text();
           return data;
+
+        }
+        const getCurrency = function(codigo){
+          var salida = "€";
+          switch (codigo){
+            case "UK":
+              salida = "£";
+              break;
+            case "PL":
+              salida = "zł";
+              break;
+            default:
+              salida = "€";
+
+          }
+          return salida;
 
         }
 
@@ -169,8 +185,27 @@
                             }
                         });
 
+                        var precio = $(this).find('a.buy-button span').text()
+                                        .replace("€", "")
+                                        .replace("£", "")
+                                        .replace("zł", "")
+                                        .replace(".", ",");
+
+                        var precioObj = {
+                            url: resultado.url + $(this).find('a.js-product').attr('href')
+                           ,price: precio
+                           ,priceInt: parseFloat(precio.replace(",", "."))
+                           ,currency: getCurrency(resultado.text)
+                           ,text: resultado.text
+                        };
+
                         if (encontrado){
-                          discos[indexEncontrado].prices.push({url :  resultado.url + $(this).find('a.js-product').attr('href'), price : $(this).find('a.buy-button span').text(), text: resultado.text});
+                          discos[indexEncontrado].prices.push(precioObj);
+
+                          if (discos[indexEncontrado].minPrice > precioObj.priceInt){
+                            discos[indexEncontrado].minPrice = precioObj.priceInt;
+                          }
+
                         }
                         else{
 
@@ -180,7 +215,8 @@
                           obj.from = $(this).find('p.product_from').text();
                           obj.type = $(this).find('p.product_type').text();
                           obj.prices = []
-                          obj.prices.push({url :  resultado.url + $(this).find('a.js-product').attr('href'), price : $(this).find('a.buy-button span').text(), text: resultado.text})
+                          obj.prices.push(precioObj)
+                          obj.minPrice = precioObj.priceInt;
                           discos.push(obj);
                         
                         }
@@ -204,7 +240,7 @@
                               $base.find("p.artist").text(value.from);
                               $base.find("img.cover").attr("src", value.image);
                               $.each(value.prices, function(index, value2){
-                                $base.find("table tbody").append("<tr><td>" + value2.text + "</td><td><a target='_blank' href='"+ value2.url + "'>" + value2.price + "</a></td><td>"+ value2.price +"</td></div>");
+                                $base.find("table tbody").append("<tr><td>" + value2.text + "</td><td><a target='_blank' href='"+ value2.url + "'>" + value2.price + " " + value2.currency + "</a></td><td>"+ (value2.priceInt === value.minPrice ? "<i class='fas fa-star'></i>": "") +"</td></div>");
                               });
                               $(".resultados").append($base);
                     });
