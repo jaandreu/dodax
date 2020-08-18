@@ -97,7 +97,7 @@
       </div>
 
       <!--Mensaje para no se han encontrado datos-->
-      <div style="display: none;" class="noresult notification is-info">
+      <div style="display: none;" id="div-noresult" class="noresult notification is-info">
         No se han encontrado coincidencias
       </div>
 
@@ -160,7 +160,22 @@
     //Proxy para evitar el CORS
     const proxyurl = window.location.host.includes('netlify') ? "https://dodax-proxy.herokuapp.com/" : "https://cors-anywhere.herokuapp.com/";
     const ownerDocument = document.implementation.createHTMLDocument('virtual');
-    
+
+    //Funciones auxiliares DOM
+    const showElement = function(idElement){
+       var elem = document.getElementById(idElement);
+       if (elem != null) {
+         elem.style.display = "block";
+       }
+    }
+
+    const hideElement = function(idElement){
+       var elem = document.getElementById(idElement);
+       if (elem != null) {
+         elem.style.display = "none";
+       }
+    }
+
     //Obtiene un JSON con los rates de las monedas en base al EUR.
     const getCurrencyRates = async (url) => {
 
@@ -365,7 +380,7 @@
         });
     }
 
-    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", function(event) { 
 
       getCurrencyRates()
         .then((salida) => {
@@ -382,7 +397,7 @@
 
     });
 
-    $("#formulario").submit(function (event) {
+    document.getElementById("formulario").addEventListener('submit', function(){
 
       var cadenaBusqueda = $("#search").val().replace(/ /g, '+');
 
@@ -391,17 +406,19 @@
         return false;
 
       showSpinner(true);
+      hideElement("div-noresult");
+      hideElement("div-resultados");
 
-      $("div.noresult").hide();
-      $(".resultados").hide();
       $(".resultados-items").remove();
       discos = [];
       limiteAlcanzado = false;
       getAlbums(urlsDodax, cadenaBusqueda, 0);
+      showElement("div-resultados");
 
-      $(".resultados").show();
       event.preventDefault();
+
     });
+
   </script>
 
 </body>
