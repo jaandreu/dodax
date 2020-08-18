@@ -95,6 +95,21 @@
           </div>
         </div>
       </div>
+      
+      <article id="div-info" class="message is-info">
+        <div class="message-header">
+          <p>Ayuda</p>
+        </div>
+        <div class="message-body">
+          <ul>
+            <li>- La búsqueda está limitada a 50 resultados.</li>
+            <li>- Sólo busca vinilos, no hace falta poner <b>VINILO</b>, <b>VINYL</b> ni <b>LP</b>.</li>
+            <li>- Se puede introducir tanto el ID de DODAX como el código de barras del disco para que realice la búsqueda.</li>
+            <li>- A partir del resultado se puede acceder al detalle del disco en Dodax o a Discogs pulsando sobre el icono con forma de vinilo.</li>
+            <li>- El icono de la estrella representa los mejores precios.</li>
+          </ul>
+        </div>
+      </article>
 
       <!--Mensaje para no se han encontrado datos-->
       <div style="display: none;" id="div-noresult" class="noresult notification is-info">
@@ -254,6 +269,7 @@
 
       const requests = urls.map((urlDodax) => {
 
+
         if (urlDodax.text === "ES")
           cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINYL", "VINILO");
         else
@@ -361,7 +377,7 @@
 
           });
 
-          limiteAlcanzado = discos.length > 100;
+          limiteAlcanzado = discos.length > 50;
 
           if (nextUrlDodax.length > 0) {
             getAlbums(nextUrlDodax, cadenaBusqueda, items + 12);
@@ -417,13 +433,21 @@
 
     document.getElementById("formulario").addEventListener('submit', function(){
 
-      var cadenaBusqueda = $("#search").val().replace(/ /g, '+');
+      cadenaBusqueda = $("#search").val()
+                          .replace("VINILO", "")
+                          .replace("VINYL", "")
+                          .replace("CD", "")
+                          .replace("LP","")
+                          .replace(/ /g, '+');
 
       //Como mínimo 6 caracteres de búsqueda.
       if (cadenaBusqueda.length < 1)
         return false;
 
+      cadenaBusqueda = cadenaBusqueda + "+LP";
       showSpinner(true);
+
+      hideElement("div-info")
       hideElement("div-noresult");
       hideElement("div-resultados");
 
