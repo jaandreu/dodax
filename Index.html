@@ -67,7 +67,7 @@
 
     <!-- Container para las fichas de resultados.-->
     <div class="container">
-      <div class="columns resultados is-multiline">
+      <div id="div-resultados" class="columns resultados is-multiline">
         <div class=" base column is-one-quarter">
           <div class="card">
             <div class="card-image">
@@ -283,7 +283,10 @@
                 .replace("€", "")
                 .replace("£", "")
                 .replace("zł", "")
-                .replace(".", ",");
+                .replace(".", ",")
+                .replace(" ", "")
+                .replace(String.fromCharCode(160), "")
+                .replace("&nbsp;", "");
               
               var $gtin =   $(this).find("a.buy-button").attr("onmousedown");
 
@@ -334,23 +337,28 @@
               $("div.noresult").show();
             else {
               $("div.noresult").hide();
-              debugger;
               $.each(discos, function (index, value) {
                 var $base = $(".base").clone().removeClass("base").addClass("resultados-items");
                 $base.find("p.album").html("<span style='padding-right:4px;'>" + value.title + "</span>" + (
                     value.type !== "" ? "<span class='tag is-info is-rounded'>" + value.type + "</span>" : ""
-                    ) + (value.gtin !== "" ? "<span class='discogs'><a target='_blank' href='https://www.discogs.com/search/?q=" + value.gtin +"&type=all'><i class='fas fa-record-vinyl'></i></a></span>" : ""));
+                    ) + (value.gtin !== "" ? "<span class='discogs'><a href='https://www.discogs.com/search/?q=" + value.gtin +"&type=all'><i class='fas fa-record-vinyl'></i></a></span>" : ""));
                 $base.find("p.artist").text(value.from);
                 $base.find("img.cover").attr("src", value.image);
                 $.each(value.prices, function (index, value2) {
                   $base.find("table tbody").append("<tr><td>" + value2.text +
-                    "</td><td><a target='_blank' href='" + value2.url + "'>" + value2.price + " " + value2
+                    "</td><td><a href='" + value2.url + "'>" + value2.price + " " + value2
                     .currency + "</a></td><td>"+ value2.priceOriginal +"</td><td>" + (value2.priceInt === value.minPrice ?
                       "<i class='fas fa-star has-text-info	'></i>" : "") + "</td></div>");
                 });
                 $(".resultados").append($base);
               });
             }
+
+            var htmlToSave = document.getElementById("div-resultados").innerHTML;
+
+            sessionStorage.setItem('lastSearchResult', htmlToSave);
+            sessionStorage.setItem('lastSearch', cadenaBusqueda);
+
             showSpinner(false);
           }
 
@@ -363,6 +371,15 @@
         .then((salida) => {
           rates = salida;
         });
+      //última búsqueda
+      var lastSearchResult = sessionStorage.getItem('lastSearchResult');
+      var lastSearch = sessionStorage.getItem('lastSearch');
+
+      if (lastSearchResult != null){
+        document.getElementById("div-resultados").innerHTML = lastSearchResult;
+        document.getElementById("search").value = lastSearch;
+      }
+
     });
 
     $("#formulario").submit(function (event) {
