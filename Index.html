@@ -61,7 +61,7 @@
     </div>
   </nav>
   <!-- Loading -->
-  <div class="pageloader"><span class="title">Buscando...</span></div>
+  <div id="div-pageloader" class="pageloader"><span class="title">Buscando...</span></div>
 
   <section class="section">
 
@@ -116,10 +116,12 @@
 
     //Método que muestra u oculta el frame de buscando.
     const showSpinner = function (show) {
+
       if (show)
-        $("div.pageloader").addClass("is-active");
+        addClass("div-pageloader", "is-active");  
       else
-        $("div.pageloader").removeClass("is-active");
+        removeClass("div-pageloader", "is-active");  
+
     }
 
     //Listado de servidores a los que consultaremos.
@@ -165,7 +167,7 @@
     const showElement = function(idElement){
        var elem = document.getElementById(idElement);
        if (elem != null) {
-         elem.style.display = "block";
+         elem.style.display = "";
        }
     }
 
@@ -175,6 +177,21 @@
          elem.style.display = "none";
        }
     }
+
+    const addClass = function(idElement, className){
+       var elem = document.getElementById(idElement);
+       if (elem != null) {
+        elem.classList.add(className)
+       }
+    }
+
+    const removeClass = function(idElement, className){
+       var elem = document.getElementById(idElement);
+       if (elem != null) {
+        elem.classList.remove(className)
+       }
+    }
+
 
     //Obtiene un JSON con los rates de las monedas en base al EUR.
     const getCurrencyRates = async (url) => {
@@ -343,15 +360,16 @@
             });
 
           });
+
           limiteAlcanzado = discos.length > 100;
 
           if (nextUrlDodax.length > 0) {
             getAlbums(nextUrlDodax, cadenaBusqueda, items + 12);
           } else {
             if (discos.length == 0)
-              $("div.noresult").show();
+              showElement("div-noresult");
             else {
-              $("div.noresult").hide();
+              hideElement("div-noresult");
               $.each(discos, function (index, value) {
                 var $base = $(".base").clone().removeClass("base").addClass("resultados-items");
                 $base.find("p.album").html("<span style='padding-right:4px;'>" + value.title + "</span>" + (
