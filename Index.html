@@ -191,17 +191,17 @@
     }
 
     //Obtiene el caracter de moneda en función del código de pais.
-    const getCurrency = function (codigo) {
-      var salida = "€";
+    const getCurrency = function (price, codigo) {
+      var salida = "";
       switch (codigo) {
         case "UK":
-          salida = "£";
+          salida = price + " £";
           break;
         case "PL":
-          salida = "zł";
+          salida = price + " zł";
           break;
         default:
-          salida = "€";
+          salida = "";
 
       }
       return salida;
@@ -291,6 +291,7 @@
                 url: resultado.url + $(this).find('a.js-product').attr('href'),
                 price: getPrice(precio, resultado.text).replace(".", ","),
                 priceInt: getPrice(precio, resultado.text),
+                priceOriginal: getCurrency(precio, resultado.text),
                 currency: "€",
                 text: resultado.text,
               };
@@ -344,7 +345,7 @@
                 $.each(value.prices, function (index, value2) {
                   $base.find("table tbody").append("<tr><td>" + value2.text +
                     "</td><td><a target='_blank' href='" + value2.url + "'>" + value2.price + " " + value2
-                    .currency + "</a></td><td>" + (value2.priceInt === value.minPrice ?
+                    .currency + "</a></td><td>"+ value2.priceOriginal +"</td><td>" + (value2.priceInt === value.minPrice ?
                       "<i class='fas fa-star has-text-info	'></i>" : "") + "</td></div>");
                 });
                 $(".resultados").append($base);
