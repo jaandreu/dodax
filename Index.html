@@ -29,7 +29,10 @@
         vertical-align: middle;
         padding-left: 2px;
       }
-  
+      
+      .flexgrow {
+        flex-grow: 1;
+      }
     </style>
 
 </head>
@@ -37,16 +40,16 @@
   <!--Navbar (buscador)-->
   <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-menu is-active">
-      <div class="navbar-start">
-        <div class="navbar-item">
+      <div class="navbar-start flexgrow">
+        <div class="navbar-item flexgrow">
           <div class="container">
             <div class="columns">
               <div class="column">
                 <form id="formulario" method='GET' action='javascript:void(0); return false;'>
                   <div class="field has-addons">
-                    <div class="control">
-                      <input class="input is-large is-info" id="search" type="text"
-                        placeholder="last shadow puppets lp ...">
+                    <div class="control flexgrow">
+                      <input class="input is-large is-info is-expanded" id="search" type="text"
+                        placeholder="last shadow puppets ...">
                     </div>
                     <div class="control">
                       <button type="submit" class="button is-info is-large"> <i class="fas fa-search"></i></button>
