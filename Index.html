@@ -25,6 +25,10 @@
       div.navbar-menu {
         background-color: black;
       }
+      span.discogs {
+        vertical-align: middle;
+        padding-left: 2px;
+      }
   
     </style>
 
@@ -106,7 +110,7 @@
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
   </script>
   
-  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
   
   <script>
 
@@ -280,17 +284,23 @@
                 .replace("£", "")
                 .replace("zł", "")
                 .replace(".", ",");
+              
+              var $gtin =   $(this).find("a.buy-button").attr("onmousedown");
 
               var precioObj = {
                 url: resultado.url + $(this).find('a.js-product').attr('href'),
                 price: getPrice(precio, resultado.text).replace(".", ","),
                 priceInt: getPrice(precio, resultado.text),
                 currency: "€",
-                text: resultado.text
+                text: resultado.text,
               };
 
               if (encontrado) {
                 discos[indexEncontrado].prices.push(precioObj);
+
+                if ($gtin != null && discos[indexEncontrado].gtin === ""){
+                  discos[indexEncontrado].gtin = $gtin.replace("RetailRocket.addToCartRetailRocket('", "").replace("');", "");
+                }
 
                 if (parseFloat(discos[indexEncontrado].minPrice) > parseFloat(precioObj.priceInt)) {
                   discos[indexEncontrado].minPrice = precioObj.priceInt;
@@ -306,13 +316,14 @@
                 obj.prices = []
                 obj.prices.push(precioObj)
                 obj.minPrice = precioObj.priceInt;
+                obj.gtin = $gtin != null ? $gtin.replace("RetailRocket.addToCartRetailRocket('", "").replace("');", "") : "";
+
                 discos.push(obj);
 
               }
             });
 
           });
-
           limiteAlcanzado = discos.length > 100;
 
           if (nextUrlDodax.length > 0) {
@@ -327,7 +338,7 @@
                 var $base = $(".base").clone().removeClass("base").addClass("resultados-items");
                 $base.find("p.album").html("<span style='padding-right:4px;'>" + value.title + "</span>" + (
                     value.type !== "" ? "<span class='tag is-info is-rounded'>" + value.type + "</span>" : ""
-                    ));
+                    ) + (value.gtin !== "" ? "<span class='discogs'><a target='_blank' href='https://www.discogs.com/search/?q=" + value.gtin +"&type=all'><i class='fas fa-record-vinyl'></i></a></span>" : ""));
                 $base.find("p.artist").text(value.from);
                 $base.find("img.cover").attr("src", value.image);
                 $.each(value.prices, function (index, value2) {
