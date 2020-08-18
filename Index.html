@@ -23,7 +23,7 @@
         opacity: 70%;
       }
       div.navbar-menu {
-        background-color: black;
+        background-color: #f16130;
       }
       span.discogs {
         vertical-align: middle;
@@ -32,6 +32,9 @@
       
       .flexgrow {
         flex-grow: 1;
+      }
+      .naranja {
+        color: #f16130;
       }
     </style>
 
@@ -393,7 +396,7 @@
                 var $base = $(".base").clone().removeClass("base").addClass("resultados-items");
                 $base.find("p.album").html("<span style='padding-right:4px;'>" + value.title + "</span>" + (
                     value.type !== "" ? "<span class='tag is-info is-rounded'>" + value.type + "</span>" : ""
-                    ) + (value.gtin !== "" ? "<span class='discogs'><a href='https://www.discogs.com/search/?q=" + value.gtin +"&type=all'><i class='fas fa-record-vinyl'></i></a></span>" : ""));
+                    ) + (value.gtin !== "" ? "<span class='discogs'><a href='https://www.discogs.com/search/?q=" + value.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : ""));
                 $base.find("p.artist").text(value.from);
                 $base.find("img.cover").attr("src", value.image);
                 $.each(value.prices, function (index, value2) {
