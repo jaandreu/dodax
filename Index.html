@@ -149,8 +149,7 @@
       params: "/nl-nl/search/?s="
     }]
 
-    //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    const proxyurl = "https://dodax-proxy.herokuapp.com/";
+    const proxyurl = window.location.host.includes('netlify') ? "https://dodax-proxy.herokuapp.com/" : "https://cors-anywhere.herokuapp.com/";
     const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
     const getCurrencyRates = async (url) => {
