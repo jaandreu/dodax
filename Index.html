@@ -9,7 +9,7 @@
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
 
-    <title>doooodax</title>
+    <title>XADOD</title>
     <style>
 
       .base {
@@ -29,302 +29,340 @@
     </style>
 
 </head>
-<body  class="has-navbar-fixed-top">
+<body class="has-navbar-fixed-top">
+  <!--Navbar (buscador)-->
   <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-menu is-active">
       <div class="navbar-start">
-       <div class="navbar-item">
+        <div class="navbar-item">
           <div class="container">
             <div class="columns">
               <div class="column">
                 <form id="formulario">
-                <div class="field has-addons">
-                  <div class="control">
-                    <input class="input is-large is-info" id="search" type="text" placeholder="last shadow puppets lp ...">
-                  </div>
-                  <div class="control">
+                  <div class="field has-addons">
+                    <div class="control">
+                      <input class="input is-large is-info" id="search" type="text"
+                        placeholder="last shadow puppets lp ...">
+                    </div>
+                    <div class="control">
                       <button type="submit" class="button is-info is-large"> <i class="fas fa-search"></i></button>
+                    </div>
                   </div>
-                </div>
-              </form>
-    </div>
-    </div>
-    </div>
-    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
+  <!-- Loading -->
   <div class="pageloader"><span class="title">Buscando...</span></div>
+
   <section class="section">
-     <div class="container">
-    <div class="columns resultados is-multiline">
-      <div class=" base column is-one-quarter">
-        <div class="card">
-          <div class="card-image">
-            <figure class="image is-4by3">
-              <img class="cover" src="" alt="Album cover">
-            </figure>
-          </div>
-          <div class="card-content">
-            <div class="media">
-              <div class="media-content">
-                <p class="album title is-4"></p>
-                <p class="artist subtitle is-6"></p>
-              </div>
+
+    <!-- Container para las fichas de resultados.-->
+    <div class="container">
+      <div class="columns resultados is-multiline">
+        <div class=" base column is-one-quarter">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img class="cover" src="" alt="Album cover">
+              </figure>
             </div>
-            <div class="content">
-              <div class="table-container">
-                <table class="table is-hoverable is-fullwidth">
-                   <tbody>
+            <div class="card-content">
+              <div class="media">
+                <div class="media-content">
+                  <p class="album title is-4"></p>
+                  <p class="artist subtitle is-6"></p>
+                </div>
+              </div>
+              <div class="content">
+                <div class="table-container">
+                  <table class="table is-hoverable is-fullwidth">
+                    <tbody>
                       <!-- Items con los precios-->
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-        </div>       
+        </div>
       </div>
+
+      <!--Mensaje para no se han encontrado datos-->
+      <div style="display: none;" class="noresult notification is-info">
+        No se han encontrado coincidencias
+      </div>
+
     </div>
 
-    <div style="display: none;" class="noresult notification is-info">
-       No se han encontrado coincidencias
-    </div>  
-  </div>
- 
   </section>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-<script>
-        
-       const showSpinner = function (show) {
-          if (show)
-           $("div.pageloader").addClass("is-active");
-          else
-           $("div.pageloader").removeClass("is-active");
-       }
 
-        var urlsDodax = [
-                  {text: "DE" , url: "https://www.dodax.de", params: "/de-de/search/?s="}
-                  ,{text: "AT" , url: "https://www.dodax.at", params: "/de-at/search/?s=" }
-                  ,{text: "FR" , url: "https://www.dodax.fr", params: "/fr-fr/search/?s="} 
-                  ,{text: "UK" , url: "https://www.dodax.co.uk", params:"/en-gb/search/?s="} 
-                  ,{text: "ES" , url: "https://www.dodax.es", params: "/es-es/search/?s="}
-                  ,{text: "IT" , url: "https://www.dodax.it", params:"/it-it/search/?s="}
-                  ,{text: "PL" , url: "https://www.dodax.pl", params: "/pl-pl/search/?s="} 
-                  ,{text: "NL" , url: "https://www.dodax.nl", params: "/nl-nl/search/?s="} 
-            ]
+  <!-- Sripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  </script>
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script>
 
-        //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-        const proxyurl = "https://dodax-proxy.herokuapp.com/";
-        const ownerDocument = document.implementation.createHTMLDocument('virtual');
+    const showSpinner = function (show) {
+      if (show)
+        $("div.pageloader").addClass("is-active");
+      else
+        $("div.pageloader").removeClass("is-active");
+    }
 
-        const getCurrencyRates = async (url) => {
+    var urlsDodax = [{
+      text: "DE",
+      url: "https://www.dodax.de",
+      params: "/de-de/search/?s="
+    }, {
+      text: "AT",
+      url: "https://www.dodax.at",
+      params: "/de-at/search/?s="
+    }, {
+      text: "FR",
+      url: "https://www.dodax.fr",
+      params: "/fr-fr/search/?s="
+    }, {
+      text: "UK",
+      url: "https://www.dodax.co.uk",
+      params: "/en-gb/search/?s="
+    }, {
+      text: "ES",
+      url: "https://www.dodax.es",
+      params: "/es-es/search/?s="
+    }, {
+      text: "IT",
+      url: "https://www.dodax.it",
+      params: "/it-it/search/?s="
+    }, {
+      text: "PL",
+      url: "https://www.dodax.pl",
+      params: "/pl-pl/search/?s="
+    }, {
+      text: "NL",
+      url: "https://www.dodax.nl",
+      params: "/nl-nl/search/?s="
+    }]
 
-          let response = await fetch("https://api.exchangeratesapi.io/latest"); 
-          let data = await response.json();
-          return data;
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    //const proxyurl = "https://dodax-proxy.herokuapp.com/";
+    const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
-        }
+    const getCurrencyRates = async (url) => {
 
-        //Devuelve la información de los albums de una url de Dodax.
-        const getDodaxAlbums = async (url) => {
+      let response = await fetch("https://api.exchangeratesapi.io/latest");
+      let data = await response.json();
+      return data;
 
-          console.log("Conectando:" + url);
-          let response = await fetch(url); 
-          let data = await response.text();
-          return data;
+    }
 
-        }
+    //Devuelve la información de los albums de una url de Dodax.
+    const getDodaxAlbums = async (url) => {
 
-        const getPrice = function (price, codigo){
-          if (rates != null){
+      console.log("Conectando:" + url);
+      let response = await fetch(url);
+      let data = await response.text();
+      return data;
 
-            switch (codigo){
-              case "UK":
-                salida = (parseFloat(price.replace(",", ".")) * (1/rates.rates["GBP"])).toFixed(2);
-                break;
-              case "PL":
-                salida = (parseFloat(price.replace(",", ".")) * (1/rates.rates["PLN"])).toFixed(2);
-                break;
-              default:
-                salida = parseFloat(price.replace(",", ".")).toFixed(2);
-            }
-          }
-          else{
+    }
+
+    const getPrice = function (price, codigo) {
+      if (rates != null) {
+
+        switch (codigo) {
+          case "UK":
+            salida = (parseFloat(price.replace(",", ".")) * (1 / rates.rates["GBP"])).toFixed(2);
+            break;
+          case "PL":
+            salida = (parseFloat(price.replace(",", ".")) * (1 / rates.rates["PLN"])).toFixed(2);
+            break;
+          default:
             salida = parseFloat(price.replace(",", ".")).toFixed(2);
-          }
-          return salida;
         }
+      } else {
+        salida = parseFloat(price.replace(",", ".")).toFixed(2);
+      }
+      return salida;
+    }
 
-        const getCurrency = function(codigo){
-          var salida = "€";
-          switch (codigo){
-            case "UK":
-              salida = "£";
-              break;
-            case "PL":
-              salida = "zł";
-              break;
-            default:
-              salida = "€";
+    const getCurrency = function (codigo) {
+      var salida = "€";
+      switch (codigo) {
+        case "UK":
+          salida = "£";
+          break;
+        case "PL":
+          salida = "zł";
+          break;
+        default:
+          salida = "€";
 
-          }
-          return salida;
-        }
+      }
+      return salida;
+    }
 
-        //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
-        const getDodaxSitesAlbums = async(urls, cadenaBusqueda, items) => {
-            
-            const requests = urls.map((urlDodax) => {
+    //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
+    const getDodaxSitesAlbums = async (urls, cadenaBusqueda, items) => {
 
-                if (urlDodax.text === "ES")
-                  cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINYL", "VINILO");
-                else
-                  cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINILO", "VINYL");
+      const requests = urls.map((urlDodax) => {
 
-                const urlCompleta = proxyurl +  urlDodax.url + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" + items;
+        if (urlDodax.text === "ES")
+          cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINYL", "VINILO");
+        else
+          cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINILO", "VINYL");
 
-                return getDodaxAlbums(urlCompleta)
-                  .then((salida) => {
+        const urlCompleta = proxyurl + urlDodax.url + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" +
+          items;
 
-                    const $lineas = $(salida, ownerDocument).find("div.product");
-                    urlDodax.html = $lineas;
-
-                    return urlDodax;
-                });
-
-            })
-
-            return Promise.all(requests)
-        }
-        var discos = []
-        var rates = null;
-        var limiteAlcanzado = false;
-
-        const getAlbums = function(urlsDodax, cadenaBusqueda, items) {
-
-          getDodaxSitesAlbums(urlsDodax, cadenaBusqueda, items)
-            .then(content => {
-
-                var nextUrlDodax = [];
-
-                content.forEach(resultado => {
-
-                  if (resultado.html.length == 12 && !limiteAlcanzado){
-                        nextUrlDodax.push(resultado);
-                  }
-
-                  resultado.html.each(function() {
-
-                        var obj = {};
-                        var idAlbum = $(this).find('a.js-product').attr('id');
-
-                        var encontrado = false;
-                        var indexEncontrado = -1;
-                       
-                        $.each(discos, function(index,value){
-                            if (value.id == idAlbum){
-                               indexEncontrado = index;
-                               encontrado = true;
-                               return false;
-                            }
-                        });
-
-                        var precio = $(this).find('a.buy-button span').text()
-                                        .replace("€", "")
-                                        .replace("£", "")
-                                        .replace("zł", "")
-                                        .replace(".", ",");
-
-                        var precioObj = {
-                            url: resultado.url + $(this).find('a.js-product').attr('href')
-                           ,price: getPrice(precio, resultado.text).replace(".", ",")
-                           ,priceInt: getPrice(precio, resultado.text)
-                           ,currency: "€"
-                           ,text: resultado.text
-                        };
-
-                        if (encontrado){
-                          discos[indexEncontrado].prices.push(precioObj);
-
-                          if (parseFloat(discos[indexEncontrado].minPrice) > parseFloat(precioObj.priceInt)){
-                            discos[indexEncontrado].minPrice = precioObj.priceInt;
-                          }
-
-                        }
-                        else{
-
-                          obj.id = idAlbum;
-                          obj.image = $(this).find('img').attr('src');
-                          obj.title = $(this).find('p.product_title').text();
-                          obj.from = $(this).find('p.product_from').text();
-                          obj.type = $(this).find('p.product_type').text();
-                          obj.prices = []
-                          obj.prices.push(precioObj)
-                          obj.minPrice = precioObj.priceInt;
-                          discos.push(obj);
-                        
-                        }
-                  });
-                 
-                });
-
-                limiteAlcanzado = discos.length > 100;
-
-                if (nextUrlDodax.length > 0){
-                  getAlbums(nextUrlDodax, cadenaBusqueda, items + 12);
-                }
-                else {
-                  if (discos.length == 0)
-                    $("div.noresult").show();
-                  else {
-                    $("div.noresult").hide();
-                    debugger;
-                    $.each(discos, function(index, value){
-                        var $base = $(".base").clone().removeClass("base").addClass("resultados-items");
-                              $base.find("p.album").html("<span style='padding-right:4px;'>" + value.title + "</span>" + (value.type !== "" ? "<span class='tag is-info is-rounded'>"+ value.type + "</span>" : ""));
-                              $base.find("p.artist").text(value.from);
-                              $base.find("img.cover").attr("src", value.image);
-                              $.each(value.prices, function(index, value2){
-                                $base.find("table tbody").append("<tr><td>" + value2.text + "</td><td><a target='_blank' href='"+ value2.url + "'>" + value2.price + " " + value2.currency + "</a></td><td>"+ (value2.priceInt === value.minPrice ? "<i class='fas fa-star has-text-info	'></i>": "") +"</td></div>");
-                              });
-                              $(".resultados").append($base);
-                    });
-                  }
-                  showSpinner(false);             
-                }
-
-            });
-        }
-
-        $( document ).ready(function() {
-
-          getCurrencyRates()
+        return getDodaxAlbums(urlCompleta)
           .then((salida) => {
-             rates = salida;
+
+            const $lineas = $(salida, ownerDocument).find("div.product");
+            urlDodax.html = $lineas;
+
+            return urlDodax;
           });
+
+      })
+
+      return Promise.all(requests)
+    }
+    var discos = []
+    var rates = null;
+    var limiteAlcanzado = false;
+
+    const getAlbums = function (urlsDodax, cadenaBusqueda, items) {
+
+      getDodaxSitesAlbums(urlsDodax, cadenaBusqueda, items)
+        .then(content => {
+
+          var nextUrlDodax = [];
+
+          content.forEach(resultado => {
+
+            if (resultado.html.length == 12 && !limiteAlcanzado) {
+              nextUrlDodax.push(resultado);
+            }
+
+            resultado.html.each(function () {
+
+              var obj = {};
+              var idAlbum = $(this).find('a.js-product').attr('id');
+
+              var encontrado = false;
+              var indexEncontrado = -1;
+
+              $.each(discos, function (index, value) {
+                if (value.id == idAlbum) {
+                  indexEncontrado = index;
+                  encontrado = true;
+                  return false;
+                }
+              });
+
+              var precio = $(this).find('a.buy-button span').text()
+                .replace("€", "")
+                .replace("£", "")
+                .replace("zł", "")
+                .replace(".", ",");
+
+              var precioObj = {
+                url: resultado.url + $(this).find('a.js-product').attr('href'),
+                price: getPrice(precio, resultado.text).replace(".", ","),
+                priceInt: getPrice(precio, resultado.text),
+                currency: "€",
+                text: resultado.text
+              };
+
+              if (encontrado) {
+                discos[indexEncontrado].prices.push(precioObj);
+
+                if (parseFloat(discos[indexEncontrado].minPrice) > parseFloat(precioObj.priceInt)) {
+                  discos[indexEncontrado].minPrice = precioObj.priceInt;
+                }
+
+              } else {
+
+                obj.id = idAlbum;
+                obj.image = $(this).find('img').attr('src');
+                obj.title = $(this).find('p.product_title').text();
+                obj.from = $(this).find('p.product_from').text();
+                obj.type = $(this).find('p.product_type').text();
+                obj.prices = []
+                obj.prices.push(precioObj)
+                obj.minPrice = precioObj.priceInt;
+                discos.push(obj);
+
+              }
+            });
+
+          });
+
+          limiteAlcanzado = discos.length > 100;
+
+          if (nextUrlDodax.length > 0) {
+            getAlbums(nextUrlDodax, cadenaBusqueda, items + 12);
+          } else {
+            if (discos.length == 0)
+              $("div.noresult").show();
+            else {
+              $("div.noresult").hide();
+              debugger;
+              $.each(discos, function (index, value) {
+                var $base = $(".base").clone().removeClass("base").addClass("resultados-items");
+                $base.find("p.album").html("<span style='padding-right:4px;'>" + value.title + "</span>" + (
+                    value.type !== "" ? "<span class='tag is-info is-rounded'>" + value.type + "</span>" : ""
+                    ));
+                $base.find("p.artist").text(value.from);
+                $base.find("img.cover").attr("src", value.image);
+                $.each(value.prices, function (index, value2) {
+                  $base.find("table tbody").append("<tr><td>" + value2.text +
+                    "</td><td><a target='_blank' href='" + value2.url + "'>" + value2.price + " " + value2
+                    .currency + "</a></td><td>" + (value2.priceInt === value.minPrice ?
+                      "<i class='fas fa-star has-text-info	'></i>" : "") + "</td></div>");
+                });
+                $(".resultados").append($base);
+              });
+            }
+            showSpinner(false);
+          }
+
         });
+    }
 
-        $("#formulario").submit(function( event ) {
+    $(document).ready(function () {
 
-            var cadenaBusqueda = $("#search").val().replace(/ /g, '+');
-
-            //Como mínimo 6 caracteres de búsqueda.
-            if (cadenaBusqueda.length < 1)
-              return false;
-
-            showSpinner(true);
-
-            $("div.noresult").hide();
-            $(".resultados").hide();
-            $(".resultados-items").remove();
-            discos = [];
-            limiteAlcanzado = false;
-            getAlbums(urlsDodax, cadenaBusqueda, 0);
-    
-            $(".resultados").show();
-            event.preventDefault();
+      getCurrencyRates()
+        .then((salida) => {
+          rates = salida;
         });
+    });
 
-    </script>
+    $("#formulario").submit(function (event) {
+
+      var cadenaBusqueda = $("#search").val().replace(/ /g, '+');
+
+      //Como mínimo 6 caracteres de búsqueda.
+      if (cadenaBusqueda.length < 1)
+        return false;
+
+      showSpinner(true);
+
+      $("div.noresult").hide();
+      $(".resultados").hide();
+      $(".resultados-items").remove();
+      discos = [];
+      limiteAlcanzado = false;
+      getAlbums(urlsDodax, cadenaBusqueda, 0);
+
+      $(".resultados").show();
+      event.preventDefault();
+    });
+  </script>
 </body>
+</html>
