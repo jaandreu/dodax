@@ -105,9 +105,12 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
   </script>
+  
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  
   <script>
 
+    //Método que muestra u oculta el frame de buscando.
     const showSpinner = function (show) {
       if (show)
         $("div.pageloader").addClass("is-active");
@@ -115,6 +118,7 @@
         $("div.pageloader").removeClass("is-active");
     }
 
+    //Listado de servidores a los que consultaremos.
     var urlsDodax = [{
       text: "DE",
       url: "https://www.dodax.de",
@@ -149,9 +153,11 @@
       params: "/nl-nl/search/?s="
     }]
 
+    //Proxy para evitar el CORS
     const proxyurl = window.location.host.includes('netlify') ? "https://dodax-proxy.herokuapp.com/" : "https://cors-anywhere.herokuapp.com/";
     const ownerDocument = document.implementation.createHTMLDocument('virtual');
-
+    
+    //Obtiene un JSON con los rates de las monedas en base al EUR.
     const getCurrencyRates = async (url) => {
 
       let response = await fetch("https://api.exchangeratesapi.io/latest");
@@ -160,16 +166,7 @@
 
     }
 
-    //Devuelve la información de los albums de una url de Dodax.
-    const getDodaxAlbums = async (url) => {
-
-      console.log("Conectando:" + url);
-      let response = await fetch(url);
-      let data = await response.text();
-      return data;
-
-    }
-
+    //Obtiene un importe en euros.
     const getPrice = function (price, codigo) {
       if (rates != null) {
 
@@ -189,6 +186,7 @@
       return salida;
     }
 
+    //Obtiene el caracter de moneda en función del código de pais.
     const getCurrency = function (codigo) {
       var salida = "€";
       switch (codigo) {
@@ -203,6 +201,16 @@
 
       }
       return salida;
+    }
+  
+    //Devuelve la información de los albums de una url de Dodax.
+    const getDodaxAlbums = async (url) => {
+
+      console.log("Conectando:" + url);
+      let response = await fetch(url);
+      let data = await response.text();
+      return data;
+
     }
 
     //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
@@ -231,10 +239,13 @@
 
       return Promise.all(requests)
     }
+
+    //Variables globales.
     var discos = []
     var rates = null;
     var limiteAlcanzado = false;
 
+    //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
     const getAlbums = function (urlsDodax, cadenaBusqueda, items) {
 
       getDodaxSitesAlbums(urlsDodax, cadenaBusqueda, items)
@@ -363,5 +374,6 @@
       event.preventDefault();
     });
   </script>
+
 </body>
 </html>
