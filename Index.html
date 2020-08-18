@@ -275,14 +275,7 @@
 
       const requests = urls.map((urlDodax) => {
 
-
-        if (urlDodax.text === "ES")
-          cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINYL", "VINILO");
-        else
-          cadenaBusqueda = cadenaBusqueda.toUpperCase().replace("VINILO", "VINYL");
-
-        const urlCompleta = proxyurl + urlDodax.url + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" +
-          items;
+     const urlCompleta = proxyurl + urlDodax.url + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" + items;
 
         return getDodaxAlbums(urlCompleta)
           .then((salida) => {
