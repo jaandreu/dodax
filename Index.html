@@ -463,11 +463,11 @@
                           .replace(" LP","")
                           .replace("CD ", "")
                           .replace("LP ","")
-                          .replace(/ /g, '+')
-                          .trim();
+                          .trim()
+                          .replace(/ /g, '+');
 
       //Como mínimo 6 caracteres de búsqueda.
-      if (cadenaBusqueda.length < 1)
+      if (cadenaBusqueda.length < 2)
         return false;
 
       sessionStorage.setItem('lastSearch', cadenaBusqueda);
