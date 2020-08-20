@@ -47,7 +47,9 @@
          border-color: transparent;
          color: #fff;
       }
-
+      tr.best-price {
+        background-color:hsl(282, 100%, 95%);
+      }
     </style>
 
 </head>
@@ -423,7 +425,10 @@
                   disco.prices.forEach(price => {
 
                       var trElement = document.createElement("tr");
-
+                      
+                      if (price.priceInt === disco.minPrice){
+                        trElement.classList.add("best-price");
+                      }
                       trElement.innerHTML = "<td>" + price.text + "</td>" 
                                           + "<td><a href='" + price.url + "'>" + price.price + " " + price.currency + "</a></td>"
                                           + "<td>"+ price.priceOriginal +"</td>"
