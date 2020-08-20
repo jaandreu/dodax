@@ -514,6 +514,7 @@
     document.getElementById("button-more").addEventListener('click', function(){
 
       if (nextUrlDodax.length > 0){
+        showSpinner(true);
         discos = [];
         itemsActual = itemsActual + 12;
         getAlbums(nextUrlDodax, cadenaBusquedaActual, itemsActual);
