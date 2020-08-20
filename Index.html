@@ -64,6 +64,9 @@
               <div class="column">
                 <form id="formulario" method='GET' action='javascript:void(0); return false;'>
                   <div class="field has-addons">
+                    <div class="control">
+                      <button id="i-times" type="button" class="button is-large"> <i class="fas fa-times"></i></button>
+                    </div>
                     <div class="control flexgrow">
                       <input class="input is-large is-info is-expanded" id="search" type="text"
                         placeholder="last shadow puppets ..." style="text-transform:uppercase">
@@ -335,6 +338,7 @@
                  .replace(" ", "")
                  .replace(String.fromCharCode(160), "")
                  .replace("&nbsp;", "");
+
                //Código de barras.
                var gtin =  (album.getElementsByClassName('buy-button')[0]).getAttribute('onmousedown');
                //Url del detalle del disco.
@@ -342,6 +346,7 @@
 
                var encontrado = false;
                var indexEncontrado = -1;
+
                //Vemos si hemos entrado el album en otra llamada anterior (otro país)
                discos.forEach((disco, index) => {
                   if (disco.id === idAlbum){
@@ -469,6 +474,10 @@
         document.getElementById("search").value = lastSearch;
       }
 
+    });
+
+    document.getElementById("i-times").addEventListener('click', function(){
+      document.getElementById("search").value = "";
     });
 
     document.getElementById("formulario").addEventListener('submit', function(){
