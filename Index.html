@@ -87,6 +87,11 @@
 
     <!-- Container para las fichas de resultados.-->
     <div class="container">
+    <!--Mensaje para no se han encontrado datos-->
+    <div style="display:none" id="div-error" class="notification is-danger">
+      Ha fallado la conexión con alguno de los servidores, repita la búsqueda
+    </div>
+      
       <div id="div-resultados" class="columns resultados is-multiline">
         <div id="div-base" class=" base column is-one-quarter is-half-tablet">
           <div class="card">
@@ -236,10 +241,9 @@
     //Obtiene un JSON con los rates de las monedas en base al EUR.
     const getCurrencyRates = async (url) => {
 
-      let response = await fetch("https://api.exchangeratesapi.io/latest");
-      let data = await response.json();
-      return data;
-
+        let response = await fetch("https://api.exchangeratesapi.io/latest");
+        let data = await response.json();
+        return data;
     }
 
     //Obtiene un importe en euros.
@@ -285,9 +289,13 @@
       console.log("Conectando:" + url);
       console.time("FETCH");
       let response = await fetch(url);
-      let data = await response.text();
+      let data = await response.text()
       console.timeEnd("FETCH");
-      return data;
+
+      return {
+           status: response.status
+          ,data: data
+      };
 
     }
 
@@ -300,12 +308,14 @@
 
         return getDodaxAlbums(urlCompleta)
           .then((salida) => {
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(salida, "text/html");
-            urlDodax.listaAlbums = doc.getElementsByClassName('product');
+
+              var parser = new DOMParser();
+              var doc = parser.parseFromString(salida.data, "text/html");
+              urlDodax.listaAlbums = doc.getElementsByClassName('product');
+              urlDodax.error = (salida.status !== 200 ? salida.data : "");
+
             return urlDodax;
           });
-
       })
 
       return Promise.all(requests)
@@ -326,6 +336,11 @@
 
           content.forEach(resultado => {
 
+            if (resultado.error !== ""){
+              console.log(resultado.error);
+              showElement("div-error");
+            }
+            
             if (resultado.listaAlbums.length == 12 && !limiteAlcanzado) {
               nextUrlDodax.push(resultado);
             }
@@ -502,6 +517,7 @@
       showSpinner(true);
 
       hideElement("div-info")
+      hideElement("div-error")
       hideElement("div-noresult");
       hideElement("div-resultados");
 
