@@ -121,6 +121,13 @@
         </div>
       </div>
 
+      <!-- Botón para obtener más resultados.-->
+      <div id="div-button-more" style="display: none" class="columns">
+        <div class="column">
+           <button id="button-more" class="button is-info is-fullwidth is-outlined">Más resultados</button>
+        </div>
+      </div>
+
       <!-- Cuadro de ayuda-->
       <article id="div-info" class="message is-info">
         <div class="message-header">
@@ -325,6 +332,9 @@
     var discos = []
     var rates = null;
     var limiteAlcanzado = false;
+    var itemsActual = 0;
+    var nextUrlDodax = [];
+    var cadenaBusquedaActual = "";
 
     //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
     const getAlbums = function (urlsDodax, cadenaBusqueda, items) {
@@ -332,7 +342,8 @@
       getDodaxSitesAlbums(urlsDodax, cadenaBusqueda, items)
         .then(content => {
 
-          var nextUrlDodax = [];
+          //var nextUrlDodax = [];
+          nextUrlDodax = [];
 
           content.forEach(resultado => {
 
@@ -343,6 +354,10 @@
             
             if (resultado.listaAlbums.length == 12 && !limiteAlcanzado) {
               nextUrlDodax.push(resultado);
+              showElement("div-button-more");
+            }
+            else{
+              hideElement("div-button-more");
             }
             Array.from(resultado.listaAlbums).forEach(album => {
 
@@ -420,10 +435,10 @@
 
           limiteAlcanzado = items === 36; //discos.length > 50;
 
-          if (nextUrlDodax.length > 0) {
+          /*if (nextUrlDodax.length > 0) {
             getAlbums(nextUrlDodax, cadenaBusqueda, items + 12);
           } else {
-
+          */    
             if (discos.length == 0)
               showElement("div-noresult");
             else {
@@ -474,7 +489,7 @@
             sessionStorage.setItem('lastSearchResult', htmlToSave);
 
             showSpinner(false);
-          }
+        //  }
 
         });
     }
@@ -496,7 +511,17 @@
 
     });
 
-      document.getElementById("formulario").addEventListener('submit', function(){
+    document.getElementById("button-more").addEventListener('click', function(){
+
+      if (nextUrlDodax.length > 0){
+        discos = [];
+        itemsActual = itemsActual + 12;
+        getAlbums(nextUrlDodax, cadenaBusquedaActual, itemsActual);
+      }
+    
+    });
+    
+    document.getElementById("formulario").addEventListener('submit', function(){
 
       cadenaBusqueda = document.getElementById("search").value
                           .toUpperCase()
@@ -526,7 +551,9 @@
       });
 
       discos = [];
+      var itemsActual = 0;
       limiteAlcanzado = false;
+      cadenaBusquedaActual = cadenaBusqueda;
       getAlbums(urlsDodax, cadenaBusqueda, 0);
       showElement("div-resultados");
 
