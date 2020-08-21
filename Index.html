@@ -54,6 +54,7 @@
 
 </head>
 <body class="has-navbar-fixed-top">
+
   <!--Navbar (buscador)-->
   <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-menu is-active">
@@ -80,6 +81,7 @@
       </div>
     </div>
   </nav>
+
   <!-- Loading -->
   <div id="div-pageloader" class="pageloader"><span class="title">Buscando...</span></div>
 
@@ -87,11 +89,8 @@
 
     <!-- Container para las fichas de resultados.-->
     <div class="container">
-    <!--Mensaje para no se han encontrado datos-->
-    <div style="display:none" id="div-error" class="notification is-danger">
-      Ha fallado la conexión con alguno de los servidores, repita la búsqueda
-    </div>
-      
+   
+      <!-- Resultados -->
       <div id="div-resultados" class="columns resultados is-multiline">
         <div id="div-base" class=" base column is-one-quarter is-half-tablet">
           <div class="card">
@@ -120,11 +119,16 @@
           </div>
         </div>
       </div>
+      
+      <!--Mensaje para no se han encontrado datos-->
+      <div style="display:none" id="div-error" class="notification is-danger">
+        Ha fallado la conexión con alguno de los servidores, repita la búsqueda
+      </div>
 
       <!-- Botón para obtener más resultados.-->
       <div id="div-button-more" style="display: none" class="columns">
         <div class="column">
-           <button id="button-more" class="button is-info is-fullwidth is-outlined">Más resultados</button>
+            <button id="button-more" class="button is-info is-fullwidth is-outlined">Más resultados</button>
         </div>
       </div>
 
@@ -244,7 +248,6 @@
        }
     }
 
-
     //Obtiene un JSON con los rates de las monedas en base al EUR.
     const getCurrencyRates = async (url) => {
 
@@ -306,6 +309,85 @@
 
     }
 
+    const updateBestsPrices = function(idAlbum, minPrice){
+
+       var fichaAlbum = document.getElementById(idAlbum);
+
+       Array.from(fichaAlbum.getElementsByClassName('tr-albumprice')).forEach(tr => {
+          if (tr.getAttribute('price-int') === minPrice){
+              tr.classList.add('best-price');
+              (tr.getElementsByClassName("td-albumminprice")[0]).innerHTML = "<i class='fas fa-star has-text-info''></i>";
+          }
+          else{
+            tr.classList.remove('best-price');
+            (tr.getElementsByClassName("td-albumminprice")[0]).innerHTML = "";
+          }
+          
+       });
+
+    }
+    const setHTMLPrice = function(idAlbum, price){
+        
+         var ficha = document.getElementById(idAlbum);
+         var minPrice = parseFloat(ficha.getAttribute('min-price'));
+
+         var idPrecio = price.text + "-" + idAlbum;
+         var trElement = document.getElementById(idPrecio);
+         trElement.setAttribute('price-int', price.priceInt);
+         trElement.classList.add('tr-albumprice');
+
+         document.getElementById(idPrecio + "-PRICE").innerHTML = "<a href='" + price.url + "'>" + price.price + " " + price.currency + "</a>"
+         document.getElementById(idPrecio + "-ORIGINALPRICE").innerText = price.priceOriginal;
+
+         if (parseFloat(minPrice) >= parseFloat(price.priceInt)) {
+             ficha.setAttribute("min-price", price.priceInt);
+             updateBestsPrices(idAlbum, price.priceInt);
+         }
+
+                // if (gtin != null && discos[indexEncontrado].gtin === ""){
+                //   discos[indexEncontrado].gtin = gtin.replace("RetailRocket.addToCartRetailRocket('", "").replace("');", "");
+                // }
+
+    }
+
+    //Establece el HTML de un disco completo.
+    const setHTMLAlbum = function(disco){
+
+      var parser = new DOMParser();
+      var base = parser.parseFromString(document.getElementById("div-base").outerHTML, "text/html");
+
+      base.getElementById("div-base").setAttribute("id", disco.id);
+      base.getElementById(disco.id).classList.remove('base');
+      base.getElementById(disco.id).classList.add("resultados-items");
+      base.getElementById(disco.id).setAttribute("min-price",disco.price.priceInt);
+
+      base.getElementById("p-album").innerHTML = 
+          "<span style='padding-right:4px;'>" + disco.title + "</span>" 
+        + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "")
+        + (disco.gtin !== "" ? "<span class='discogs'><a href='https://www.discogs.com/search/?q=" + disco.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : "");
+
+      base.getElementById("p-artist").innerText = disco.from;
+      base.getElementById("img-cover").setAttribute("src", disco.image);
+
+      urlsDodax.forEach(url => {
+
+        var idPrecio = url.text + "-" + disco.id;
+        var trElement = document.createElement("tr");
+        trElement.setAttribute("id", idPrecio);
+
+        trElement.innerHTML = "<td>" + url.text + "</td>" 
+                            + "<td id='" + idPrecio + "-PRICE'>--</td>"
+                            + "<td id='" + idPrecio + "-ORIGINALPRICE'></td>"
+                            + "<td class='td-albumminprice' id='" + idPrecio + "-MINPRICE'></td>";
+
+        base.getElementById("table-precios-body").appendChild(trElement);
+
+      })
+
+      document.getElementById("div-resultados").appendChild(base.getElementById(disco.id));
+      setHTMLPrice(disco.id, disco.price)
+    }
+
     //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
     const getDodaxSitesAlbums = async (urls, cadenaBusqueda, items) => {
 
@@ -329,9 +411,7 @@
     }
 
     //Variables globales.
-    var discos = []
     var rates = null;
-    var limiteAlcanzado = false;
     var itemsActual = 0;
     var nextUrlDodax = [];
     var cadenaBusquedaActual = "";
@@ -342,7 +422,6 @@
       getDodaxSitesAlbums(urlsDodax, cadenaBusqueda, items)
         .then(content => {
 
-          //var nextUrlDodax = [];
           nextUrlDodax = [];
 
           content.forEach(resultado => {
@@ -352,16 +431,16 @@
               showElement("div-error");
             }
             
-            if (resultado.listaAlbums.length == 12 && !limiteAlcanzado) {
+            if (resultado.listaAlbums.length == 12) {
               nextUrlDodax.push(resultado);
               showElement("div-button-more");
             }
             else{
               hideElement("div-button-more");
             }
+
             Array.from(resultado.listaAlbums).forEach(album => {
 
-               var obj = {};
                //Identificador del album
                var idAlbum = (album.getElementsByClassName('js-product')[0]).getAttribute('id');
                //Precio del disco.
@@ -378,19 +457,9 @@
                var gtin =  (album.getElementsByClassName('buy-button')[0]).getAttribute('onmousedown');
                //Url del detalle del disco.
                var urlRelativa = (album.getElementsByClassName('js-product')[0]).getAttribute('href');
-
-               var encontrado = false;
-               var indexEncontrado = -1;
-
-               //Vemos si hemos entrado el album en otra llamada anterior (otro país)
-               discos.forEach((disco, index) => {
-                  if (disco.id === idAlbum){
-                   indexEncontrado = index;
-                   encontrado = true;
-                   return false;
-                  }
-               });
-
+               //Existe ya la ficha?
+               var encontrado = document.getElementById(idAlbum) != null;
+               //Datos del precio.
                var precioObj = {
                  url: resultado.url + urlRelativa,
                  price: getPrice(precio, resultado.text).replace(".", ","),
@@ -400,30 +469,28 @@
                  text: resultado.text,
                };
 
+
               if (encontrado) {
-                discos[indexEncontrado].prices.push(precioObj);
+                setHTMLPrice(idAlbum, precioObj)
 
-                if (gtin != null && discos[indexEncontrado].gtin === ""){
-                  discos[indexEncontrado].gtin = gtin.replace("RetailRocket.addToCartRetailRocket('", "").replace("');", "");
-                }
-
-                if (parseFloat(discos[indexEncontrado].minPrice) > parseFloat(precioObj.priceInt)) {
-                  discos[indexEncontrado].minPrice = precioObj.priceInt;
-                }
+                // if (gtin != null && discos[indexEncontrado].gtin === ""){
+                //   discos[indexEncontrado].gtin = gtin.replace("RetailRocket.addToCartRetailRocket('", "").replace("');", "");
+                // }
 
               } else {
 
+                //El disco no está cargado en la página.  
+                var obj = {};
                 obj.id = idAlbum;
                 obj.image =  (album.getElementsByTagName('img')[0]).getAttribute('src');
                 obj.title = (album.getElementsByClassName('product_title')[0]).innerText;
                 obj.from = (album.getElementsByClassName('product_from')[0]).innerText;
                 obj.type = (album.getElementsByClassName('product_type')[0]).innerText;
-                obj.prices = []
-                obj.prices.push(precioObj)
+                obj.price = precioObj;
                 obj.minPrice = precioObj.priceInt;
                 obj.gtin = gtin != null ? gtin.replace("RetailRocket.addToCartRetailRocket('", "").replace("');", "") : "";
 
-                discos.push(obj);
+                setHTMLAlbum(obj);
 
               }
 
@@ -433,63 +500,10 @@
 
           });
 
-          limiteAlcanzado = items === 36; //discos.length > 50;
-
-          /*if (nextUrlDodax.length > 0) {
-            getAlbums(nextUrlDodax, cadenaBusqueda, items + 12);
-          } else {
-          */    
-            if (discos.length == 0)
-              showElement("div-noresult");
-            else {
-
-              hideElement("div-noresult");
-
-              discos.forEach(disco => {
-                  
-                  var parser = new DOMParser();
-                  var base = parser.parseFromString(document.getElementById("div-base").outerHTML, "text/html");
-
-                  //var base = document.getElementById("div-base").cloneNode(true);
-                  base.getElementById("div-base").classList.remove('base');
-                  base.getElementById("div-base").classList.add("resultados-items");
-
-                  base.getElementById("p-album").innerHTML = 
-                      "<span style='padding-right:4px;'>" + disco.title + "</span>" 
-                    + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "")
-                    + (disco.gtin !== "" ? "<span class='discogs'><a href='https://www.discogs.com/search/?q=" + disco.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : "");
-
-                  base.getElementById("p-artist").innerText = disco.from;
-                  base.getElementById("img-cover").setAttribute("src", disco.image);
-
-                  disco.prices.forEach(price => {
-
-                      var trElement = document.createElement("tr");
-                      
-                      if (price.priceInt === disco.minPrice){
-                        trElement.classList.add("best-price");
-                      }
-                      trElement.innerHTML = "<td>" + price.text + "</td>" 
-                                          + "<td><a href='" + price.url + "'>" + price.price + " " + price.currency + "</a></td>"
-                                          + "<td>"+ price.priceOriginal +"</td>"
-                                          + "<td>" + (price.priceInt === disco.minPrice ? "<i class='fas fa-star has-text-info	'></i>" : "") + "</td>";
-
-                      base.getElementById("table-precios-body").appendChild(trElement);
-
-                  });
-
-                  document.getElementById("div-resultados").appendChild(base.getElementById("div-base"));
-              });
-
-   
-            }
-
-            var htmlToSave = document.getElementById("div-resultados").innerHTML;
-
-            sessionStorage.setItem('lastSearchResult', htmlToSave);
-
-            showSpinner(false);
-        //  }
+          hideElement("div-noresult");
+          var htmlToSave = document.getElementById("div-resultados").innerHTML;
+          sessionStorage.setItem('lastSearchResult', htmlToSave);
+          showSpinner(false);
 
         });
     }
@@ -500,6 +514,7 @@
         .then((salida) => {
           rates = salida;
         });
+
       //última búsqueda
       var lastSearchResult = sessionStorage.getItem('lastSearchResult');
       var lastSearch = sessionStorage.getItem('lastSearch');
@@ -515,7 +530,6 @@
 
       if (nextUrlDodax.length > 0){
         showSpinner(true);
-        discos = [];
         itemsActual = itemsActual + 12;
         getAlbums(nextUrlDodax, cadenaBusquedaActual, itemsActual);
       }
@@ -551,9 +565,7 @@
           element.parentNode.removeChild(element);
       });
 
-      discos = [];
       itemsActual = 0;
-      limiteAlcanzado = false;
       cadenaBusquedaActual = cadenaBusqueda;
       getAlbums(urlsDodax, cadenaBusqueda, 0);
       showElement("div-resultados");
