@@ -419,15 +419,13 @@
     var cadenaBusquedaActual = "";
 
     //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
-    const getAlbums = function (urlsDodax, cadenaBusqueda, items) {
-
-      var salida = false;
+    const getAlbums = function (urlsDodax, cadenaBusqueda, items, firstCall) {
 
       getDodaxSitesAlbums(urlsDodax, cadenaBusqueda, items)
         .then(content => {
 
           nextUrlDodax = [];
-
+          var hayResultados = false;
           content.forEach(resultado => {
 
             //Si ha habido un error mostramos el mensaje pero procesamos la respuesta.
@@ -446,7 +444,7 @@
 
             Array.from(resultado.listaAlbums).forEach(album => {
 
-               salida = true;
+               hayResultados = true;
 
                //Identificador del album
                var idAlbum = (album.getElementsByClassName('js-product')[0]).getAttribute('id');
@@ -501,13 +499,16 @@
 
           });
 
+          if (firstCall && !hayResultados){
+            showElement("div-noresult");
+          }
+          
           var htmlToSave = document.getElementById("div-resultados").innerHTML;
           sessionStorage.setItem('lastSearchResult', htmlToSave);
           showSpinner(false);
 
         });
 
-        return salida;
     }
 
     document.addEventListener("DOMContentLoaded", function(event) { 
@@ -533,7 +534,7 @@
       if (nextUrlDodax.length > 0){
         showSpinner(true);
         itemsActual = itemsActual + 12;
-        getAlbums(nextUrlDodax, cadenaBusquedaActual, itemsActual);
+        getAlbums(nextUrlDodax, cadenaBusquedaActual, itemsActual, false);
       }
     
     });
@@ -571,15 +572,8 @@
 
       itemsActual = 0;
       cadenaBusquedaActual = cadenaBusqueda;
-      
-      if (getAlbums(urlsDodax, cadenaBusqueda, 0)) {
-        showElement("div-resultados");
-      }
-      else 
-      {  
-        showElement("div-noresult");
-      }
-
+      getAlbums(urlsDodax, cadenaBusqueda, 0, true);
+      showElement("div-resultados");
 
       event.preventDefault();
 
