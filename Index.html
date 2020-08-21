@@ -128,10 +128,15 @@
       <!-- Botón para obtener más resultados.-->
       <div id="div-button-more" style="display: none" class="columns">
         <div class="column">
-            <button id="button-more" class="button is-info is-fullwidth is-outlined">Más resultados</button>
+            <button id="button-more" class="button is-info is-fullwidth is-outlined">
+              <span class="icon is-small">
+                <i class="fas fa-caret-down"></i>
+              </span>
+              <span>Más resultados</span>
+            </button>
         </div>
       </div>
-
+        
       <!-- Cuadro de ayuda-->
       <article id="div-info" class="message is-info">
         <div class="message-header">
@@ -414,9 +419,6 @@
 
     //Variables globales.
     var rates = null;
-    var itemsActual = 0;
-    var nextUrlDodax = [];
-    var cadenaBusquedaActual = "";
 
     //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
     const getAlbums = function (urlsDodax, cadenaBusqueda, items, firstCall) {
@@ -424,8 +426,9 @@
       getDodaxSitesAlbums(urlsDodax, cadenaBusqueda, items)
         .then(content => {
 
-          nextUrlDodax = [];
           var hayResultados = false;
+          var mostrarMasResultados = false;
+
           content.forEach(resultado => {
 
             //Si ha habido un error mostramos el mensaje pero procesamos la respuesta.
@@ -435,11 +438,7 @@
             }
             
             if (resultado.listaAlbums.length == 12) {
-              nextUrlDodax.push(resultado);
-              showElement("div-button-more");
-            }
-            else{
-              hideElement("div-button-more");
+              mostrarMasResultados = true;
             }
 
             Array.from(resultado.listaAlbums).forEach(album => {
@@ -502,7 +501,16 @@
           if (firstCall && !hayResultados){
             showElement("div-noresult");
           }
-          
+
+          if (mostrarMasResultados){
+            showElement("div-button-more");
+            sessionStorage.setItem("moreItems", "1");
+          }
+          else{
+            hideElement("div-button-more");
+            sessionStorage.setItem("moreItems", "0");
+          }
+
           var htmlToSave = document.getElementById("div-resultados").innerHTML;
           sessionStorage.setItem('lastSearchResult', htmlToSave);
           showSpinner(false);
@@ -525,18 +533,21 @@
       if (lastSearchResult != null){
         document.getElementById("div-resultados").innerHTML = lastSearchResult;
         document.getElementById("search").value = lastSearch;
+        hideElement("div-info")
+        if (sessionStorage.getItem("moreItems") === "1"){
+            showElement("div-button-more");
+        }
+    
       }
 
     });
 
     document.getElementById("button-more").addEventListener('click', function(){
-
-      if (nextUrlDodax.length > 0){
         showSpinner(true);
-        itemsActual = itemsActual + 12;
-        getAlbums(nextUrlDodax, cadenaBusquedaActual, itemsActual, false);
-      }
-    
+        var itemsActual = parseInt(sessionStorage.getItem("lastSearchIndex")) + 12;
+        var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
+        getAlbums(urlsDodax, cadenaBusquedaActual, itemsActual, false);
+        sessionStorage.setItem("lastSearchIndex", itemsActual)
     });
     
     document.getElementById("formulario").addEventListener('submit', function(){
@@ -570,8 +581,7 @@
           element.parentNode.removeChild(element);
       });
 
-      itemsActual = 0;
-      cadenaBusquedaActual = cadenaBusqueda;
+      sessionStorage.setItem("lastSearchIndex", "0");
       getAlbums(urlsDodax, cadenaBusqueda, 0, true);
       showElement("div-resultados");
 
