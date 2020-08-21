@@ -408,6 +408,8 @@
               var parser = new DOMParser();
               var doc = parser.parseFromString(salida.data, "text/html");
               urlDodax.listaAlbums = doc.getElementsByClassName('product');
+              var nextUrlElement = doc.getElementsByClassName('related_list')[0];
+              urlDodax.nextUrl = nextUrlElement != null ? nextUrlElement.getAttribute('data-scroller-next-url') : null;
               urlDodax.error = (salida.status !== 200 ? salida.data : "");
 
             return urlDodax;
@@ -437,7 +439,7 @@
               showElement("div-error");
             }
             
-            if (resultado.listaAlbums.length == 12) {
+            if (resultado.nextUrl != null) {
               mostrarMasResultados = true;
             }
 
