@@ -30,7 +30,7 @@
       div.navbar-menu {
         background-color: hsl(198, 100%, 21%);
       }
-      span.discogs {
+      span.actions  {
         vertical-align: middle;
         padding-left: 2px;
       }
@@ -371,7 +371,8 @@
       base.getElementById("p-album").innerHTML = 
           "<span style='padding-right:4px;'>" + disco.title + "</span>" 
         + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "")
-        + (disco.gtin !== "" ? "<span class='discogs'><a href='https://www.discogs.com/search/?q=" + disco.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : "<span class='discogs'></span>");
+        + "<span class='actions span-update'><a href='#'><i class='fas fa-sync'></i></a></span>"
+        + (disco.gtin !== "" ? "<span class='actions discogs'><a href='https://www.discogs.com/search/?q=" + disco.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : "<span class='discogs'></span>");
 
       base.getElementById("p-artist").innerText = disco.from;
       base.getElementById("img-cover").setAttribute("src", disco.image);
@@ -396,9 +397,9 @@
     }
 
     //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
-    const getDodaxSitesAlbums = async (urls, cadenaBusqueda, items) => {
+    const getDodaxSitesAlbums = async (cadenaBusqueda, items) => {
 
-      const requests = urls.map((urlDodax) => {
+      const requests = urlsDodax.map((urlDodax) => {
 
      const urlCompleta = proxyurl + urlDodax.url + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" + items;
 
@@ -407,12 +408,19 @@
 
               var parser = new DOMParser();
               var doc = parser.parseFromString(salida.data, "text/html");
-              urlDodax.listaAlbums = doc.getElementsByClassName('product');
               var nextUrlElement = doc.getElementsByClassName('related_list')[0];
-              urlDodax.nextUrl = nextUrlElement != null ? nextUrlElement.getAttribute('data-scroller-next-url') : null;
-              urlDodax.error = (salida.status !== 200 ? salida.data : "");
 
-            return urlDodax;
+              return {
+
+                  url : urlDodax.url
+                 ,params: urlDodax.params
+                 ,text: urlDodax.text
+                 ,listaAlbums: doc.getElementsByClassName('product')
+                 ,nextUrl: nextUrlElement != null ? nextUrlElement.getAttribute('data-scroller-next-url') : null
+                 ,error: (salida.status !== 200 ? salida.data : "")
+
+              };
+
           });
       })
 
@@ -423,9 +431,9 @@
     var rates = null;
 
     //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
-    const getAlbums = function (urlsDodax, cadenaBusqueda, items, firstCall) {
+    const getAlbums = function (cadenaBusqueda, items, firstCall) {
 
-      getDodaxSitesAlbums(urlsDodax, cadenaBusqueda, items)
+      getDodaxSitesAlbums(cadenaBusqueda, items)
         .then(content => {
 
           var hayResultados = false;
@@ -545,11 +553,13 @@
     });
 
     document.getElementById("button-more").addEventListener('click', function(){
+
         showSpinner(true);
         var itemsActual = parseInt(sessionStorage.getItem("lastSearchIndex")) + 12;
         var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
-        getAlbums(urlsDodax, cadenaBusquedaActual, itemsActual, false);
+        getAlbums(cadenaBusquedaActual, itemsActual, false);
         sessionStorage.setItem("lastSearchIndex", itemsActual)
+
     });
     
     document.getElementById("formulario").addEventListener('submit', function(){
@@ -584,7 +594,7 @@
       });
 
       sessionStorage.setItem("lastSearchIndex", "0");
-      getAlbums(urlsDodax, cadenaBusqueda, 0, true);
+      getAlbums(cadenaBusqueda, 0, true);
       showElement("div-resultados");
 
       event.preventDefault();
