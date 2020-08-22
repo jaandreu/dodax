@@ -42,6 +42,10 @@
         color: hsl(93, 67%, 38%);
       }
 
+      .update {
+        color: hsl(282, 43%, 54%)
+      }
+
       .button.is-green {
          background-color: hsl(93, 67%, 38%);
          border-color: transparent;
@@ -371,8 +375,8 @@
       base.getElementById("p-album").innerHTML = 
           "<span style='padding-right:4px;'>" + disco.title + "</span>" 
         + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "")
-        + "<span class='actions span-update'><a href='#'><i class='fas fa-sync'></i></a></span>"
-        + (disco.gtin !== "" ? "<span class='actions discogs'><a href='https://www.discogs.com/search/?q=" + disco.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : "<span class='discogs'></span>");
+        + (disco.gtin !== "" ? "<span class='actions discogs'><a href='https://www.discogs.com/search/?q=" + disco.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : "<span class='discogs'></span>")
+        + "<span class='actions span-update'><a href='#'><i class='update fab fa-stumbleupon-circle'></i></a></span>";
 
       base.getElementById("p-artist").innerText = disco.from;
       base.getElementById("img-cover").setAttribute("src", disco.image);
