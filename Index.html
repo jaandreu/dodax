@@ -43,7 +43,7 @@
       }
 
       .update {
-        color: hsl(282, 43%, 54%)
+        color: hsl(93, 67%, 38%);
       }
 
       .button.is-green {
@@ -188,7 +188,7 @@
       url: "https://www.dodax.de",
       params: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
      }
-    , {
+     , {
       text: "AT",
       url: "https://www.dodax.at",
       params: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
@@ -315,6 +315,13 @@
       };
 
     }
+    const updateAlbum = function(idAlbum) {
+
+      showSpinner(true);
+      getAlbums(idAlbum, 0, false, true)
+      console.log(event);
+
+    };
 
     const updateBestsPrices = function(idAlbum, minPrice){
 
@@ -375,8 +382,8 @@
       base.getElementById("p-album").innerHTML = 
           "<span style='padding-right:4px;'>" + disco.title + "</span>" 
         + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "")
-        + (disco.gtin !== "" ? "<span class='actions discogs'><a href='https://www.discogs.com/search/?q=" + disco.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : "<span class='discogs'></span>")
-        + "<span class='actions span-update'><a href='#'><i class='update fab fa-stumbleupon-circle'></i></a></span>";
+        + (disco.gtin !== "" ? "<span class='actions discogs'><a href='https://www.discogs.com/search/?q=" + disco.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : "<span class='actions discogs'></span>")
+        + "<span class='actions span-update'><a id='update-album' onclick='updateAlbum(\""+ disco.id + "\")' href='javascript:void(0);'><i class='update fas fa-sync-alt'></i></a></span>";
 
       base.getElementById("p-artist").innerText = disco.from;
       base.getElementById("img-cover").setAttribute("src", disco.image);
@@ -435,7 +442,7 @@
     var rates = null;
 
     //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
-    const getAlbums = function (cadenaBusqueda, items, firstCall) {
+    const getAlbums = function (cadenaBusqueda, items, firstCall, updateAlbum) {
 
       getDodaxSitesAlbums(cadenaBusqueda, items)
         .then(content => {
@@ -516,17 +523,22 @@
             showElement("div-noresult");
           }
 
-          if (mostrarMasResultados){
-            showElement("div-button-more");
-            sessionStorage.setItem("moreItems", "1");
-          }
-          else{
-            hideElement("div-button-more");
-            sessionStorage.setItem("moreItems", "0");
+          if (!updateAlbum){
+  
+            if (mostrarMasResultados){
+              showElement("div-button-more");
+              sessionStorage.setItem("moreItems", "1");
+            }
+            else{
+              hideElement("div-button-more");
+              sessionStorage.setItem("moreItems", "0");
+            }
+  
+            var htmlToSave = document.getElementById("div-resultados").innerHTML;
+            sessionStorage.setItem('lastSearchResult', htmlToSave);
+
           }
 
-          var htmlToSave = document.getElementById("div-resultados").innerHTML;
-          sessionStorage.setItem('lastSearchResult', htmlToSave);
           showSpinner(false);
 
         });
@@ -561,7 +573,7 @@
         showSpinner(true);
         var itemsActual = parseInt(sessionStorage.getItem("lastSearchIndex")) + 12;
         var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
-        getAlbums(cadenaBusquedaActual, itemsActual, false);
+        getAlbums(cadenaBusquedaActual, itemsActual, false, false);
         sessionStorage.setItem("lastSearchIndex", itemsActual)
 
     });
@@ -598,7 +610,7 @@
       });
 
       sessionStorage.setItem("lastSearchIndex", "0");
-      getAlbums(cadenaBusqueda, 0, true);
+      getAlbums(cadenaBusqueda, 0, true, false);
       showElement("div-resultados");
 
       event.preventDefault();
