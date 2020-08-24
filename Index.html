@@ -122,6 +122,7 @@
             </div>
             <footer class="card-footer">
               <a id='a-discogs' class="discogs card-footer-item" href='javascript:void(0);'><img src="discogs.png"></img></a>
+              <a id='a-amazon' class="amazon card-footer-item" href='javascript:void(0);'><img src="amazon.png"></img></a>
               <a id='update-album' class="card-footer-item" href='javascript:void(0);'><i class='update fas fa-sync-alt'></i></a>
             </footer>
           </div>
@@ -355,6 +356,7 @@
          if (gtinFicha === "" && gtin != ""){
            ficha.setAttribute("gtin-ficha", gtin);
            (ficha.getElementsByClassName("discogs")[0]).setAttribute("href", "https://www.discogs.com/search/?q=" + gtin +"&type=all"); 
+           (ficha.getElementsByClassName("amazon")[0]).setAttribute("href", "https://www.amazon.es/s?k=" + gtin + "&i=popular&ref=nb_sb_noss"); 
          }
 
          var idPrecio = price.text + "-" + idAlbum;
@@ -386,14 +388,13 @@
 
       base.getElementById("p-album").innerHTML = 
           "<span style='padding-right:4px;'>" + disco.title + "</span>" 
-        + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "")
-        //+ (disco.gtin !== "" ? "<span class='actions discogs'><a href='https://www.discogs.com/search/?q=" + disco.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : "<span class='actions discogs'></span>")
-        //+ "<span class='actions span-update'><a id='update-album' onclick='updateAlbum(\""+ disco.id + "\")' href='javascript:void(0);'><i class='update fas fa-sync-alt'></i></a></span>";
+        + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "");
 
       base.getElementById("update-album").setAttribute("onclick", "updateAlbum('"+ disco.id + "')");
 
       if (disco.gtin != ""){
         base.getElementById("a-discogs").setAttribute("href", "https://www.discogs.com/search/?q=" + disco.gtin +"&type=all");
+        base.getElementById("a-amazon").setAttribute("href", "https://www.amazon.es/s?k=" + disco.gtin + "&i=popular&ref=nb_sb_noss");
       }
       base.getElementById("p-artist").innerText = disco.from;
       base.getElementById("img-cover").setAttribute("src", disco.image);
