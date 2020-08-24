@@ -197,7 +197,7 @@
       url: "https://www.dodax.at",
       params: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
     }
-    , {
+/*    , {
       text: "FR",
       url: "https://www.dodax.fr",
       params: "/fr-fr/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
@@ -226,7 +226,7 @@
       text: "NL",
       url: "https://www.dodax.nl",
       params: "/nl-nl/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
-    }
+    }*/
     ]
 
     //Proxy para evitar el CORS
@@ -323,7 +323,7 @@
 
       showSpinner(true);
       hideElement("div-error")
-      getAlbums(idAlbum, false, true)
+      getAlbums(idAlbum, false, true, 0)
       console.log(event);
 
     };
@@ -454,7 +454,7 @@
     var rates = null;
 
     //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
-    const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum) {
+    const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum, index) {
 
       getDodaxSitesAlbums(cadenaBusqueda, firstCall, updateAlbum)
         .then(content => {
@@ -471,9 +471,10 @@
               showElement("div-error");
             }
             
-            if (resultado.nextUrl != null) {
-              mostrarMasResultados = true;
+            mostrarMasResultados = resultado.nextUrl != null && index === 2;
 
+            if (resultado.nextUrl != null) {
+              
               nextUrls.push({
                 url: resultado.url
                ,params: resultado.nextUrl
@@ -555,15 +556,31 @@
             }
             
             if (nextUrls.length > 0){
+
               sessionStorage.setItem('nextUrls', JSON.stringify(nextUrls));
+              if (index < 2){
+                getAlbums(cadenaBusqueda, false, false, index + 1);
+              }
+              else{
+                var htmlToSave = document.getElementById("div-resultados").innerHTML;
+                sessionStorage.setItem('lastSearchResult', htmlToSave);
+                showSpinner(false);
+              }
+            }
+            else{
+              var htmlToSave = document.getElementById("div-resultados").innerHTML;
+                sessionStorage.setItem('lastSearchResult', htmlToSave);
+                showSpinner(false);
             }
 
+          }
+          else{
             var htmlToSave = document.getElementById("div-resultados").innerHTML;
             sessionStorage.setItem('lastSearchResult', htmlToSave);
+            showSpinner(false);
 
           }
 
-          showSpinner(false);
 
         });
 
@@ -597,7 +614,7 @@
         hideElement("div-error")
         showSpinner(true);
         var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
-        getAlbums(cadenaBusquedaActual, false, false);
+        getAlbums(cadenaBusquedaActual, false, false, 0);
     });
     
     document.getElementById("formulario").addEventListener('submit', function(){
@@ -634,7 +651,7 @@
       });
 
       sessionStorage.setItem("lastSearchIndex", "0");
-      getAlbums(cadenaBusqueda, true, false);
+      getAlbums(cadenaBusqueda, true, false, 0);
       showElement("div-resultados");
 
       event.preventDefault();
