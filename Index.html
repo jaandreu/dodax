@@ -544,43 +544,28 @@
             showElement("div-noresult");
           }
 
-          if (!updateAlbum){
-  
-            if (mostrarMasResultados){
-              showElement("div-button-more");
-              sessionStorage.setItem("moreItems", "1");
-            }
-            else{
-              hideElement("div-button-more");
-              sessionStorage.setItem("moreItems", "0");
-            }
-            
-            if (nextUrls.length > 0){
+          sessionStorage.setItem('nextUrls', JSON.stringify(nextUrls));
 
-              sessionStorage.setItem('nextUrls', JSON.stringify(nextUrls));
-              if (index < 2){
-                getAlbums(cadenaBusqueda, false, false, index + 1);
-              }
-              else{
-                var htmlToSave = document.getElementById("div-resultados").innerHTML;
-                sessionStorage.setItem('lastSearchResult', htmlToSave);
-                showSpinner(false);
-              }
-            }
-            else{
-              var htmlToSave = document.getElementById("div-resultados").innerHTML;
-                sessionStorage.setItem('lastSearchResult', htmlToSave);
-                showSpinner(false);
-            }
-
+          //Quedan más resultados.
+          if (nextUrls.length > 0 && index < 2 && !updateAlbum) {
+            getAlbums(cadenaBusqueda, false, false, index + 1);
           }
           else{
+
+            if (mostrarMasResultados){
+                showElement("div-button-more");
+                sessionStorage.setItem("moreItems", "1");
+            }
+            else{
+                hideElement("div-button-more");
+                sessionStorage.setItem("moreItems", "0");
+            }
+  
             var htmlToSave = document.getElementById("div-resultados").innerHTML;
             sessionStorage.setItem('lastSearchResult', htmlToSave);
-            showSpinner(false);
+            showSpinner(false);              
 
           }
-
 
         });
 
