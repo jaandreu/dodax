@@ -120,6 +120,10 @@
                 </div>
               </div>
             </div>
+            <footer class="card-footer">
+              <a id='a-discogs' class="discogs card-footer-item" href='javascript:void(0);'><img src="discogs.png"></img></a>
+              <a id='update-album' class="card-footer-item" href='javascript:void(0);'><i class='update fas fa-sync-alt'></i></a>
+            </footer>
           </div>
         </div>
       </div>
@@ -166,7 +170,7 @@
     </div>
 
   </section>
-
+ 
   <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
   
   <script>
@@ -193,36 +197,36 @@
       url: "https://www.dodax.at",
       params: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
     }
-    , {
-      text: "FR",
-      url: "https://www.dodax.fr",
-      params: "/fr-fr/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
-    }
-    , {
-      text: "UK",
-      url: "https://www.dodax.co.uk",
-      params: "/en-gb/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
-    }
-    , {
-      text: "ES",
-      url: "https://www.dodax.es",
-      params: "/es-es/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
-    }
-    , {
-      text: "IT",
-      url: "https://www.dodax.it",
-      params: "/it-it/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
-    }
-    , {
-      text: "PL",
-      url: "https://www.dodax.pl",
-      params: "/pl-pl/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
-    }
-    , {
-      text: "NL",
-      url: "https://www.dodax.nl",
-      params: "/nl-nl/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
-    }
+    // , {
+    //   text: "FR",
+    //   url: "https://www.dodax.fr",
+    //   params: "/fr-fr/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+    // }
+    // , {
+    //   text: "UK",
+    //   url: "https://www.dodax.co.uk",
+    //   params: "/en-gb/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+    // }
+    // , {
+    //   text: "ES",
+    //   url: "https://www.dodax.es",
+    //   params: "/es-es/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+    // }
+    // , {
+    //   text: "IT",
+    //   url: "https://www.dodax.it",
+    //   params: "/it-it/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+    // }
+    // , {
+    //   text: "PL",
+    //   url: "https://www.dodax.pl",
+    //   params: "/pl-pl/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+    // }
+    // , {
+    //   text: "NL",
+    //   url: "https://www.dodax.nl",
+    //   params: "/nl-nl/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+    // }
     ]
 
     //Proxy para evitar el CORS
@@ -318,7 +322,8 @@
     const updateAlbum = function(idAlbum) {
 
       showSpinner(true);
-      getAlbums(idAlbum, 0, false, true)
+      hideElement("div-error")
+      getAlbums(idAlbum, false, true)
       console.log(event);
 
     };
@@ -349,7 +354,7 @@
 
          if (gtinFicha === "" && gtin != ""){
            ficha.setAttribute("gtin-ficha", gtin);
-           (ficha.getElementsByClassName("discogs")[0]).innerHTML = "<a href='https://www.discogs.com/search/?q=" + gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a>";
+           (ficha.getElementsByClassName("discogs")[0]).setAttribute("href", "https://www.discogs.com/search/?q=" + gtin +"&type=all"); 
          }
 
          var idPrecio = price.text + "-" + idAlbum;
@@ -382,9 +387,14 @@
       base.getElementById("p-album").innerHTML = 
           "<span style='padding-right:4px;'>" + disco.title + "</span>" 
         + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "")
-        + (disco.gtin !== "" ? "<span class='actions discogs'><a href='https://www.discogs.com/search/?q=" + disco.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : "<span class='actions discogs'></span>")
-        + "<span class='actions span-update'><a id='update-album' onclick='updateAlbum(\""+ disco.id + "\")' href='javascript:void(0);'><i class='update fas fa-sync-alt'></i></a></span>";
+        //+ (disco.gtin !== "" ? "<span class='actions discogs'><a href='https://www.discogs.com/search/?q=" + disco.gtin +"&type=all'><i class='naranja fas fa-record-vinyl'></i></a></span>" : "<span class='actions discogs'></span>")
+        //+ "<span class='actions span-update'><a id='update-album' onclick='updateAlbum(\""+ disco.id + "\")' href='javascript:void(0);'><i class='update fas fa-sync-alt'></i></a></span>";
 
+      base.getElementById("update-album").setAttribute("onclick", "updateAlbum('"+ disco.id + "')");
+
+      if (disco.gtin != ""){
+        base.getElementById("a-discogs").setAttribute("href", "https://www.discogs.com/search/?q=" + disco.gtin +"&type=all");
+      }
       base.getElementById("p-artist").innerText = disco.from;
       base.getElementById("img-cover").setAttribute("src", disco.image);
 
@@ -408,7 +418,7 @@
     }
 
     //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
-    const getDodaxSitesAlbums = async (cadenaBusqueda, items, firstCall, updateAlbum) => {
+    const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum) => {
 
       var urls = firstCall || updateAlbum ? urlsDodax : (JSON.parse(sessionStorage.getItem("nextUrls")));
 
@@ -444,9 +454,9 @@
     var rates = null;
 
     //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
-    const getAlbums = function (cadenaBusqueda, items, firstCall, updateAlbum) {
+    const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum) {
 
-      getDodaxSitesAlbums(cadenaBusqueda, items, firstCall, updateAlbum)
+      getDodaxSitesAlbums(cadenaBusqueda, firstCall, updateAlbum)
         .then(content => {
 
           var hayResultados = false;
@@ -584,12 +594,10 @@
 
     document.getElementById("button-more").addEventListener('click', function(){
 
+        hideElement("div-error")
         showSpinner(true);
-        var itemsActual = parseInt(sessionStorage.getItem("lastSearchIndex")) + 12;
         var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
-        getAlbums(cadenaBusquedaActual, itemsActual, false, false);
-        sessionStorage.setItem("lastSearchIndex", itemsActual)
-
+        getAlbums(cadenaBusquedaActual, false, false);
     });
     
     document.getElementById("formulario").addEventListener('submit', function(){
@@ -626,7 +634,7 @@
       });
 
       sessionStorage.setItem("lastSearchIndex", "0");
-      getAlbums(cadenaBusqueda, 0, true, false);
+      getAlbums(cadenaBusqueda, true, false);
       showElement("div-resultados");
 
       event.preventDefault();
