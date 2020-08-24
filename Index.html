@@ -408,11 +408,13 @@
     }
 
     //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
-    const getDodaxSitesAlbums = async (cadenaBusqueda, items) => {
+    const getDodaxSitesAlbums = async (cadenaBusqueda, items, firstCall, updateAlbum) => {
 
-      const requests = urlsDodax.map((urlDodax) => {
+      var urls = firstCall || updateAlbum ? urlsDodax : (JSON.parse(sessionStorage.getItem("nextUrls")));
 
-     const urlCompleta = proxyurl + urlDodax.url + urlDodax.params + cadenaBusqueda + "&paginating=true&f=" + items;
+      const requests = urls.map((urlDodax) => {
+
+      const urlCompleta = proxyurl + urlDodax.url + urlDodax.params + (firstCall || updateAlbum ? cadenaBusqueda : "");
 
         return getDodaxAlbums(urlCompleta)
           .then((salida) => {
@@ -444,11 +446,12 @@
     //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
     const getAlbums = function (cadenaBusqueda, items, firstCall, updateAlbum) {
 
-      getDodaxSitesAlbums(cadenaBusqueda, items)
+      getDodaxSitesAlbums(cadenaBusqueda, items, firstCall, updateAlbum)
         .then(content => {
 
           var hayResultados = false;
           var mostrarMasResultados = false;
+          var nextUrls = [];
 
           content.forEach(resultado => {
 
@@ -460,6 +463,13 @@
             
             if (resultado.nextUrl != null) {
               mostrarMasResultados = true;
+
+              nextUrls.push({
+                url: resultado.url
+               ,params: resultado.nextUrl
+               ,text: resultado.text
+              });
+
             }
 
             Array.from(resultado.listaAlbums).forEach(album => {
@@ -533,7 +543,11 @@
               hideElement("div-button-more");
               sessionStorage.setItem("moreItems", "0");
             }
-  
+            
+            if (nextUrls.length > 0){
+              sessionStorage.setItem('nextUrls', JSON.stringify(nextUrls));
+            }
+
             var htmlToSave = document.getElementById("div-resultados").innerHTML;
             sessionStorage.setItem('lastSearchResult', htmlToSave);
 
@@ -596,6 +610,8 @@
         return false;
 
       sessionStorage.setItem('lastSearch', cadenaBusqueda);
+      //Inicializamos las rutas de las siguientes llamadas.
+      sessionStorage.setItem('nextUrls', JSON.stringify([]));
 
       showSpinner(true);
 
