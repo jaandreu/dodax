@@ -1,4 +1,4 @@
-  <!doctype html>
+<!doctype html>
 <html>
 
 <head>
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">    <title>XADOD</title>
     <style>
-
+      
       html {
         background-color: hsl(201, 29%, 88%);
       }
@@ -46,6 +46,9 @@
       .flexgrow {
         flex-grow: 1;
       }
+      .desactivado {
+        opacity: 20%;
+      }
 
       .update {
         color: hsl(93, 67%, 38%);
@@ -60,6 +63,7 @@
       tr.best-price {
         background-color:hsl(282, 100%, 95%);
       }
+      .ayuda, .notificacion {font-size: 1.3rem;}
     </style>
 
 </head>
@@ -127,8 +131,8 @@
               </div>
             </div>
             <footer class="card-footer">
-              <a id='a-discogs' class="discogs card-footer-item" href='javascript:void(0);'><img src="discogs.png"></img></a>
-              <a id='a-amazon' class="amazon card-footer-item" href='javascript:void(0);'><img src="amazon.png"></img></a>
+              <a id='a-discogs' class="desactivado discogs card-footer-item" href='javascript:void(0);'><img src="discogs.png"></img></a>
+              <a id='a-amazon' class="desactivado amazon card-footer-item" href='javascript:void(0);'><img src="amazon.png"></img></a>
               <a id='a-spotify' class="spotify card-footer-item" href='javascript:void(0);'><img src="spotify.png"></img></a>
               <a id='update-album' class="card-footer-item" href='javascript:void(0);'><i class='update fas fa-sync-alt'></i></a>
             </footer>
@@ -137,7 +141,7 @@
       </div>
 
       <!--Mensaje para no se han encontrado datos-->
-      <div style="display:none" id="div-error" class="notification is-danger">
+      <div style="display:none" id="div-error" class="notificacion notification is-danger">
         Ha fallado la conexión con alguno de los servidores, repita la búsqueda
       </div>
 
@@ -154,15 +158,15 @@
       </div>
         
       <!-- Cuadro de ayuda-->
-      <article id="div-info" class="message is-info">
+      <article id="div-info" class="message is-info ayuda">
         <div class="message-header">
           <p>Ayuda</p>
         </div>
         <div class="message-body">
           <ul>
-            <li>- <b>Búsqueda en la sección de vinilos:</b> no hace falta poner <b>VINILO</b>, <b>VINYL</b> ni <b>LP</b>.</li>
-            <li>- <b>Criterios de búsqueda:</b> artista/album, id dodax/codigo de barras, label, cualquier cosa que funcione en dodax aquí funcionará <b>;-).</b></li>
-            <li>- <b>Ficha:</b> podemos acceder a Dodax clicando en el importe, podemos acceder a Discogs clicando en el icono del vinilo.</li>
+            <li>- <b>Búsqueda en la sección de vinilos y singles:</b> no hace falta poner <b>VINILO</b>, <b>VINYL</b> ni <b>LP</b>.</li>
+            <li>- <b>Criterios de búsqueda:</b> Cualquier cosa que funcione en dodax aquí funcionará <b>;-).</b></li>
+            <li>- <b>Ficha:</b> podemos acceder a Dodax clicando en el importe, podemos acceder a Discogs, Amazon o Spotify clicando en los iconos del pie de la ficha.</li>
             <li>- <b>El icono de la estrella representa los mejores precios.</b></li>
             <li>- <b>Cambio de moneda:</b> para el cambio de moneda se usan los datos oficiales en el momento de la consulta, aunque servicios como Paypal suelen aplicar otros tipos de cambio.</li>
             <li>- <b>Sugerencias:</b> cualquier sugerencia de cambio la podéir reportar en el grupo de Facebook <b><a href="https://www.facebook.com/groups/307523296709864">Ofertas de Vinilos en amazon, dodax, etc...sin censuras todos los estilos</a></b></li>
@@ -198,42 +202,42 @@
     {
       text: "DE",
       url: "https://www.dodax.de",
-      params: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+      params: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
      }
      , {
       text: "AT",
       url: "https://www.dodax.at",
-      params: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+      params: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
     }
     , {
       text: "FR",
       url: "https://www.dodax.fr",
-      params: "/fr-fr/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+      params: "/fr-fr/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
     }
     , {
       text: "UK",
       url: "https://www.dodax.co.uk",
-      params: "/en-gb/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+      params: "/en-gb/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
     }
     , {
       text: "ES",
       url: "https://www.dodax.es",
-      params: "/es-es/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+      params: "/es-es/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
     }
     , {
       text: "IT",
       url: "https://www.dodax.it",
-      params: "/it-it/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+      params: "/it-it/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
     }
     , {
       text: "PL",
       url: "https://www.dodax.pl",
-      params: "/pl-pl/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+      params: "/pl-pl/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
     }
     , {
       text: "NL",
       url: "https://www.dodax.nl",
-      params: "/nl-nl/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9/?s="
+      params: "/nl-nl/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
     }
     ]
 
@@ -364,6 +368,9 @@
            ficha.setAttribute("gtin-ficha", gtin);
            (ficha.getElementsByClassName("discogs")[0]).setAttribute("href", "https://www.discogs.com/search/?q=" + gtin +"&type=all"); 
            (ficha.getElementsByClassName("amazon")[0]).setAttribute("href", "https://www.amazon.es/s?k=" + gtin + "&i=popular&ref=nb_sb_noss"); 
+           (ficha.getElementsByClassName("discogs")[0]).classList.remove("desactivado");
+           (ficha.getElementsByClassName("amazon")[0]).classList.remove("desactivado");
+
          }
 
          var idPrecio = price.text + "-" + idAlbum;
@@ -398,11 +405,14 @@
         + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "");
 
       base.getElementById("update-album").setAttribute("onclick", "updateAlbum('"+ disco.id + "')");
-      base.getElementById("a-spotify").setAttribute("href", "https://open.spotify.com/search/" + encodeURIComponent(disco.from + " " + disco.title));
+      var spotifyString = encodeURIComponent(disco.from.toLowerCase() + " " + disco.title.toLowerCase().replace(/ \([\s\S]*?\)/g, ''));
+      base.getElementById("a-spotify").setAttribute("href", "https://open.spotify.com/search/" + spotifyString);
 
       if (disco.gtin != ""){
         base.getElementById("a-discogs").setAttribute("href", "https://www.discogs.com/search/?q=" + disco.gtin +"&type=all");
         base.getElementById("a-amazon").setAttribute("href", "https://www.amazon.es/s?k=" + disco.gtin + "&i=popular&ref=nb_sb_noss");
+        base.getElementById("a-discogs").classList.remove("desactivado");
+        base.getElementById("a-amazon").classList.remove("desactivado");
       }
       base.getElementById("p-artist").innerText = disco.from.toLowerCase();
       base.getElementById("img-cover").setAttribute("src", disco.image);
