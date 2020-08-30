@@ -64,6 +64,14 @@
         background-color:hsl(282, 100%, 95%);
       }
       .ayuda, .notificacion {font-size: 1.3rem;}
+      div.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 80px;
+  padding-left: 10px;
+  z-index: 100;
+}
+
     </style>
 
 </head>
@@ -98,12 +106,16 @@
 
   <!-- Loading -->
   <div id="div-pageloader" class="pageloader"><span class="title">Buscando...</span></div>
-
+  <div class="sticky">
+    <button class="button is-green is-rounded"><span class="icon is-small">
+      <i class="fas fa-cog"></i>
+    </span></button>
+  </div>
   <section class="section">
 
     <!-- Container para las fichas de resultados.-->
     <div class="container">
-   
+
       <!-- Resultados -->
       <div id="div-resultados" class="columns resultados is-multiline">
         <div id="div-base" class=" base column is-one-quarter is-half-tablet">
