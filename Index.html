@@ -5,11 +5,12 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <title>XADOD</title>
     <!-- Bulma CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">    <title>XADOD</title>
-    <style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">    
+<style>
       
       html {
         background-color: hsl(201, 29%, 88%);
@@ -64,13 +65,14 @@
         background-color:hsl(282, 100%, 95%);
       }
       .ayuda, .notificacion {font-size: 1.3rem;}
+      
       div.sticky {
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 80px;
-  padding-left: 10px;
-  z-index: 100;
-}
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 80px;
+        padding-left: 10px;
+        z-index: 39;
+      }
 
     </style>
 
@@ -106,12 +108,42 @@
 
   <!-- Loading -->
   <div id="div-pageloader" class="pageloader"><span class="title">Buscando...</span></div>
+
+  <!--Botón para la página de configuración-->
   <div class="sticky">
-    <button class="button is-green is-rounded"><span class="icon is-small">
+    <button id="button-conf" class="button is-green is-rounded"><span class="icon is-small">
       <i class="fas fa-cog"></i>
     </span></button>
   </div>
   <section class="section">
+
+  <!--Página de configuración-->
+  <div id="div-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Qué buscamos?</p>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <input id="lp-vinyl" type="checkbox" name="lp-vinyl" class="switch is-thin is-info" checked="checked">
+          <label for="lp-vinyl">LP (Vinyl)</label>
+        </div>
+        <div class="field">
+          <input id="single-vinyl" type="checkbox" name="single-vinyl" class="switch is-thin is-info" checked="checked">
+          <label for="single-vinyl">Single (Vinyl)</label>
+        </div>
+        <div class="field">
+          <input id="cd" type="checkbox" name="cd" class="switch is-thin is-info">
+          <label for="cd">CD</label>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button id="button-aceptar" class="button is-success">Guay!</button>
+        <button id="button-cancelar"class="button">Déjalo como estaba</button>
+      </footer>
+    </div>
+  </div>
 
     <!-- Container para las fichas de resultados.-->
     <div class="container">
@@ -632,7 +664,20 @@
         var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
         getAlbums(cadenaBusquedaActual, false, false, 0);
     });
-    
+
+
+   document.getElementById("button-aceptar").addEventListener('click', function(){
+    document.getElementById("div-modal").classList.remove("is-active");
+   });
+   
+   document.getElementById("button-cancelar").addEventListener('click', function(){
+    document.getElementById("div-modal").classList.remove("is-active");
+   });
+ 
+   document.getElementById("button-conf").addEventListener('click', function(){
+    document.getElementById("div-modal").classList.add("is-active");
+   });
+   
     document.getElementById("formulario").addEventListener('submit', function(){
 
       cadenaBusqueda = document.getElementById("search").value
