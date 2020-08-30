@@ -64,7 +64,7 @@
       tr.best-price {
         background-color:hsl(282, 100%, 95%);
       }
-      .ayuda, .notificacion {font-size: 1.3rem;}
+      .ayuda, .notificacion, .modal {font-size: 1.3rem;}
       
       div.sticky {
         position: -webkit-sticky; /* Safari */
@@ -137,6 +137,15 @@
           <input id="cd" type="checkbox" name="cd" class="switch is-thin is-info">
           <label for="cd">CD</label>
         </div>
+        <div class="field">
+          <input id="sacd" type="checkbox" name="sacd" class="switch is-thin is-info">
+          <label for="sacd">SACD</label>
+        </div>
+        <div class="field">
+          <input id="dvd" type="checkbox" name="dvd" class="switch is-thin is-info">
+          <label for="dvd">DVD</label>
+        </div>
+
       </section>
       <footer class="modal-card-foot">
         <button id="button-aceptar" class="button is-success">
@@ -250,6 +259,14 @@
         removeClass("div-pageloader", "is-active");  
 
     }
+    //Tipos de búsqueda
+    var tiposBusqueda = {
+       "lp-vinyl": "lpvinyl-K6IQQ1BLV9",
+       "single-vinyl": "singlevinyl-TVBN098J7D",
+       "cd": "cd-QQQ6F29MQA",
+       "dvd": "dvd-DBRGQD0GK",
+       "sacd": "sacd-TKLFV1USKM"
+    };
 
     //Listado de servidores a los que consultaremos.
     var urlsDodax = [
