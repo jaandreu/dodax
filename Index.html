@@ -258,57 +258,84 @@
 
     }
     //Tipos de búsqueda
-    var tiposBusqueda = {
-       "lp-vinyl": "lpvinyl-K6IQQ1BLV9",
-       "single-vinyl": "singlevinyl-TVBN098J7D",
-       "cd": "cd-QQQ6F29MQA",
-       "dvd": "dvd-DBRGQD0GK",
-       "sacd": "sacd-TKLFV1USKM"
-    };
+    var tiposBusqueda = [
+       {"name":"lp-vinyl", "filter": "lpvinyl-K6IQQ1BLV9"},
+       {"name":"single-vinyl", "filter":"singlevinyl-TVBN098J7D"},
+       {"name":"cd", "filter":"cd-QQQ6F29MQA"},
+       {"name":"dvd", "filter":"dvd-DBRGQD0GK"},
+       {"name" :"sacd", "filter":"sacd-TKLFV1USKM"}
+    ];
 
     //Listado de servidores a los que consultaremos.
     var urlsDodax = [
     {
       text: "DE",
       url: "https://www.dodax.de",
-      params: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
+      params: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H"
      }
      , {
       text: "AT",
       url: "https://www.dodax.at",
-      params: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
+      params: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H"
     }
     , {
       text: "FR",
       url: "https://www.dodax.fr",
-      params: "/fr-fr/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
+      params: "/fr-fr/musik-cds-dvds-vinyl-cLOFV6FFU7H"
     }
     , {
       text: "UK",
       url: "https://www.dodax.co.uk",
-      params: "/en-gb/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
+      params: "/en-gb/musik-cds-dvds-vinyl-cLOFV6FFU7H"
     }
     , {
       text: "ES",
       url: "https://www.dodax.es",
-      params: "/es-es/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
+      params: "/es-es/musik-cds-dvds-vinyl-cLOFV6FFU7H"
     }
     , {
       text: "IT",
       url: "https://www.dodax.it",
-      params: "/it-it/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
+      params: "/it-it/musik-cds-dvds-vinyl-cLOFV6FFU7H"
     }
     , {
       text: "PL",
       url: "https://www.dodax.pl",
-      params: "/pl-pl/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
+      params: "/pl-pl/musik-cds-dvds-vinyl-cLOFV6FFU7H"
     }
     , {
       text: "NL",
       url: "https://www.dodax.nl",
-      params: "/nl-nl/musik-cds-dvds-vinyl-cLOFV6FFU7H-f-lpvinyl-K6IQQ1BLV9-singlevinyl-TVBN098J7D/?s="
+      params: "/nl-nl/musik-cds-dvds-vinyl-cLOFV6FFU7H"
     }
     ]
+
+    const getUrlsDodax = function (){
+
+      //Obtenemos las opciones de búsqueda.
+      var filtro = tiposBusqueda.filter((t) => {
+          return document.getElementById(t.name).checked;
+      }).map( tb => {
+        return tb.filter;
+      }).join("-");
+
+      if (filtro !== ""){
+        filtro = "-f-" +  filtro;
+      }
+
+      return urlsDodax.map(urlDodax => {
+         
+           var newUrl = {
+              url: urlDodax.url,
+              text: urlDodax.text,
+              params: urlDodax.params + filtro + "/?s="
+           }
+
+          return newUrl;
+
+      });
+
+    }
 
     //Proxy para evitar el CORS
     const proxyurl = window.location.host.includes('netlify') ? "https://dodax-proxy.herokuapp.com/" : "https://cors-anywhere.herokuapp.com/";
@@ -508,7 +535,7 @@
     //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
     const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum) => {
 
-      var urls = firstCall || updateAlbum ? urlsDodax : (JSON.parse(sessionStorage.getItem("nextUrls")));
+      var urls = firstCall || updateAlbum ? getUrlsDodax() : (JSON.parse(sessionStorage.getItem("nextUrls")));
 
       const requests = urls.map((urlDodax) => {
 
