@@ -151,7 +151,7 @@
 
       </section>
       <footer class="modal-card-foot">
-        <button id="button-aceptar" class="button is-success">
+        <button id="button-aceptar" class="button is-green">
           <span class="icon is-small">
           <i class="far fa-thumbs-up"></i>
           </span> 
@@ -310,17 +310,24 @@
     }
     ]
 
-    const getUrlsDodax = function (){
+    const getUrlsDodax = function (updateAlbum){
 
       //Obtenemos las opciones de búsqueda.
-      var filtro = tiposBusqueda.filter((t) => {
-          return document.getElementById(t.name).checked;
-      }).map( tb => {
-        return tb.filter;
-      }).join("-");
+      var filtro = "";
 
-      if (filtro !== ""){
-        filtro = "-f-" +  filtro;
+      if (!updateAlbum){
+        filtro = tiposBusqueda.filter((t) => {
+            return document.getElementById(t.name).checked;
+        }).map( tb => {
+          return tb.filter;
+        }).join("-");
+
+        if (filtro !== ""){
+          filtro = "-f-" +  filtro;
+        }
+        else{
+          return [];
+        }
       }
 
       return urlsDodax.map(urlDodax => {
@@ -535,7 +542,7 @@
     //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
     const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum) => {
 
-      var urls = firstCall || updateAlbum ? getUrlsDodax() : (JSON.parse(sessionStorage.getItem("nextUrls")));
+      var urls = firstCall || updateAlbum ? getUrlsDodax(updateAlbum) : (JSON.parse(sessionStorage.getItem("nextUrls")));
 
       const requests = urls.map((urlDodax) => {
 
