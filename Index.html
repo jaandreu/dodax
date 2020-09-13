@@ -6,13 +6,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>XADOD</title>
+
+    <!-- Ionic CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+
+
     <!-- Bulma CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">     -->
+
 <style>
       
-      html {
+      /* html {
         background-color: hsl(201, 29%, 88%);
       }
 
@@ -67,19 +73,62 @@
       .ayuda, .notificacion, .modal {font-size: 1.3rem;}
       
       div.sticky {
-        position: -webkit-sticky; /* Safari */
+        position: -webkit-sticky; 
         position: sticky;
         top: 80px;
         padding-left: 10px;
         z-index: 39;
-      }
+      } */
 
     </style>
 
 </head>
-<body class="has-navbar-fixed-top">
+<body>
 
-  <!--Navbar (buscador)-->
+
+  <ion-app>
+    <ion-tabs>
+      <ion-tab tab="search">
+        <ion-header translucent>
+          <ion-toolbar>
+            <ion-title>Búsquedas</ion-title>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-searchbar></ion-searchbar>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content fullscreen>
+          <ion-list>
+          </ion-list>
+        </ion-content>      
+      </ion-tab>
+      <ion-tab tab="settings">
+        <ion-header translucent>
+          <ion-toolbar>
+            <ion-title>Configuración</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content fullscreen>
+          <ion-list>
+          </ion-list>
+        </ion-content>      
+      </ion-tab>      </ion-tab>
+      <!--Menú del pié de página.-->
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="search">
+          <ion-label>Buscar</ion-label>
+          <ion-icon name="search-outline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="settings">
+          <ion-label>Configuración</ion-label>
+          <ion-icon name="settings"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-app>
+
+  <!-- <body class="has-navbar-fixed-top">
+
   <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-menu is-active">
       <div class="navbar-start flexgrow">
@@ -106,10 +155,8 @@
     </div>
   </nav>
 
-  <!-- Loading -->
   <div id="div-pageloader" class="pageloader"><span class="title">Buscando...</span></div>
 
-  <!--Botón para la página de configuración-->
   <div class="sticky">
     <button id="button-conf" class="button is-green is-rounded"><span class="icon is-small">
       <i class="fas fa-cog"></i>
@@ -117,7 +164,6 @@
   </div>
   <section class="section">
 
-  <!--Página de configuración-->
   <div class="columns">
     <div class="column">
   <div id="div-modal" class="modal">
@@ -163,9 +209,7 @@
 </div>
 </div>  
 
-    <!-- Container para las fichas de resultados.-->
     <div class="container">
-      <!-- Resultados -->
       <div id="div-resultados" class="columns resultados is-multiline">
         <div id="div-base" class=" base column is-one-quarter is-half-tablet">
           <div class="card">
@@ -185,7 +229,7 @@
                 <div class="table-container">
                   <table id="table-precios"  class="table is-hoverable is-fullwidth">
                     <tbody id="table-precios-body">
-                      <!-- Items con los precios-->
+
                     </tbody>
                   </table>
                 </div>
@@ -201,12 +245,10 @@
         </div>
       </div>
 
-      <!--Mensaje para no se han encontrado datos-->
       <div style="display:none" id="div-error" class="notificacion notification is-danger">
         Ha fallado la conexión con alguno de los servidores, repita la búsqueda
       </div>
 
-      <!-- Botón para obtener más resultados.-->
       <div id="div-button-more" style="display: none" class="columns">
         <div class="column">
             <button id="button-more" class="button is-info is-fullwidth is-outlined">
@@ -218,7 +260,6 @@
         </div>
       </div>
         
-      <!-- Cuadro de ayuda-->
       <article id="div-info" class="message is-info ayuda">
         <div class="message-header">
           <p>Ayuda</p>
@@ -235,7 +276,6 @@
         </div>
       </article>
 
-      <!--Mensaje para no se han encontrado datos-->
       <div style="display: none;" id="div-noresult" class="noresult notification is-info">
         No se han encontrado coincidencias
       </div>
@@ -243,8 +283,15 @@
     </div>
 
   </section>
- 
-  <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
+ --> 
+  <!-- IONIC -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+
+
+  <!-- <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script> -->
   
   <script>
 
