@@ -84,9 +84,9 @@
       img.img-album-cover {
         width: 100%;
       }
-
-      * {
-        font-family: 'Open Sans Condensed' !important;
+      
+      .toolbar-search {
+        padding-top: 15px !important;
       }
 
     </style>
@@ -99,17 +99,14 @@
     <ion-tabs>
       <ion-tab tab="search">
         <ion-header translucent>
-          <ion-toolbar color="primary">
-            <ion-title>Búsquedas</ion-title>
-          </ion-toolbar>
-          <ion-toolbar color="primary">
+          <ion-toolbar class="toolbar-search" color="primary">
             <form id="formulario" method='GET' action='javascript:void(0); return false;'>
-              <ion-searchbar inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
+              <ion-searchbar style="text-transform:uppercase" inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
             </form>
           </ion-toolbar>
         </ion-header>
         <ion-content fullscreen>
-          <ion-grid>
+          <ion-grid id="div-resultados" class="resultados">
           <ion-row>
             <ion-col size-xs="12" size-sm="6" size-lg="3">
               <ion-card>
@@ -119,47 +116,24 @@
                   <ion-card-title>Blood Sugar Sex Magik</ion-card-title>
                 </ion-card-header>
                 <ion-card-content>
-                  Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col size="2">ES</ion-col>
+                            <ion-col size="4">1000€</ion-col>
+                            <ion-col size="4"></ion-col>
+                            <ion-col size="2"></ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size="2">ES</ion-col>
+                          <ion-col size="4">1000€</ion-col>
+                          <ion-col size="4">1000€</ion-col>
+                          <ion-col size="2"> <ion-icon name="settings"></ion-icon></ion-col>
+                      </ion-row>
+                      </ion-grid>
                 </ion-card-content>
               </ion-card>
             </ion-col>
-            <ion-col size-xs="12" size-sm="6" size-lg="3">
-              <ion-card>
-                <img class="img-album-cover" src="https://c5-static.dodax.com/de-de/musik-cds-dvds-vinyl/alternative-rock/red-hot-chili-peppers-blood-sugar-sex-magik-dpFH98ABN5EFA-cc42c03d8d-175-175-6395603081897149273" />
-                <ion-card-header>
-                  <ion-card-subtitle>Red Hot Chili Peppers</ion-card-subtitle>
-                  <ion-card-title>Blood Sugar Sex Magik</ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                  Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
-                </ion-card-content>
-              </ion-card>
-              </ion-col>
-            <ion-col size-xs="12" size-sm="6" size-lg="3">
-              <ion-card>
-                <img class="img-album-cover" src="https://c5-static.dodax.com/de-de/musik-cds-dvds-vinyl/alternative-rock/red-hot-chili-peppers-blood-sugar-sex-magik-dpFH98ABN5EFA-cc42c03d8d-175-175-6395603081897149273" />
-                <ion-card-header>
-                  <ion-card-subtitle>Red Hot Chili Peppers</ion-card-subtitle>
-                  <ion-card-title>Blood Sugar Sex Magik</ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                  Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
-                </ion-card-content>
-              </ion-card>
-              </ion-col>
-            <ion-col size-xs="12" size-sm="6" size-lg="3">
-              <ion-card>
-                <img class="img-album-cover" src="https://c5-static.dodax.com/de-de/musik-cds-dvds-vinyl/alternative-rock/red-hot-chili-peppers-blood-sugar-sex-magik-dpFH98ABN5EFA-cc42c03d8d-175-175-6395603081897149273" />
-                <ion-card-header>
-                  <ion-card-subtitle>Red Hot Chili Peppers</ion-card-subtitle>
-                  <ion-card-title>Blood Sugar Sex Magik</ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                  Founded in 1829 on an isthmus between Lake Monona and Lake Mendota, Madison was named the capital of the Wisconsin Territory in 1836.
-                </ion-card-content>
-              </ion-card>
-              </ion-col>
-            </ion-row>
+          </ion-row>
         </ion-grid>
         </ion-content>      
       </ion-tab>
@@ -173,27 +147,27 @@
           <ion-list lines="none">
             <ion-item>
               <ion-label>LP (Vinyl)</ion-label>
-              <ion-toggle slot="start" name="lp-vinyl" checked></ion-toggle>
+              <ion-toggle slot="start" name="lp-vinyl" class="formato" checked></ion-toggle>
             </ion-item>
     
             <ion-item>
               <ion-label>Single (Vinyl)</ion-label>
-              <ion-toggle slot="start" name="single-vinyl" checked></ion-toggle>
+              <ion-toggle slot="start" name="single-vinyl" class="formato" checked></ion-toggle>
             </ion-item>
     
             <ion-item>
               <ion-label>CD</ion-label>
-              <ion-toggle slot="start" name="cd" color="secondary"></ion-toggle>
+              <ion-toggle slot="start" name="cd" color="secondary" class="formato"></ion-toggle>
             </ion-item>
     
             <ion-item>
               <ion-label>SACD</ion-label>
-              <ion-toggle slot="start" name="sacd" color="secondary"></ion-toggle>
+              <ion-toggle slot="start" name="sacd" color="secondary" class="formato"></ion-toggle>
             </ion-item>
     
             <ion-item>
               <ion-label>DVD</ion-label>
-              <ion-toggle slot="start" name="dvd" color="secondary"></ion-toggle>
+              <ion-toggle slot="start" name="dvd" color="secondary" class="formato"></ion-toggle>
             </ion-item>
 
           </ion-list>
@@ -215,85 +189,9 @@
 
   <!-- <body class="has-navbar-fixed-top">
 
-  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-    <div class="navbar-menu is-active">
-      <div class="navbar-start flexgrow">
-        <div class="navbar-item flexgrow">
-          <div class="container">
-            <div class="columns">
-              <div class="column">
-                <form id="formulario" method='GET' action='javascript:void(0); return false;'>
-                  <div class="field has-addons">
-                    <div class="control flexgrow">
-                      <input class="input is-large is-info is-expanded" id="search" type="text"
-                        placeholder="last shadow puppets ..." style="text-transform:uppercase">
-                    </div>
-                    <div class="control">
-                      <button type="submit" class="button is-green is-large"> <i class="fas fa-search"></i></button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
   <div id="div-pageloader" class="pageloader"><span class="title">Buscando...</span></div>
 
-  <div class="sticky">
-    <button id="button-conf" class="button is-green is-rounded"><span class="icon is-small">
-      <i class="fas fa-cog"></i>
-    </span></button>
-  </div>
   <section class="section">
-
-  <div class="columns">
-    <div class="column">
-  <div id="div-modal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Qué buscamos?</p>
-      </header>
-      <section class="modal-card-body">
-
-        <div class="field">
-          <input id="lp-vinyl" type="checkbox" name="lp-vinyl" class="formato switch is-thin is-medium is-info" checked="checked">
-          <label for="lp-vinyl">LP (Vinyl)</label>
-        </div>
-        <div class="field">
-          <input id="single-vinyl" type="checkbox" name="single-vinyl" class="formato switch is-thin is-medium is-info" checked="checked">
-          <label for="single-vinyl">Single (Vinyl)</label>
-        </div>
-        <div class="field">
-          <input id="cd" type="checkbox" name="cd" class="formato switch is-thin is-medium is-info">
-          <label for="cd">CD</label>
-        </div>
-        <div class="field">
-          <input id="sacd" type="checkbox" name="sacd" class="formato switch is-thin is-medium is-info">
-          <label for="sacd">SACD</label>
-        </div>
-        <div class="field">
-          <input id="dvd" type="checkbox" name="dvd" class="formato switch is-thin is-medium is-info">
-          <label for="dvd">DVD</label>
-        </div>
-
-      </section>
-      <footer class="modal-card-foot">
-        <button id="button-aceptar" class="button is-green">
-          <span class="icon is-small">
-          <i class="far fa-thumbs-up"></i>
-          </span> 
-          <span>Guay!</span>
-        </button>
-      </footer>
-    </div>
-  </div>
-</div>
-</div>  
 
     <div class="container">
       <div id="div-resultados" class="columns resultados is-multiline">
