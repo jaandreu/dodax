@@ -1,7 +1,7 @@
-<!doctype html>
 <html>
 
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,11 +10,7 @@
     <!-- Ionic CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
 
-
-    <!-- Bulma CSS -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css">-->
-
+    <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet"> 
 
 <style>
@@ -95,7 +91,7 @@
 <body>
 
 
-  <ion-app>
+  <ion-app class="ios">
     <ion-tabs>
       <ion-tab tab="search">
         <ion-header translucent>
@@ -726,63 +722,63 @@
 
     document.addEventListener("DOMContentLoaded", function(event) { 
 
-      getCurrencyRates()
-        .then((salida) => {
-          rates = salida;
-        });
+      // getCurrencyRates()
+      //   .then((salida) => {
+      //     rates = salida;
+      //   });
 
-      //última búsqueda
-      var lastSearchResult = sessionStorage.getItem('lastSearchResult');
-      var lastSearch = sessionStorage.getItem('lastSearch');
+      // //última búsqueda
+      // var lastSearchResult = sessionStorage.getItem('lastSearchResult');
+      // var lastSearch = sessionStorage.getItem('lastSearch');
 
-      if (lastSearchResult != null){
-        document.getElementById("div-resultados").innerHTML = lastSearchResult;
-        document.getElementById("search").value = lastSearch;
-        hideElement("div-info")
-        if (sessionStorage.getItem("moreItems") === "1"){
-            showElement("div-button-more");
-        }
+      // if (lastSearchResult != null){
+      //   document.getElementById("div-resultados").innerHTML = lastSearchResult;
+      //   document.getElementById("search").value = lastSearch;
+      //   hideElement("div-info")
+      //   if (sessionStorage.getItem("moreItems") === "1"){
+      //       showElement("div-button-more");
+      //   }
     
-      }
+      // }
 
-      //última configuración.
-      var lastConf = localStorage.getItem("conf");
-      if (lastConf !== null){
+      // //última configuración.
+      // var lastConf = localStorage.getItem("conf");
+      // if (lastConf !== null){
 
-        JSON.parse(lastConf).forEach(item => {
-            document.getElementById(item.name).checked = item.checked;
-        });
+      //   JSON.parse(lastConf).forEach(item => {
+      //       document.getElementById(item.name).checked = item.checked;
+      //   });
 
-      }
+      // }
 
     });
 
-    document.getElementById("button-more").addEventListener('click', function(){
+    // document.getElementById("button-more").addEventListener('click', function(){
 
-        hideElement("div-error")
-        showSpinner(true);
-        var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
-        getAlbums(cadenaBusquedaActual, false, false, 0);
-    });
+    //     hideElement("div-error")
+    //     showSpinner(true);
+    //     var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
+    //     getAlbums(cadenaBusquedaActual, false, false, 0);
+    // });
 
 
-   document.getElementById("button-aceptar").addEventListener('click', function(){
+  //  document.getElementById("button-aceptar").addEventListener('click', function(){
 
-    //guardamos la configuración en el storage del navegador.
-    var conf = [];
+  //   //guardamos la configuración en el storage del navegador.
+  //   var conf = [];
 
-    Array.from(document.getElementsByClassName("formato")).forEach(check => {
-      conf.push({name: check.name, checked: check.checked});
-    });
+  //   Array.from(document.getElementsByClassName("formato")).forEach(check => {
+  //     conf.push({name: check.name, checked: check.checked});
+  //   });
 
-    localStorage.setItem("conf", JSON.stringify(conf));
+  //   localStorage.setItem("conf", JSON.stringify(conf));
 
-    document.getElementById("div-modal").classList.remove("is-active");
-   });
+  //   document.getElementById("div-modal").classList.remove("is-active");
+  //  });
    
-   document.getElementById("button-conf").addEventListener('click', function(){
-    document.getElementById("div-modal").classList.add("is-active");
-   });
+  //  document.getElementById("button-conf").addEventListener('click', function(){
+  //   document.getElementById("div-modal").classList.add("is-active");
+  //  });
    
     document.getElementById("formulario").addEventListener('submit', function(){
 
