@@ -586,6 +586,7 @@
         var idPrecio = url.text + "-" + disco.id;
         var trElement = document.createElement("ion-item");
         trElement.setAttribute("id", idPrecio);
+        trElement.classList.add("ion-no-padding");
 
         trElement.innerHTML = "<ion-grid class='no-padding'>"
                            +   "<ion-row>" 
@@ -765,28 +766,28 @@
        });
 
       // //última búsqueda
-      // var lastSearchResult = sessionStorage.getItem('lastSearchResult');
-      // var lastSearch = sessionStorage.getItem('lastSearch');
+       var lastSearchResult = sessionStorage.getItem('lastSearchResult');
+       var lastSearch = sessionStorage.getItem('lastSearch');
 
-      // if (lastSearchResult != null){
-      //   document.getElementById("div-resultados").innerHTML = lastSearchResult;
-      //   document.getElementById("search").value = lastSearch;
+       if (lastSearchResult != null){
+         document.getElementById("div-resultados").innerHTML = lastSearchResult;
+         document.getElementById("search").value = lastSearch;
       //   hideElement("div-info")
-      //   if (sessionStorage.getItem("moreItems") === "1"){
-      //       showElement("div-button-more");
-      //   }
-    
-      // }
+         if (sessionStorage.getItem("moreItems") === "1"){
+             showElement("div-button-more");
+         }
+   
+       }
 
-      // //última configuración.
-      // var lastConf = localStorage.getItem("conf");
-      // if (lastConf !== null){
+      //última configuración.
+      var lastConf = localStorage.getItem("conf");
+      if (lastConf !== null){
 
-      //   JSON.parse(lastConf).forEach(item => {
-      //       document.getElementById(item.name).checked = item.checked;
-      //   });
+      JSON.parse(lastConf).forEach(item => {
+           document.getElementById(item.name).checked = item.checked;
+      });
 
-      // }
+      }
 
     });
 
@@ -798,25 +799,23 @@
     //     getAlbums(cadenaBusquedaActual, false, false, 0);
     // });
 
+  Array.from(document.getElementsByClassName("formato")).forEach(formato => {
 
-  //  document.getElementById("button-aceptar").addEventListener('click', function(){
+      formato.addEventListener('click', function(){
 
-  //   //guardamos la configuración en el storage del navegador.
-  //   var conf = [];
+          //guardamos la configuración en el storage del navegador.
+          var conf = [];
 
-  //   Array.from(document.getElementsByClassName("formato")).forEach(check => {
-  //     conf.push({name: check.name, checked: check.checked});
-  //   });
+          Array.from(document.getElementsByClassName("formato")).forEach(check => {
+              debugger;
+              conf.push({name: check.name, checked: check.checked});
+          });
 
-  //   localStorage.setItem("conf", JSON.stringify(conf));
+          localStorage.setItem("conf", JSON.stringify(conf));
 
-  //   document.getElementById("div-modal").classList.remove("is-active");
-  //  });
-   
-  //  document.getElementById("button-conf").addEventListener('click', function(){
-  //   document.getElementById("div-modal").classList.add("is-active");
-  //  });
-   
+      });
+  });   
+
     document.getElementById("formulario").addEventListener('submit', function(){
 
       cadenaBusqueda = document.getElementById("search").value
@@ -834,10 +833,10 @@
       if (cadenaBusqueda.length < 2)
         return false;
 
-      //sessionStorage.setItem('lastSearch', cadenaBusqueda);
+      sessionStorage.setItem('lastSearch', cadenaBusqueda);
 
       //Inicializamos las rutas de las siguientes llamadas.
-      //sessionStorage.setItem('nextUrls', JSON.stringify([]));
+      sessionStorage.setItem('nextUrls', JSON.stringify([]));
 
       showSpinner(true);
 
