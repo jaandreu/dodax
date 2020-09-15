@@ -1,4 +1,4 @@
-<html>
+<html class="ios">
 
 <head>
 
@@ -19,18 +19,7 @@
         background-color: hsl(201, 29%, 88%);
       }
 
-      body, button, input, select, textarea {
-        font-family:  'Open Sans Condensed', sans-serif, BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-      }
-
-      table {
-        font-family:  'Open Sans', sans-serif, BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 100%;
-      }
-
-      .base {
-        display: none;
-      }
+    
 
       p.album, p.artist {
         text-transform: capitalize;
@@ -85,6 +74,14 @@
         padding-top: 15px !important;
       }
 
+      .base {
+        display: none;
+      }
+
+      .album, .artist {
+        text-transform: capitalize;
+      }
+
     </style>
 
 </head>
@@ -97,35 +94,24 @@
         <ion-header translucent>
           <ion-toolbar class="toolbar-search" color="primary">
             <form id="formulario" method='GET' action='javascript:void(0); return false;'>
-              <ion-searchbar style="text-transform:uppercase" inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
+              <ion-searchbar id="search" style="text-transform:uppercase" type="search" inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
             </form>
           </ion-toolbar>
         </ion-header>
         <ion-content fullscreen>
-          <ion-grid id="div-resultados" class="resultados">
-          <ion-row>
-            <ion-col size-xs="12" size-sm="6" size-lg="3">
+          <ion-grid>
+          <ion-row id="div-resultados" class="resultados">
+            <ion-col id="div-base" class="base" size-xs="12" size-sm="6" size-lg="3">
               <ion-card>
-                <img class="img-album-cover" src="https://c5-static.dodax.com/de-de/musik-cds-dvds-vinyl/alternative-rock/red-hot-chili-peppers-blood-sugar-sex-magik-dpFH98ABN5EFA-cc42c03d8d-175-175-6395603081897149273" />
+                <img id="img-cover" alt="Album cover" class="img-album-cover" src="https://c5-static.dodax.com/de-de/musik-cds-dvds-vinyl/alternative-rock/red-hot-chili-peppers-blood-sugar-sex-magik-dpFH98ABN5EFA-cc42c03d8d-175-175-6395603081897149273" />
                 <ion-card-header>
-                  <ion-card-subtitle>Red Hot Chili Peppers</ion-card-subtitle>
-                  <ion-card-title>Blood Sugar Sex Magik</ion-card-title>
+                  <ion-card-subtitle class="artist" id="p-artist">Red Hot Chili Peppers</ion-card-subtitle>
+                  <ion-card-title class="album" id="p-album">Blood Sugar Sex Magik</ion-card-title>
                 </ion-card-header>
                 <ion-card-content>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col size="2">ES</ion-col>
-                            <ion-col size="4">1000€</ion-col>
-                            <ion-col size="4"></ion-col>
-                            <ion-col size="2"></ion-col>
-                        </ion-row>
-                        <ion-row>
-                          <ion-col size="2">ES</ion-col>
-                          <ion-col size="4">1000€</ion-col>
-                          <ion-col size="4">1000€</ion-col>
-                          <ion-col size="2"> <ion-icon name="settings"></ion-icon></ion-col>
-                      </ion-row>
-                      </ion-grid>
+                    <ion-list id="table-precios-body">
+                      
+                    </ion-list>
                 </ion-card-content>
               </ion-card>
             </ion-col>
@@ -143,27 +129,27 @@
           <ion-list lines="none">
             <ion-item>
               <ion-label>LP (Vinyl)</ion-label>
-              <ion-toggle slot="start" name="lp-vinyl" class="formato" checked></ion-toggle>
+              <ion-toggle slot="start" name="lp-vinyl" id="lp-vinyl" class="formato" checked></ion-toggle>
             </ion-item>
     
             <ion-item>
               <ion-label>Single (Vinyl)</ion-label>
-              <ion-toggle slot="start" name="single-vinyl" class="formato" checked></ion-toggle>
+              <ion-toggle slot="start" id="single-vinyl" name="single-vinyl" class="formato" checked></ion-toggle>
             </ion-item>
     
             <ion-item>
               <ion-label>CD</ion-label>
-              <ion-toggle slot="start" name="cd" color="secondary" class="formato"></ion-toggle>
+              <ion-toggle slot="start" id="cd" name="cd" color="secondary" class="formato"></ion-toggle>
             </ion-item>
     
             <ion-item>
               <ion-label>SACD</ion-label>
-              <ion-toggle slot="start" name="sacd" color="secondary" class="formato"></ion-toggle>
+              <ion-toggle slot="start" id="sacd" name="sacd" color="secondary" class="formato"></ion-toggle>
             </ion-item>
     
             <ion-item>
               <ion-label>DVD</ion-label>
-              <ion-toggle slot="start" name="dvd" color="secondary" class="formato"></ion-toggle>
+              <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
             </ion-item>
 
           </ion-list>
@@ -494,14 +480,14 @@
          var minPrice = parseFloat(ficha.getAttribute('min-price'));
          var gtinFicha = ficha.getAttribute("gtin-ficha");
 
-         if (gtinFicha === "" && gtin != ""){
+       /*  if (gtinFicha === "" && gtin != ""){
            ficha.setAttribute("gtin-ficha", gtin);
            (ficha.getElementsByClassName("discogs")[0]).setAttribute("href", "https://www.discogs.com/search/?q=" + gtin +"&type=all"); 
            (ficha.getElementsByClassName("amazon")[0]).setAttribute("href", "https://www.amazon.es/s?k=" + gtin + "&i=popular&ref=nb_sb_noss"); 
            (ficha.getElementsByClassName("discogs")[0]).classList.remove("desactivado");
            (ficha.getElementsByClassName("amazon")[0]).classList.remove("desactivado");
 
-         }
+         }*/
 
          var idPrecio = price.text + "-" + idAlbum;
          var trElement = document.getElementById(idPrecio);
@@ -513,7 +499,7 @@
 
          if (parseFloat(minPrice) >= parseFloat(price.priceInt)) {
              ficha.setAttribute("min-price", price.priceInt);
-             updateBestsPrices(idAlbum, price.priceInt);
+             //updateBestsPrices(idAlbum, price.priceInt);
          }
 
     }
@@ -530,33 +516,41 @@
       base.getElementById(disco.id).setAttribute("min-price",disco.price.priceInt);
       base.getElementById(disco.id).setAttribute("gtin-ficha", disco.gtin);
 
-      base.getElementById("p-album").innerHTML = 
+      /*base.getElementById("p-album").innerHTML = 
           "<span style='padding-right:4px;'>" + disco.title.toLowerCase() + "</span>" 
-        + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "");
+        + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "");*/
 
-      base.getElementById("update-album").setAttribute("onclick", "updateAlbum('"+ disco.id + "')");
+      base.getElementById("p-album").innerHTML = disco.title.toLowerCase();
+
+      /*base.getElementById("update-album").setAttribute("onclick", "updateAlbum('"+ disco.id + "')");
       var spotifyString = encodeURIComponent(disco.from.toLowerCase() + " " + disco.title.toLowerCase().replace(/ \([\s\S]*?\)/g, ''));
-      base.getElementById("a-spotify").setAttribute("href", "https://open.spotify.com/search/" + spotifyString);
+      base.getElementById("a-spotify").setAttribute("href", "https://open.spotify.com/search/" + spotifyString);*/
 
-      if (disco.gtin != ""){
+      /*if (disco.gtin != ""){
         base.getElementById("a-discogs").setAttribute("href", "https://www.discogs.com/search/?q=" + disco.gtin +"&type=all");
         base.getElementById("a-amazon").setAttribute("href", "https://www.amazon.es/s?k=" + disco.gtin + "&i=popular&ref=nb_sb_noss");
         base.getElementById("a-discogs").classList.remove("desactivado");
         base.getElementById("a-amazon").classList.remove("desactivado");
-      }
+      }*/
+
       base.getElementById("p-artist").innerText = disco.from.toLowerCase();
       base.getElementById("img-cover").setAttribute("src", disco.image);
+
 
       urlsDodax.forEach(url => {
 
         var idPrecio = url.text + "-" + disco.id;
-        var trElement = document.createElement("tr");
+        var trElement = document.createElement("ion-item");
         trElement.setAttribute("id", idPrecio);
 
-        trElement.innerHTML = "<td>" + url.text + "</td>" 
-                            + "<td id='" + idPrecio + "-PRICE'>--</td>"
-                            + "<td id='" + idPrecio + "-ORIGINALPRICE'></td>"
-                            + "<td class='td-albumminprice' id='" + idPrecio + "-MINPRICE'></td>";
+        trElement.innerHTML = "<ion-grid>"
+                           +   "<ion-row>" 
+                           +      "<ion-col size='2'>" + url.text + "</ion-col>"
+                           +      "<ion-col size='4' id='" + idPrecio + "-PRICE'>--</ion-col>"
+                           +      "<ion-col size='5' id='" + idPrecio + "-ORIGINALPRICE'></ion-col>"
+                           +      "<ion-col class='td-albumminprice' size='1' id='" + idPrecio + "-MINPRICE'><ion-icon name='star'></ion-icon></ion-col>"
+                           +   "</ion-row>"
+                           + "</ion-grid>";
 
         base.getElementById("table-precios-body").appendChild(trElement);
 
@@ -797,24 +791,26 @@
       if (cadenaBusqueda.length < 2)
         return false;
 
-      sessionStorage.setItem('lastSearch', cadenaBusqueda);
+      //sessionStorage.setItem('lastSearch', cadenaBusqueda);
+
       //Inicializamos las rutas de las siguientes llamadas.
-      sessionStorage.setItem('nextUrls', JSON.stringify([]));
+      //sessionStorage.setItem('nextUrls', JSON.stringify([]));
 
-      showSpinner(true);
+      //showSpinner(true);
 
-      hideElement("div-info")
-      hideElement("div-error")
-      hideElement("div-noresult");
+      //hideElement("div-info")
+      //hideElement("div-error")
+      //hideElement("div-noresult");
       hideElement("div-resultados");
-      hideElement("div-button-more");
+      //hideElement("div-button-more");
 
       Array.from(document.getElementsByClassName("resultados-items")).forEach(element => {
           element.parentNode.removeChild(element);
       });
 
-      sessionStorage.setItem("lastSearchIndex", "0");
+      //sessionStorage.setItem("lastSearchIndex", "0");
       getAlbums(cadenaBusqueda, true, false, 0);
+      
       showElement("div-resultados");
 
       event.preventDefault();
