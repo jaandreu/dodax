@@ -42,10 +42,10 @@
 */
 
 * {
-  font-family:  'Open Sans', sans-serif !important;
+  font-family: 'Open Sans', sans-serif;
 }
 
-ion-card-title, ion-card-subtitle, ion-searchbar {
+ion-card-title, ion-card-subtitle, .searchbar-input {
   font-family: 'Open Sans Condensed', sans-serif !important;
 }
 
@@ -54,6 +54,10 @@ ion-card-title, ion-card-subtitle, ion-searchbar {
 }
 .is-subtitle{
   font-size: 1.25rem;
+}
+
+.searchbar-input {
+    font-size: 1.5rem !important;
 }
 
 :root {
@@ -104,9 +108,9 @@ ion-card-title, ion-card-subtitle, ion-searchbar {
 
         <!-- header -->
         <ion-header translucent>
-          <ion-toolbar class="toolbar-search is-title" color="primary">
+          <ion-toolbar class="toolbar-search" color="primary">
             <form id="formulario" method='GET' action='javascript:void(0); return false;'>
-              <ion-searchbar id="search" style="text-transform:uppercase" type="search" inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
+              <ion-searchbar class="is-title" id="search" style="text-transform:uppercase" type="search" inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
             </form>
           </ion-toolbar>
         </ion-header>
