@@ -104,16 +104,30 @@
         <ion-content fullscreen>
           <ion-grid>
           <ion-row id="div-resultados" class="resultados">
-            <ion-col id="div-base" class="base" size-xs="12" size-sm="6" size-lg="3">
+            <ion-col id="div-base" class="base" size-xs="12" size-sm="6" size-lg="4" size-xl="3">
               <ion-card>
-                <img id="img-cover" alt="Album cover" class="img-album-cover" src="https://c5-static.dodax.com/de-de/musik-cds-dvds-vinyl/alternative-rock/red-hot-chili-peppers-blood-sugar-sex-magik-dpFH98ABN5EFA-cc42c03d8d-175-175-6395603081897149273" />
+                <img id="img-cover" alt="Album cover" class="img-album-cover" src="#" />
                 <ion-card-header>
-                  <ion-card-subtitle class="artist" id="p-artist">Red Hot Chili Peppers</ion-card-subtitle>
-                  <ion-card-title class="album" id="p-album">Blood Sugar Sex Magik</ion-card-title>
-                </ion-card-header>
                 <ion-card-content>
-                    <ion-list id="table-precios-body">
-                      
+                   <ion-fab vertical="top" horizontal="end" slot="fixed">
+                    <ion-fab-button>
+                      <ion-icon name="share"></ion-icon>
+                    </ion-fab-button>
+                    <ion-fab-list side="top">
+                      <ion-fab-button><ion-icon name="logo-amazon"></ion-icon></ion-fab-button>
+                    </ion-fab-list>
+                    <ion-fab-list side="bottom">
+                      <ion-fab-button><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
+                    </ion-fab-list>
+                    <ion-fab-list side="start">
+                      <ion-fab-button><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
+                    </ion-fab-list>
+                  </ion-fab>
+                  <ion-card-title class="album" id="p-album">#album#</ion-card-title>
+                  <ion-card-subtitle class="artist" id="p-artist">#artist#</ion-card-subtitle>
+                </ion-card-header>
+                  <ion-list id="table-precios-body">
+                       <!--lista de precios-->
                     </ion-list>
                 </ion-card-content>
               </ion-card>
@@ -157,7 +171,8 @@
 
           </ion-list>
         </ion-content>      
-      </ion-tab>      </ion-tab>
+      </ion-tab> 
+
       <!--Menú del pié de página.-->
       <ion-tab-bar slot="bottom">
         <ion-tab-button tab="search">
