@@ -15,94 +15,65 @@
 
 <style>
       
-      /* html {
-        background-color: hsl(201, 29%, 88%);
-      }
+  * {
+    font-family: 'Open Sans', sans-serif;
+  }
 
-      .desactivado {
-        opacity: 20%;
-      }
+  ion-card-title, ion-card-subtitle, .searchbar-input {
+    font-family: 'Open Sans Condensed', sans-serif !important;
+  }
 
-      .update {
-        color: hsl(93, 67%, 38%);
-      }
+  .is-title{
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .is-subtitle{
+    font-size: 1.25rem;
+  }
 
-      .button.is-green {
-         background-color: hsl(93, 67%, 38%);
-         border-color: transparent;
-         color: #fff;
-      }
+  .searchbar-input {
+      font-size: 1.5rem !important;
+  }
 
-      tr.best-price {
-        background-color:hsl(282, 100%, 95%);
-      }
+  :root {
+    --ion-color-primary: #000000;
+    --ion-color-primary-rgb: 0,0,0;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255,255,255;
+    --ion-color-primary-shade: #000000;
+    --ion-color-primary-tint: #1a1a1a;
 
-      .ayuda, .notificacion, .modal {font-size: 1.3rem;}
+    --ion-color-secondary: #1DB954;
+    --ion-color-secondary-rgb: 29,185,84;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255,255,255;
+    --ion-color-secondary-shade: #1aa34a;
+    --ion-color-secondary-tint: #34c065;
+  }
 
-*/
-
-* {
-  font-family: 'Open Sans', sans-serif;
-}
-
-ion-card-title, ion-card-subtitle, .searchbar-input {
-  font-family: 'Open Sans Condensed', sans-serif !important;
-}
-
-.is-title{
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-.is-subtitle{
-  font-size: 1.25rem;
-}
-
-.searchbar-input {
-    font-size: 1.5rem !important;
-}
-
-:root {
-  --ion-color-primary: #000000;
-  --ion-color-primary-rgb: 0,0,0;
-  --ion-color-primary-contrast: #ffffff;
-  --ion-color-primary-contrast-rgb: 255,255,255;
-  --ion-color-primary-shade: #000000;
-  --ion-color-primary-tint: #1a1a1a;
-
-  --ion-color-secondary: #1DB954;
-  --ion-color-secondary-rgb: 29,185,84;
-  --ion-color-secondary-contrast: #ffffff;
-  --ion-color-secondary-contrast-rgb: 255,255,255;
-  --ion-color-secondary-shade: #1aa34a;
-  --ion-color-secondary-tint: #34c065;
+  img.img-album-cover {
+    width: 100%;
+  }
   
-  
+  .toolbar-search {
+    padding-top: 15px !important;
+  }
 
-}
+  .base {
+    display: none;
+  }
 
-      img.img-album-cover {
-        width: 100%;
-      }
-      
-      .toolbar-search {
-        padding-top: 15px !important;
-      }
+  .album, .artist {
+    text-transform: capitalize;
+  }
+  .no-padding {
+    padding: 0px 0px 0px 0px !important;
+  }
 
-      .base {
-        display: none;
-      }
-
-      .album, .artist {
-        text-transform: capitalize;
-      }
-      .no-padding {
-        padding: 0px 0px 0px 0px !important;
-      }
-
-    </style>
-
+</style>
 </head>
-<body onload="loadApp();">
+
+<body>
   <ion-app>
     <ion-tabs>
       <ion-tab tab="search">
@@ -133,7 +104,7 @@ ion-card-title, ion-card-subtitle, .searchbar-input {
                           <ion-icon name="add"></ion-icon>
                         </ion-fab-button>
                         <ion-fab-list side="top">
-                          <ion-fab-button  color="secondary"><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
+                          <ion-fab-button id="update-album" color="secondary"><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
                         </ion-fab-list>
                         <ion-fab-list side="bottom">
                           <ion-fab-button id="a-discogs" class="discogs"  color="secondary"><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
@@ -184,12 +155,6 @@ ion-card-title, ion-card-subtitle, .searchbar-input {
               <ion-label>DVD</ion-label>
               <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
             </ion-item>
-
-            <ion-item>
-              <ion-label>Modo Heavy!</ion-label>
-              <ion-toggle slot="start" id="themeToggle" name="themeToggle" color="secondary" ></ion-toggle>
-            </ion-item>
-
           </ion-list>
         </ion-content>      
       </ion-tab> 
@@ -583,15 +548,16 @@ ion-card-title, ion-card-subtitle, .searchbar-input {
       base.getElementById(disco.id).classList.add("resultados-items");
       base.getElementById(disco.id).setAttribute("min-price",disco.price.priceInt);
       base.getElementById(disco.id).setAttribute("gtin-ficha", disco.gtin);
+      base.getElementById("p-album").innerHTML = "<ion-text>" 
+                                                + disco.title.toLowerCase()
+                                                + "</ion-text>"
+                                                + "<ion-badge color='secondary'>"
+                                                + disco.type
+                                                + "</ion-badge>";
+      
+      base.getElementById("update-album").setAttribute("onclick", "updateAlbum('"+ disco.id + "')");
 
-      /*base.getElementById("p-album").innerHTML = 
-          "<span style='padding-right:4px;'>" + disco.title.toLowerCase() + "</span>" 
-        + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "");*/
-
-      base.getElementById("p-album").innerHTML = disco.title.toLowerCase();
-
-      /*base.getElementById("update-album").setAttribute("onclick", "updateAlbum('"+ disco.id + "')");
-      var spotifyString = encodeURIComponent(disco.from.toLowerCase() + " " + disco.title.toLowerCase().replace(/ \([\s\S]*?\)/g, ''));
+      /*var spotifyString = encodeURIComponent(disco.from.toLowerCase() + " " + disco.title.toLowerCase().replace(/ \([\s\S]*?\)/g, ''));
       base.getElementById("a-spotify").setAttribute("href", "https://open.spotify.com/search/" + spotifyString);*/
 
       if (disco.gtin != ""){
@@ -882,29 +848,6 @@ ion-card-title, ion-card-subtitle, .searchbar-input {
       event.preventDefault();
 
     });
-
-    const toggle = document.querySelector('#themeToggle');
-
-// Listen for the toggle check/uncheck to toggle the dark class on the <body>
-    toggle.addEventListener('ionChange', (ev) => {
-      document.body.classList.toggle('dark', ev.detail.checked);
-    });
-
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-    // Listen for changes to the prefers-color-scheme media query
-    prefersDark.addListener((e) => checkToggle(e.matches));
-
-    // Called when the app loads
-    function loadApp() {
-      checkToggle(prefersDark.matches);
-    }
-
-    // Called by the media query to check/uncheck the toggle
-    function checkToggle(shouldCheck) {
-      toggle.checked = shouldCheck;
-    }
-
 
   </script>
 
