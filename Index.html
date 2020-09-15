@@ -113,10 +113,10 @@
                           <ion-fab-button  color="secondary"><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
                         </ion-fab-list>
                         <ion-fab-list side="bottom">
-                          <ion-fab-button  color="secondary"><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
+                          <ion-fab-button id="a-discogs" class="discogs"  color="secondary"><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
                         </ion-fab-list>
                         <ion-fab-list side="start">
-                          <ion-fab-button color="secondary"><ion-icon name="logo-amazon"></ion-icon></ion-fab-button>
+                          <ion-fab-button id="a-amazon" class="amazon" color="secondary"><ion-icon name="logo-amazon"></ion-icon></ion-fab-button>
                         </ion-fab-list>
                       </ion-fab>
                     <ion-list id="table-precios-body">
@@ -523,14 +523,15 @@
          var minPrice = parseFloat(ficha.getAttribute('min-price'));
          var gtinFicha = ficha.getAttribute("gtin-ficha");
 
-       /*  if (gtinFicha === "" && gtin != ""){
+        if (gtinFicha === "" && gtin != ""){
            ficha.setAttribute("gtin-ficha", gtin);
+
            (ficha.getElementsByClassName("discogs")[0]).setAttribute("href", "https://www.discogs.com/search/?q=" + gtin +"&type=all"); 
            (ficha.getElementsByClassName("amazon")[0]).setAttribute("href", "https://www.amazon.es/s?k=" + gtin + "&i=popular&ref=nb_sb_noss"); 
-           (ficha.getElementsByClassName("discogs")[0]).classList.remove("desactivado");
-           (ficha.getElementsByClassName("amazon")[0]).classList.remove("desactivado");
+           (ficha.getElementsByClassName("discogs")[0]).setAttribute("disabled", "false");
+           (ficha.getElementsByClassName("amazon")[0]).setAttribute("disabled", "false");
 
-         }*/
+         }
 
          var idPrecio = price.text + "-" + idAlbum;
          var trElement = document.getElementById(idPrecio);
@@ -570,12 +571,12 @@
       var spotifyString = encodeURIComponent(disco.from.toLowerCase() + " " + disco.title.toLowerCase().replace(/ \([\s\S]*?\)/g, ''));
       base.getElementById("a-spotify").setAttribute("href", "https://open.spotify.com/search/" + spotifyString);*/
 
-      /*if (disco.gtin != ""){
+      if (disco.gtin != ""){
         base.getElementById("a-discogs").setAttribute("href", "https://www.discogs.com/search/?q=" + disco.gtin +"&type=all");
         base.getElementById("a-amazon").setAttribute("href", "https://www.amazon.es/s?k=" + disco.gtin + "&i=popular&ref=nb_sb_noss");
-        base.getElementById("a-discogs").classList.remove("desactivado");
-        base.getElementById("a-amazon").classList.remove("desactivado");
-      }*/
+        base.getElementById("a-discogs").setAttribute("disabled", "false");
+        base.getElementById("a-amazon").setAttribute("disabled", "false");
+      }
 
       base.getElementById("p-artist").innerText = disco.from.toLowerCase();
       base.getElementById("img-cover").setAttribute("src", disco.image);
