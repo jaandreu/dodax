@@ -119,7 +119,12 @@
               </ion-col>
             </ion-row>
         </ion-grid>
-        </ion-content>      
+
+        <section id="div-button-more" style="display: none;" class="full-width">
+          <ion-button id="button-more" expand="full" color="secondary">más resultados ...</ion-button>
+        </section>
+
+      </ion-content>      
       </ion-tab>
       <ion-tab tab="settings">
         <ion-header translucent>
@@ -169,45 +174,13 @@
 
   <!-- <body class="has-navbar-fixed-top">
 
-
-      <div style="display:none" id="div-error" class="notificacion notification is-danger">
+    <div style="display:none" id="div-error" class="notificacion notification is-danger">
         Ha fallado la conexión con alguno de los servidores, repita la búsqueda
       </div>
-
-      <div id="div-button-more" style="display: none" class="columns">
-        <div class="column">
-            <button id="button-more" class="button is-info is-fullwidth is-outlined">
-              <span class="icon is-small">
-                <i class="fas fa-caret-down"></i>
-              </span>
-              <span>Más resultados</span>
-            </button>
-        </div>
-      </div>
-        
-      <article id="div-info" class="message is-info ayuda">
-        <div class="message-header">
-          <p>Ayuda</p>
-        </div>
-        <div class="message-body">
-          <ul>
-            <li>- <b>Búsqueda en la sección de vinilos y singles:</b> no hace falta poner <b>VINILO</b>, <b>VINYL</b> ni <b>LP</b>.</li>
-            <li>- <b>Criterios de búsqueda:</b> Cualquier cosa que funcione en dodax aquí funcionará <b>;-).</b></li>
-            <li>- <b>Ficha:</b> podemos acceder a Dodax clicando en el importe, podemos acceder a Discogs, Amazon o Spotify clicando en los iconos del pie de la ficha.</li>
-            <li>- <b>El icono de la estrella representa los mejores precios.</b></li>
-            <li>- <b>Cambio de moneda:</b> para el cambio de moneda se usan los datos oficiales en el momento de la consulta, aunque servicios como Paypal suelen aplicar otros tipos de cambio.</li>
-            <li>- <b>Sugerencias:</b> cualquier sugerencia de cambio la podéir reportar en el grupo de Facebook <b><a href="https://www.facebook.com/groups/307523296709864">Ofertas de Vinilos en amazon, dodax, etc...sin censuras todos los estilos</a></b></li>
-          </ul>
-        </div>
-      </article>
 
       <div style="display: none;" id="div-noresult" class="noresult notification is-info">
         No se han encontrado coincidencias
       </div>
-
-    </div>
-
-  </section>
  --> 
 
   <!-- Ionic -->
@@ -597,7 +570,7 @@
               showElement("div-error");
             }
             
-            mostrarMasResultados = resultado.nextUrl != null && index === 2;
+            mostrarMasResultados = resultado.nextUrl != null && index === 1;
 
             if (resultado.nextUrl != null) {
               
@@ -721,7 +694,6 @@
        if (lastSearchResult != null){
          document.getElementById("div-resultados").innerHTML = lastSearchResult;
          document.getElementById("search").value = lastSearch;
-      //   hideElement("div-info")
          if (sessionStorage.getItem("moreItems") === "1"){
              showElement("div-button-more");
          }
@@ -732,21 +704,22 @@
       var lastConf = localStorage.getItem("conf");
       if (lastConf !== null){
 
-      JSON.parse(lastConf).forEach(item => {
-           document.getElementById(item.name).checked = item.checked;
-      });
+        JSON.parse(lastConf).forEach(item => {
+            document.getElementById(item.name).checked = item.checked;
+        });
 
       }
 
     });
 
-    // document.getElementById("button-more").addEventListener('click', function(){
+     document.getElementById("button-more").addEventListener('click', function(){
 
-    //     hideElement("div-error")
-    //     showSpinner(true);
-    //     var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
-    //     getAlbums(cadenaBusquedaActual, false, false, 0);
-    // });
+         //hideElement("div-error")
+         showSpinner(true);
+         var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
+         getAlbums(cadenaBusquedaActual, false, false, 0);
+
+     });
 
     document.getElementById("formulario").addEventListener('submit', function(){
 
@@ -772,11 +745,10 @@
 
       showSpinner(true);
 
-      //hideElement("div-info")
       //hideElement("div-error")
       //hideElement("div-noresult");
       hideElement("div-resultados");
-      //hideElement("div-button-more");
+      hideElement("div-button-more");
 
       Array.from(document.getElementsByClassName("resultados-items")).forEach(element => {
           element.parentNode.removeChild(element);
