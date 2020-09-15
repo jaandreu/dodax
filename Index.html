@@ -35,6 +35,7 @@
       font-size: 1.5rem !important;
   }
 
+  /*Colores de ionic*/
   :root {
     --ion-color-primary: #000000;
     --ion-color-primary-rgb: 0,0,0;
@@ -101,16 +102,13 @@
                     <ion-card-subtitle class="artist is-subtitle" id="p-artist">#artist#</ion-card-subtitle>
                     <ion-fab vertical="top" horizontal="end" edge slot="fixed">
                         <ion-fab-button color="primary">
-                          <ion-icon name="add"></ion-icon>
+                          <ion-icon name="chevron-back-outline"></ion-icon>
                         </ion-fab-button>
-                        <ion-fab-list side="top">
-                          <ion-fab-button id="update-album" color="secondary"><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
-                        </ion-fab-list>
-                        <ion-fab-list side="bottom">
-                          <ion-fab-button id="a-discogs" class="discogs"  color="secondary"><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
-                        </ion-fab-list>
                         <ion-fab-list side="start">
+                          <ion-fab-button id="update-album" color="secondary"><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
+                          <ion-fab-button id="a-discogs" class="discogs"  color="secondary"><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
                           <ion-fab-button id="a-amazon" class="amazon" color="secondary"><ion-icon name="logo-amazon"></ion-icon></ion-fab-button>
+                          <ion-fab-button id="a-spotify" class="spotify" color="secondary"><ion-icon src="./spotify.png"></ion-icon></ion-fab-button>
                         </ion-fab-list>
                       </ion-fab>
                     <ion-list id="table-precios-body">
@@ -135,22 +133,18 @@
               <ion-label>LP (Vinyl)</ion-label>
               <ion-toggle slot="start" name="lp-vinyl" id="lp-vinyl" class="formato" checked></ion-toggle>
             </ion-item>
-    
             <ion-item>
               <ion-label>Single (Vinyl)</ion-label>
               <ion-toggle slot="start" id="single-vinyl" name="single-vinyl" class="formato" checked></ion-toggle>
             </ion-item>
-    
             <ion-item>
               <ion-label>CD</ion-label>
               <ion-toggle slot="start" id="cd" name="cd" color="secondary" class="formato"></ion-toggle>
             </ion-item>
-    
             <ion-item>
               <ion-label>SACD</ion-label>
               <ion-toggle slot="start" id="sacd" name="sacd" color="secondary" class="formato"></ion-toggle>
             </ion-item>
-    
             <ion-item>
               <ion-label>DVD</ion-label>
               <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
@@ -175,45 +169,6 @@
 
   <!-- <body class="has-navbar-fixed-top">
 
-  <div id="div-pageloader" class="pageloader"><span class="title">Buscando...</span></div>
-
-  <section class="section">
-
-    <div class="container">
-      <div id="div-resultados" class="columns resultados is-multiline">
-        <div id="div-base" class=" base column is-one-quarter is-half-tablet">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-square">
-                <img  id="img-cover" class="cover" src="" alt="Album cover">
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <p id="p-album" class="album title is-4"></p>
-                  <p id="p-artist" class="artist subtitle is-5"></p>
-                </div>
-              </div>
-              <div class="content">
-                <div class="table-container">
-                  <table id="table-precios"  class="table is-hoverable is-fullwidth">
-                    <tbody id="table-precios-body">
-
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <footer class="card-footer">
-              <a id='a-discogs' class="desactivado discogs card-footer-item" href='javascript:void(0);'><img src="discogs.png"></img></a>
-              <a id='a-amazon' class="desactivado amazon card-footer-item" href='javascript:void(0);'><img src="amazon.png"></img></a>
-              <a id='a-spotify' class="spotify card-footer-item" href='javascript:void(0);'><img src="spotify.png"></img></a>
-              <a id='update-album' class="card-footer-item" href='javascript:void(0);'><i class='update fas fa-sync-alt'></i></a>
-            </footer>
-          </div>
-        </div>
-      </div>
 
       <div style="display:none" id="div-error" class="notificacion notification is-danger">
         Ha fallado la conexión con alguno de los servidores, repita la búsqueda
@@ -255,12 +210,13 @@
   </section>
  --> 
 
-  <!-- IONIC -->
+  <!-- Ionic -->
   <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
   <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
-  
+
+  <!-- Componente de loading-->
   <script type="module">
     import { loadingController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
     window.loadingController = loadingController;
@@ -270,17 +226,19 @@
   
   <script>
 
-      const showLoader = function() {
+    //Método que muestra u oculta el frame de buscando.
+    const showSpinner = function(show) {
 
-          this.loadingController.create({
+       if (show){
+
+        this.loadingController.create({
             message: "Hey Ho! Let's Go!"
           }).then((res) => {
             res.present();
           });
 
-      }
-
-      const hideLoader = function() {
+       }
+       else{
 
         this.loadingController.dismiss().then((res) => {
           console.log("Hey Ho! Let's Go!", res);
@@ -288,19 +246,8 @@
           console.log('error', error);
         });
 
-      }
-
-    //Método que muestra u oculta el frame de buscando.
-    const showSpinner = function(show) {
-
-       if (show){
-        showLoader();
        }
-       else{
-        hideLoader();
-       }
- 
-    }
+     }
 
     //Tipos de búsqueda
     var tiposBusqueda = [
@@ -318,41 +265,41 @@
       url: "https://www.dodax.de",
       params: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H"
      }
-     , {
-      text: "AT",
-      url: "https://www.dodax.at",
-      params: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H"
-    }
-    , {
-      text: "FR",
-      url: "https://www.dodax.fr",
-      params: "/fr-fr/musique-cd-dvd-vinyles-cLOFV6FFU7H"
-    }
-    , {
-      text: "UK",
-      url: "https://www.dodax.co.uk",
-      params: "/en-gb/music-cds-dvds-vinyl-cLOFV6FFU7H"
-    }
-    , {
-      text: "ES",
-      url: "https://www.dodax.es",
-      params: "/es-es/musica-cds-dvds-vinilos-cLOFV6FFU7H"
-    }
-    , {
-      text: "IT",
-      url: "https://www.dodax.it",
-      params: "/it-it/musica-cd-dvd-vinili-cLOFV6FFU7H"
-    }
-    , {
-      text: "PL",
-      url: "https://www.dodax.pl",
-      params: "/pl-pl/muzyka-cd-dvd-winyle-cLOFV6FFU7H"
-    }
-    , {
-      text: "NL",
-      url: "https://www.dodax.nl",
-      params: "/nl-nl/muziek-cds-dvds-vinylplaten-cLOFV6FFU7H"
-    }
+    //  , {
+    //   text: "AT",
+    //   url: "https://www.dodax.at",
+    //   params: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H"
+    // }
+    // , {
+    //   text: "FR",
+    //   url: "https://www.dodax.fr",
+    //   params: "/fr-fr/musique-cd-dvd-vinyles-cLOFV6FFU7H"
+    // }
+    // , {
+    //   text: "UK",
+    //   url: "https://www.dodax.co.uk",
+    //   params: "/en-gb/music-cds-dvds-vinyl-cLOFV6FFU7H"
+    // }
+    // , {
+    //   text: "ES",
+    //   url: "https://www.dodax.es",
+    //   params: "/es-es/musica-cds-dvds-vinilos-cLOFV6FFU7H"
+    // }
+    // , {
+    //   text: "IT",
+    //   url: "https://www.dodax.it",
+    //   params: "/it-it/musica-cd-dvd-vinili-cLOFV6FFU7H"
+    // }
+    // , {
+    //   text: "PL",
+    //   url: "https://www.dodax.pl",
+    //   params: "/pl-pl/muzyka-cd-dvd-winyle-cLOFV6FFU7H"
+    // }
+    // , {
+    //   text: "NL",
+    //   url: "https://www.dodax.nl",
+    //   params: "/nl-nl/muziek-cds-dvds-vinylplaten-cLOFV6FFU7H"
+    // }
     ]
     
 
@@ -494,6 +441,7 @@
        var fichaAlbum = document.getElementById(idAlbum);
 
        Array.from(fichaAlbum.getElementsByClassName('tr-albumprice')).forEach(tr => {
+
           if (tr.getAttribute('price-int') === minPrice){
               tr.setAttribute("color", "secondary");
           }
@@ -512,6 +460,7 @@
          var gtinFicha = ficha.getAttribute("gtin-ficha");
 
         if (gtinFicha === "" && gtin != ""){
+
            ficha.setAttribute("gtin-ficha", gtin);
 
            (ficha.getElementsByClassName("discogs")[0]).setAttribute("href", "https://www.discogs.com/search/?q=" + gtin +"&type=all"); 
