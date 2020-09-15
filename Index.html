@@ -285,25 +285,34 @@
   
   <script>
 
-    var loading = null;
+      function showLoader() {
 
-    const createLoading = async() => {
+          this.loadingController.create({
+            message: "Hey Ho! Let's Go!"
+          }).then((res) => {
+            res.present();
+          });
 
-      loading = await loadingController.create({
-        message: "Hey ho, let's go!",
-      });
+      }
 
-    };
+      function hideLoader() {
+
+        this.loadingController.dismiss().then((res) => {
+          console.log("Hey Ho! Let's Go!", res);
+        }).catch((error) => {
+          console.log('error', error);
+        });
+
+      }
 
     //Método que muestra u oculta el frame de buscando.
     const showSpinner = async (show) => {
 
        if (show){
-         loading.present();
+        showLoader();
        }
        else{
-         debugger;
-         loading.dismiss();
+        hideLoader();
        }
  
     }
