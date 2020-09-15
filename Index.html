@@ -570,7 +570,7 @@
               showElement("div-error");
             }
             
-            mostrarMasResultados = resultado.nextUrl != null && index === 1;
+            mostrarMasResultados = resultado.nextUrl != null && index === 0;
 
             if (resultado.nextUrl != null) {
               
@@ -646,7 +646,7 @@
           sessionStorage.setItem('nextUrls', JSON.stringify(nextUrls));
 
           //Quedan más resultados.
-          if (nextUrls.length > 0 && index < 2 && !updateAlbum) {
+          if (nextUrls.length > 0 && index < 0 && !updateAlbum) {
             getAlbums(cadenaBusqueda, false, false, index + 1);
           }
           else{
