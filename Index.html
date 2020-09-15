@@ -278,7 +278,7 @@
     ]
     
 
-    const getUrlsDodax = function (updateAlbum){
+    const getUrlsDodax = function (updateAlbum, countries){
 
       //Obtenemos las opciones de búsqueda.
       var filtro = "";
@@ -298,7 +298,16 @@
         }
       }
 
-      return urlsDodax.map(urlDodax => {
+      return urlsDodax
+          .filter(fil => {
+             if (typeof countries !== "undefined"){
+                return countries.includes(fil.text);
+             }
+             else {
+               return true;
+             }
+          })
+          .map(urlDodax => {
          
            var newUrl = {
               url: urlDodax.url,
@@ -447,6 +456,7 @@
 
          var idPrecio = price.text + "-" + idAlbum;
          var trElement = document.getElementById(idPrecio);
+         trElement.classList.remove('waiting-price');
          trElement.setAttribute('price-int', price.priceInt);
          trElement.classList.add('tr-albumprice');
          trElement.setAttribute('href', price.url);
@@ -501,11 +511,12 @@
         var trElement = document.createElement("ion-item");
         trElement.setAttribute("id", idPrecio);
         trElement.classList.add("ion-no-padding");
+        trElement.classList.add("waiting-price");
 
         trElement.innerHTML = "<ion-grid class='no-padding'>"
                            +   "<ion-row>" 
                            +      "<ion-col size='2'>" + url.text + "</ion-col>"
-                           +      "<ion-col size='5' id='" + idPrecio + "-PRICE'>--</ion-col>"
+                           +      "<ion-col size='5' id='" + idPrecio + "-PRICE'><ion-spinner color='secondary' name='dots'></ion-spinner></ion-col>"
                            +      "<ion-col size='5' id='" + idPrecio + "-ORIGINALPRICE'></ion-col>"
                            +   "</ion-row>"
                            + "</ion-grid>";
@@ -519,9 +530,9 @@
     }
 
     //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
-    const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum) => {
+    const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum, countries) => {
 
-      var urls = firstCall || updateAlbum ? getUrlsDodax(updateAlbum) : (JSON.parse(sessionStorage.getItem("nextUrls")));
+      var urls = firstCall || updateAlbum ? getUrlsDodax(updateAlbum, countries) : (JSON.parse(sessionStorage.getItem("nextUrls")));
 
       const requests = urls.map((urlDodax) => {
 
@@ -664,7 +675,7 @@
   
             var htmlToSave = document.getElementById("div-resultados").innerHTML;
             sessionStorage.setItem('lastSearchResult', htmlToSave);
-            showSpinner(false);              
+            showSpinner(false);   
 
           }
 
