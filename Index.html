@@ -79,7 +79,7 @@
     </style>
 
 </head>
-<body>
+<body onload="loadApp();">
   <ion-app>
     <ion-tabs>
       <ion-tab tab="search">
@@ -758,7 +758,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", function(event) { 
-      loadApp();
+      
        getCurrencyRates()
          .then((salida) => {
            rates = salida;
