@@ -89,11 +89,11 @@
 
 </head>
 <body>
-
-
   <ion-app class="ios">
     <ion-tabs>
       <ion-tab tab="search">
+
+        <!-- header -->
         <ion-header translucent>
           <ion-toolbar class="toolbar-search" color="primary">
             <form id="formulario" method='GET' action='javascript:void(0); return false;'>
@@ -101,38 +101,40 @@
             </form>
           </ion-toolbar>
         </ion-header>
+
+        <!-- content -->
         <ion-content fullscreen>
+
+          <!-- grid para el listado de albums-->
           <ion-grid>
-          <ion-row id="div-resultados" class="resultados">
-            <ion-col id="div-base" class="base" size-xs="12" size-sm="6" size-lg="4" size-xl="3">
-              <ion-card>
-                <img id="img-cover" alt="Album cover" class="img-album-cover" src="#" />
-                <!--<ion-card-header>
-                </ion-card-header>-->
-                <ion-card-content>
-                  <ion-card-title class="album" id="p-album">#album#</ion-card-title>
-                  <ion-card-subtitle class="artist" id="p-artist">#artist#</ion-card-subtitle>
-                  <ion-fab vertical="top" horizontal="end" edge slot="fixed">
-                      <ion-fab-button color="primary">
-                        <ion-icon name="add"></ion-icon>
-                      </ion-fab-button>
-                      <ion-fab-list side="top">
-                        <ion-fab-button  color="secondary"><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
-                      </ion-fab-list>
-                      <ion-fab-list side="bottom">
-                        <ion-fab-button  color="secondary"><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
-                      </ion-fab-list>
-                      <ion-fab-list side="start">
-                        <ion-fab-button color="secondary"><ion-icon name="logo-amazon"></ion-icon></ion-fab-button>
-                      </ion-fab-list>
-                    </ion-fab>
-                  <ion-list id="table-precios-body">
-                       <!--lista de precios-->
-                    </ion-list>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-          </ion-row>
+            <ion-row id="div-resultados" class="resultados">
+              <ion-col id="div-base" class="base" size-xs="12" size-sm="6" size-lg="4" size-xl="3">
+                <ion-card>
+                  <img id="img-cover" alt="Album cover" class="img-album-cover" src="#" />
+                  <ion-card-content>
+                    <ion-card-title class="album" id="p-album">#album#</ion-card-title>
+                    <ion-card-subtitle class="artist" id="p-artist">#artist#</ion-card-subtitle>
+                    <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+                        <ion-fab-button color="primary">
+                          <ion-icon name="add"></ion-icon>
+                        </ion-fab-button>
+                        <ion-fab-list side="top">
+                          <ion-fab-button  color="secondary"><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
+                        </ion-fab-list>
+                        <ion-fab-list side="bottom">
+                          <ion-fab-button  color="secondary"><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
+                        </ion-fab-list>
+                        <ion-fab-list side="start">
+                          <ion-fab-button color="secondary"><ion-icon name="logo-amazon"></ion-icon></ion-fab-button>
+                        </ion-fab-list>
+                      </ion-fab>
+                    <ion-list id="table-precios-body">
+                        <!--lista de precios-->
+                      </ion-list>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            </ion-row>
         </ion-grid>
         </ion-content>      
       </ion-tab>
@@ -273,21 +275,39 @@
   <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
-
+  
+  <script type="module">
+    import { loadingController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+    window.loadingController = loadingController;
+  </script>
 
   <!-- <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script> -->
   
   <script>
 
+    var loading = null;
+
+    const createLoading = async() => {
+
+      loading = await loadingController.create({
+        message: "Hey ho, let's go!",
+      });
+
+    };
+
     //Método que muestra u oculta el frame de buscando.
-    const showSpinner = function (show) {
+    const showSpinner = async (show) => {
 
-      if (show)
-        addClass("div-pageloader", "is-active");  
-      else
-        removeClass("div-pageloader", "is-active");  
-
+       if (show){
+         loading.present();
+       }
+       else{
+         debugger;
+         loading.dismiss();
+       }
+ 
     }
+
     //Tipos de búsqueda
     var tiposBusqueda = [
        {"name":"lp-vinyl", "filter": "lpvinyl-K6IQQ1BLV9"},
@@ -340,6 +360,7 @@
       params: "/nl-nl/muziek-cds-dvds-vinylplaten-cLOFV6FFU7H"
     }
     ]
+    
 
     const getUrlsDodax = function (updateAlbum){
 
@@ -733,7 +754,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", function(event) { 
-
+      createLoading();
       // getCurrencyRates()
       //   .then((salida) => {
       //     rates = salida;
@@ -814,7 +835,7 @@
       //Inicializamos las rutas de las siguientes llamadas.
       //sessionStorage.setItem('nextUrls', JSON.stringify([]));
 
-      //showSpinner(true);
+      showSpinner(true);
 
       //hideElement("div-info")
       //hideElement("div-error")
