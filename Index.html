@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
 
     <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
 
 <style>
       
@@ -40,6 +40,15 @@
       .ayuda, .notificacion, .modal {font-size: 1.3rem;}
 
 */
+ion-card-title, ion-card-subtitle, ion-searchbar {
+  font-family: 'Roboto Condensed', sans-serif !important;
+}
+.is-title{
+  font-size: 1.5rem;
+}
+.is-subtitle{
+  font-size: 1.25rem;
+}
 
 :root {
   --ion-color-primary: #000000;
@@ -55,6 +64,9 @@
   --ion-color-secondary-contrast-rgb: 255,255,255;
   --ion-color-secondary-shade: #1aa34a;
   --ion-color-secondary-tint: #34c065;
+  
+  
+
 }
 
       img.img-album-cover {
@@ -86,7 +98,7 @@
 
         <!-- header -->
         <ion-header translucent>
-          <ion-toolbar class="toolbar-search" color="primary">
+          <ion-toolbar class="toolbar-search is-title" color="primary">
             <form id="formulario" method='GET' action='javascript:void(0); return false;'>
               <ion-searchbar id="search" style="text-transform:uppercase" type="search" inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
             </form>
@@ -94,7 +106,7 @@
         </ion-header>
 
         <!-- content -->
-        <ion-content fullscreen>
+        <ion-content fullscreen color="light">
 
           <!-- grid para el listado de albums-->
           <ion-grid>
@@ -103,8 +115,8 @@
                 <ion-card>
                   <img id="img-cover" alt="Album cover" class="img-album-cover" src="#" />
                   <ion-card-content>
-                    <ion-card-title class="album" id="p-album">#album#</ion-card-title>
-                    <ion-card-subtitle class="artist" id="p-artist">#artist#</ion-card-subtitle>
+                    <ion-card-title class="album is-title" id="p-album">#album#</ion-card-title>
+                    <ion-card-subtitle class="artist is-subtitle" id="p-artist">#artist#</ion-card-subtitle>
                     <ion-fab vertical="top" horizontal="end" edge slot="fixed">
                         <ion-fab-button color="primary">
                           <ion-icon name="add"></ion-icon>
