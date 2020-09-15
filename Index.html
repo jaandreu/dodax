@@ -22,7 +22,9 @@
   ion-text, ion-card-title, ion-card-subtitle, .searchbar-input {
     font-family: 'Open Sans Condensed', sans-serif !important;
   }
-
+  ion-text {
+    padding-right: 5px;
+  }
   .is-title{
     font-size: 1.5rem;
     font-weight: bold;
@@ -473,7 +475,7 @@
       base.getElementById("p-album").innerHTML = "<ion-text>" 
                                                 + disco.title.toLowerCase()
                                                 + "</ion-text>"
-                                                + "<ion-badge color='secondary'>"
+                                                + "<ion-badge color='warning'>"
                                                 + disco.type
                                                 + "</ion-badge>";
       
