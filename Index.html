@@ -49,12 +49,12 @@
   --ion-color-primary-shade: #000000;
   --ion-color-primary-tint: #1a1a1a;
 
-  --ion-color-secondary: #eb445a;
-  --ion-color-secondary-rgb: 235,68,90;
+  --ion-color-secondary: #1DB954;
+  --ion-color-secondary-rgb: 29,185,84;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255,255,255;
-  --ion-color-secondary-shade: #cf3c4f;
-  --ion-color-secondary-tint: #ed576b;
+  --ion-color-secondary-shade: #1aa34a;
+  --ion-color-secondary-tint: #34c065;
 }
 
       img.img-album-cover {
@@ -160,6 +160,11 @@
             <ion-item>
               <ion-label>DVD</ion-label>
               <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Modo Heavy!</ion-label>
+              <ion-toggle slot="start" id="themeToggle" name="themeToggle" color="secondary" ></ion-toggle>
             </ion-item>
 
           </ion-list>
@@ -753,7 +758,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", function(event) { 
-
+      loadApp();
        getCurrencyRates()
          .then((salida) => {
            rates = salida;
@@ -854,6 +859,29 @@
       event.preventDefault();
 
     });
+
+    const toggle = document.querySelector('#themeToggle');
+
+// Listen for the toggle check/uncheck to toggle the dark class on the <body>
+    toggle.addEventListener('ionChange', (ev) => {
+      document.body.classList.toggle('dark', ev.detail.checked);
+    });
+
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Listen for changes to the prefers-color-scheme media query
+    prefersDark.addListener((e) => checkToggle(e.matches));
+
+    // Called when the app loads
+    function loadApp() {
+      checkToggle(prefersDark.matches);
+    }
+
+    // Called by the media query to check/uncheck the toggle
+    function checkToggle(shouldCheck) {
+      toggle.checked = shouldCheck;
+    }
+
 
   </script>
 
