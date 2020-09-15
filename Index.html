@@ -486,12 +486,10 @@
 
        Array.from(fichaAlbum.getElementsByClassName('tr-albumprice')).forEach(tr => {
           if (tr.getAttribute('price-int') === minPrice){
-              tr.classList.add('best-price');
-              (tr.getElementsByClassName("td-albumminprice")[0]).innerHTML = "<i class='fas fa-star has-text-info''></i>";
+              tr.setAttribute("color", "primary");
           }
           else{
-            tr.classList.remove('best-price');
-            (tr.getElementsByClassName("td-albumminprice")[0]).innerHTML = "";
+            tr.removeAttribute("color");
           }
           
        });
@@ -519,13 +517,12 @@
          trElement.classList.add('tr-albumprice');
          trElement.setAttribute('href', price.url);
 
-         //document.getElementById(idPrecio + "-PRICE").innerHTML = "<a href='" + price.url + "'>" + price.price + " " + price.currency + "</a>"
          document.getElementById(idPrecio + "-PRICE").innerText = price.price + " " + price.currency;
          document.getElementById(idPrecio + "-ORIGINALPRICE").innerText = price.priceOriginal;
 
          if (parseFloat(minPrice) >= parseFloat(price.priceInt)) {
              ficha.setAttribute("min-price", price.priceInt);
-             //updateBestsPrices(idAlbum, price.priceInt);
+             updateBestsPrices(idAlbum, price.priceInt);
          }
 
     }
@@ -572,9 +569,8 @@
         trElement.innerHTML = "<ion-grid class='no-padding'>"
                            +   "<ion-row>" 
                            +      "<ion-col size='2'>" + url.text + "</ion-col>"
-                           +      "<ion-col size='4' id='" + idPrecio + "-PRICE'>--</ion-col>"
+                           +      "<ion-col size='5' id='" + idPrecio + "-PRICE'>--</ion-col>"
                            +      "<ion-col size='5' id='" + idPrecio + "-ORIGINALPRICE'></ion-col>"
-                           +      "<ion-col class='td-albumminprice' size='1' id='" + idPrecio + "-MINPRICE'><ion-icon name='star'></ion-icon></ion-col>"
                            +   "</ion-row>"
                            + "</ion-grid>";
 
