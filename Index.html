@@ -41,6 +41,22 @@
 
 */
 
+:root {
+  --ion-color-primary: #000000;
+  --ion-color-primary-rgb: 0,0,0;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #000000;
+  --ion-color-primary-tint: #1a1a1a;
+
+  --ion-color-secondary: #eb445a;
+  --ion-color-secondary-rgb: 235,68,90;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255,255,255;
+  --ion-color-secondary-shade: #cf3c4f;
+  --ion-color-secondary-tint: #ed576b;
+}
+
       img.img-album-cover {
         width: 100%;
       }
@@ -486,7 +502,7 @@
 
        Array.from(fichaAlbum.getElementsByClassName('tr-albumprice')).forEach(tr => {
           if (tr.getAttribute('price-int') === minPrice){
-              tr.setAttribute("color", "primary");
+              tr.setAttribute("color", "secondary");
           }
           else{
             tr.removeAttribute("color");
