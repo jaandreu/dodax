@@ -506,8 +506,8 @@
       
       base.getElementById("update-album").setAttribute("onclick", "updateAlbum('"+ disco.id + "')");
 
-      /*var spotifyString = encodeURIComponent(disco.from.toLowerCase() + " " + disco.title.toLowerCase().replace(/ \([\s\S]*?\)/g, ''));
-      base.getElementById("a-spotify").setAttribute("href", "https://open.spotify.com/search/" + spotifyString);*/
+      var spotifyString = encodeURIComponent(disco.from.toLowerCase() + " " + disco.title.toLowerCase().replace(/ \([\s\S]*?\)/g, ''));
+      base.getElementById("a-spotify").setAttribute("href", "https://open.spotify.com/search/" + spotifyString);
 
       if (disco.gtin != ""){
         base.getElementById("a-discogs").setAttribute("href", "https://www.discogs.com/search/?q=" + disco.gtin +"&type=all");
