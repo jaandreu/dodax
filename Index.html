@@ -1,4 +1,4 @@
-<html class="ios">
+<html>
 
 <head>
 
@@ -64,7 +64,7 @@
 
 </head>
 <body>
-  <ion-app class="ios">
+  <ion-app>
     <ion-tabs>
       <ion-tab tab="search">
 
@@ -517,8 +517,10 @@
          var trElement = document.getElementById(idPrecio);
          trElement.setAttribute('price-int', price.priceInt);
          trElement.classList.add('tr-albumprice');
+         trElement.setAttribute('href', price.url);
 
-         document.getElementById(idPrecio + "-PRICE").innerHTML = "<a href='" + price.url + "'>" + price.price + " " + price.currency + "</a>"
+         //document.getElementById(idPrecio + "-PRICE").innerHTML = "<a href='" + price.url + "'>" + price.price + " " + price.currency + "</a>"
+         document.getElementById(idPrecio + "-PRICE").innerText = price.price + " " + price.currency;
          document.getElementById(idPrecio + "-ORIGINALPRICE").innerText = price.priceOriginal;
 
          if (parseFloat(minPrice) >= parseFloat(price.priceInt)) {
