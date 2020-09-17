@@ -278,7 +278,7 @@
     ]
     
 
-    const getUrlsDodax = function (updateAlbum, countries){
+    const getUrlsDodax = function (updateAlbum, servers){
 
       //Obtenemos las opciones de búsqueda.
       var filtro = "";
@@ -300,8 +300,8 @@
 
       return urlsDodax
           .filter(fil => {
-             if (typeof countries !== "undefined"){
-                return countries.includes(fil.text);
+             if (typeof servers !== "undefined" && servers.length > 0){
+                return servers.includes(fil.text);
              }
              else {
                return true;
@@ -411,11 +411,18 @@
       };
 
     }
-    const updateAlbum = function(idAlbum) {
+    const updateAlbumPrices = function(idAlbum, updateAllServers) {
 
-      showSpinner(true);
+      var servers = [];
+      if (!updateAllServers){
+          var ficha = document.getElementById(idAlbum);
+          Array.from(ficha.getElementsByClassName('waiting-price')).forEach(item => {
+            servers.push(item.getAttribute('server'));
+          });
+      }
+      //showSpinner(true);
       hideElement("div-error")
-      getAlbums(idAlbum, false, true, 0)
+      getAlbums(idAlbum, false, true, 0, servers)
       console.log(event);
 
     };
@@ -442,6 +449,7 @@
          var ficha = document.getElementById(idAlbum);
          var minPrice = parseFloat(ficha.getAttribute('min-price'));
          var gtinFicha = ficha.getAttribute("gtin-ficha");
+         ficha.setAttribute("pending-servers", parseInt(ficha.getAttribute("pending-servers")) - 1);
 
         if (gtinFicha === "" && gtin != ""){
 
@@ -482,6 +490,7 @@
       base.getElementById(disco.id).classList.add("resultados-items");
       base.getElementById(disco.id).setAttribute("min-price",disco.price.priceInt);
       base.getElementById(disco.id).setAttribute("gtin-ficha", disco.gtin);
+      base.getElementById(disco.id).setAttribute("pending-servers", urlsDodax.length);
       base.getElementById("p-album").innerHTML = "<ion-text>" 
                                                 + disco.title.toLowerCase()
                                                 + "</ion-text>"
@@ -489,7 +498,7 @@
                                                 + disco.type
                                                 + "</ion-badge>";
       
-      base.getElementById("update-album").setAttribute("onclick", "updateAlbum('"+ disco.id + "')");
+      base.getElementById("update-album").setAttribute("onclick", "updateAlbumPrices('"+ disco.id + "', true)");
 
       var spotifyString = encodeURIComponent(disco.from.toLowerCase() + " " + disco.title.toLowerCase().replace(/ \([\s\S]*?\)/g, ''));
       base.getElementById("a-spotify").setAttribute("href", "https://open.spotify.com/search/" + spotifyString);
@@ -510,6 +519,7 @@
         var idPrecio = url.text + "-" + disco.id;
         var trElement = document.createElement("ion-item");
         trElement.setAttribute("id", idPrecio);
+        trElement.setAttribute("server", url.text);
         trElement.classList.add("ion-no-padding");
         trElement.classList.add("waiting-price");
 
@@ -530,9 +540,9 @@
     }
 
     //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
-    const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum, countries) => {
+    const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum, servers) => {
 
-      var urls = firstCall || updateAlbum ? getUrlsDodax(updateAlbum, countries) : (JSON.parse(sessionStorage.getItem("nextUrls")));
+      var urls = firstCall || updateAlbum ? getUrlsDodax(updateAlbum, servers) : (JSON.parse(sessionStorage.getItem("nextUrls")));
 
       const requests = urls.map((urlDodax) => {
 
@@ -566,9 +576,9 @@
     var rates = null;
 
     //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
-    const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum, index) {
+    const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum, index, servers) {
 
-      getDodaxSitesAlbums(cadenaBusqueda, firstCall, updateAlbum)
+      getDodaxSitesAlbums(cadenaBusqueda, firstCall, updateAlbum, servers)
         .then(content => {
 
           var hayResultados = false;
@@ -676,6 +686,15 @@
             var htmlToSave = document.getElementById("div-resultados").innerHTML;
             sessionStorage.setItem('lastSearchResult', htmlToSave);
             showSpinner(false);   
+
+            //completamos los albums pendientes.
+            Array.from(document.getElementsByTagName('ion-col')).forEach( col => {
+
+              if (parseInt(col.getAttribute("pending-servers")) > 0){
+                  updateAlbumPrices(col.id, false);
+              }
+
+            });
 
           }
 
