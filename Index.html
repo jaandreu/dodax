@@ -197,17 +197,17 @@
     window.loadingController = loadingController;
   </script>
 
-  <!-- <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script> -->
-  
   <script>
 
     //Método que muestra u oculta el frame de buscando.
-    const showSpinner = function(show) {
+    const showSpinner = function(show, customMessage) {
+       
+       var loadingMessage = typeof customMessage !== "undefined" ? customMessage : "Hey Ho! Let's Go!";
 
        if (show){
 
         this.loadingController.create({
-            message: "Hey Ho! Let's Go!"
+            message: loadingMessage
           }).then((res) => {
             res.present();
           });
@@ -216,7 +216,7 @@
        else{
 
         this.loadingController.dismiss().then((res) => {
-          console.log("Hey Ho! Let's Go!", res);
+          console.log("Quitando loading...");
         }).catch((error) => {
           console.log('error', error);
         });
@@ -414,12 +414,22 @@
     const updateAlbumPrices = function(idAlbum, updateAllServers) {
 
       var servers = [];
+
+      var ficha = document.getElementById(idAlbum);
+
+      //Si no hay que actualizar toda la ficha, metemos en un array los servidores pendientes de precio.
       if (!updateAllServers){
-          var ficha = document.getElementById(idAlbum);
+
           Array.from(ficha.getElementsByClassName('waiting-price')).forEach(item => {
             servers.push(item.getAttribute('server'));
           });
+
       }
+      else{
+          //Si hay que actualizar toda la ficha vaciamos la ficha.
+          removePrices(idAlbum);
+      }
+
       //showSpinner(true);
       hideElement("div-error")
       getAlbums(idAlbum, false, true, 0, servers)
@@ -427,8 +437,6 @@
 
     };
 
-    var onlyOne = true;
-    
     const updateBestsPrices = function(idAlbum, minPrice){
 
        var fichaAlbum = document.getElementById(idAlbum);
@@ -443,6 +451,23 @@
           }
           
        });
+
+    }
+    const removePrices = function(idAlbum){
+
+      var fichaAlbum = document.getElementById(idAlbum);
+
+      Array.from(fichaAlbum.getElementsByClassName('tr-albumprice')).forEach(tr => {
+        tr.removeAttribute('href');
+      });
+
+      Array.from(fichaAlbum.getElementsByClassName('col-price')).forEach(col => {
+        col.innerHTML = "<ion-spinner color='secondary' name='dots'></ion-spinner>";
+      });
+
+      Array.from(fichaAlbum.getElementsByClassName('col-originalprice')).forEach(col => {
+        col.innerHTML = ""
+      });
 
     }
 
@@ -527,9 +552,9 @@
 
         trElement.innerHTML = "<ion-grid class='no-padding'>"
                            +   "<ion-row>" 
-                           +      "<ion-col size='2'>" + url.text + "</ion-col>"
-                           +      "<ion-col size='5' id='" + idPrecio + "-PRICE'><ion-spinner color='secondary' name='dots'></ion-spinner></ion-col>"
-                           +      "<ion-col size='5' id='" + idPrecio + "-ORIGINALPRICE'></ion-col>"
+                           +      "<ion-col class='col-server' size='2'>" + url.text + "</ion-col>"
+                           +      "<ion-col class='col-price' size='5' id='" + idPrecio + "-PRICE'><ion-spinner color='secondary' name='dots'></ion-spinner></ion-col>"
+                           +      "<ion-col class='col-originalprice' size='5' id='" + idPrecio + "-ORIGINALPRICE'></ion-col>"
                            +   "</ion-row>"
                            + "</ion-grid>";
 
@@ -690,8 +715,7 @@
             showSpinner(false);   
 
             //completamos los albums pendientes.
-            if (onlyOne){
-              onlyOne = false;
+            if (!updateAlbum){
               Array.from(document.getElementsByTagName('ion-col')).forEach( col => {
 
                 if (parseInt(col.getAttribute("pending-servers")) > 0){
