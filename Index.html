@@ -52,7 +52,7 @@
   --ion-color-secondary-contrast-rgb: 0,0,0;
   --ion-color-secondary-shade: #e0ac08;
   --ion-color-secondary-tint: #ffca22;
-  
+
   --ion-color-tertiary: #d7d8da;
   --ion-color-tertiary-rgb: 215,216,218;
   --ion-color-tertiary-contrast: #000000;
@@ -86,23 +86,58 @@
 
 <body>
   <ion-app>
-    <ion-tabs>
-      <ion-tab tab="search">
+    <!-- header -->
+    <ion-header translucent>
+      <ion-toolbar class="toolbar-search" color="primary">
+        <form id="formulario" method='GET' action='javascript:void(0);'>
+          <ion-searchbar id="search" style="text-transform:uppercase" type="search" inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
+        </form>
+      </ion-toolbar>
+    </ion-header>
 
-        <!-- header -->
-        <ion-header translucent>
-          <ion-toolbar class="toolbar-search" color="primary">
-            <form id="formulario" method='GET' action='javascript:void(0);'>
-              <ion-searchbar id="search" style="text-transform:uppercase" type="search" inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
-            </form>
-          </ion-toolbar>
-        </ion-header>
 
-        <!-- content -->
-        <ion-content fullscreen color="light">
+    <ion-content fullscreen id="content-settings" style="display: none" color="light">
+      <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+        <ion-fab-button id="button-check" color="secondary">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <ion-list lines="none">
+        <ion-item>
+          <ion-label>LP (Vinyl)</ion-label>
+          <ion-toggle slot="start" name="lp-vinyl" id="lp-vinyl" class="formato" checked></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>Single (Vinyl)</ion-label>
+          <ion-toggle slot="start" id="single-vinyl" name="single-vinyl" class="formato" checked></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>CD</ion-label>
+          <ion-toggle slot="start" id="cd" name="cd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>SACD</ion-label>
+          <ion-toggle slot="start" id="sacd" name="sacd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>DVD</ion-label>
+          <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+
+    <!-- content -->
+    <ion-content id="content-search" fullscreen color="light">
+
+      <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+            <ion-fab-button id="button-settings" color="secondary">
+              <ion-icon name="settings-outline"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
 
           <!-- grid para el listado de albums-->
-          <ion-grid>
+        <ion-grid>
             <ion-row id="div-resultados" class="resultados">
               <ion-col id="div-base" class="base" size-xs="12" size-sm="6" size-lg="4" size-xl="3">
                 <ion-card>
@@ -128,59 +163,13 @@
                 </ion-card>
               </ion-col>
             </ion-row>
-        </ion-grid>
+       </ion-grid>
 
         <ion-infinite-scroll threshold="100px" id="infinite-scroll">
           <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="más resultados ...">
           </ion-infinite-scroll-content>
         </ion-infinite-scroll>
-
-      </ion-content>      
-      </ion-tab>
-      <ion-tab tab="settings">
-        <ion-header translucent>
-          <ion-toolbar color="primary">
-            <ion-title>Configuración</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content fullscreen>
-          <ion-list lines="none">
-            <ion-item>
-              <ion-label>LP (Vinyl)</ion-label>
-              <ion-toggle slot="start" name="lp-vinyl" id="lp-vinyl" class="formato" checked></ion-toggle>
-            </ion-item>
-            <ion-item>
-              <ion-label>Single (Vinyl)</ion-label>
-              <ion-toggle slot="start" id="single-vinyl" name="single-vinyl" class="formato" checked></ion-toggle>
-            </ion-item>
-            <ion-item>
-              <ion-label>CD</ion-label>
-              <ion-toggle slot="start" id="cd" name="cd" color="secondary" class="formato"></ion-toggle>
-            </ion-item>
-            <ion-item>
-              <ion-label>SACD</ion-label>
-              <ion-toggle slot="start" id="sacd" name="sacd" color="secondary" class="formato"></ion-toggle>
-            </ion-item>
-            <ion-item>
-              <ion-label>DVD</ion-label>
-              <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
-            </ion-item>
-          </ion-list>
-        </ion-content>      
-      </ion-tab> 
-
-      <!--Menú del pié de página.-->
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="search">
-          <ion-label>Buscar</ion-label>
-          <ion-icon name="search-outline"></ion-icon>
-        </ion-tab-button>
-        <ion-tab-button tab="settings">
-          <ion-label>Configuración</ion-label>
-          <ion-icon name="settings"></ion-icon>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
+    </ion-content>      
   </ion-app>
 
   <!-- <body class="has-navbar-fixed-top">
@@ -208,6 +197,12 @@
   <script type="module">
     import { loadingController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
     window.loadingController = loadingController;
+  </script>
+
+  <!-- Componente para tablas modales.-->
+  <script type="module">
+    import { modalController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+    window.modalController = modalController;
   </script>
 
 </body>

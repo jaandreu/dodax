@@ -151,7 +151,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     });
 
     Array.from(fichaAlbum.getElementsByClassName('col-price')).forEach(col => {
-      col.innerHTML = "<ion-spinner class='spinner-price' color='secondary' name='dots'></ion-spinner>";
+      col.innerHTML = "<ion-spinner class='spinner-price' color='primary' name='dots'></ion-spinner>";
     });
 
     Array.from(fichaAlbum.getElementsByClassName('col-originalprice')).forEach(col => {

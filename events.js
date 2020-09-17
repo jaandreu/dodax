@@ -1,13 +1,3 @@
-window.onbeforeunload = function(event){
-
-    var conf = [];
-
-    Array.from(document.getElementsByClassName("formato")).forEach(check => {
-        conf.push({name: check.name, checked: check.checked});
-    });
-
-    localStorage.setItem("conf", JSON.stringify(conf));
-};
 
 /*Se han cargado HTML y recursos completamente*/
 window.addEventListener('load', (event) => {
@@ -108,4 +98,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
       console.log('No More Data');
       infiniteScroll.disabled = true;
     }
+  });
+
+  document.getElementById('button-settings').addEventListener('click', function(){
+    showElement("content-settings");
+    hideElement("content-search");
+  });
+
+  document.getElementById('button-check').addEventListener('click', function(){
+    showElement("content-search");
+
+    var conf = [];
+
+    Array.from(document.getElementsByClassName("formato")).forEach(check => {
+        conf.push({name: check.name, checked: check.checked});
+    });
+
+    localStorage.setItem("conf", JSON.stringify(conf));
+
+    hideElement("content-settings");
+
   });
