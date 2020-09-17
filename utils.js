@@ -1,5 +1,3 @@
-/*jshint esversion: 6 */
-
 //Método que muestra u oculta el frame de buscando.
     const showSpinner = function(show, customMessage) {
        

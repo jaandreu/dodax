@@ -1,5 +1,3 @@
-    /*jshint esversion: 6 */
-
     //Tipos de búsqueda
     const tiposBusqueda = [
         {"name":"lp-vinyl", "filter": "lpvinyl-K6IQQ1BLV9"},

@@ -1,6 +1,3 @@
-/*jshint esversion: 6 */
-/*jshint esversion: 6 */
-
 const getUrlsDodax = function (updateAlbum, servers){
 
     //Obtenemos las opciones de búsqueda.
@@ -311,9 +308,9 @@ const getUrlsDodax = function (updateAlbum, servers){
   var rates = null;
 
   //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
-  const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum, index, servers) {
+  const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum, index, servers, callback) {
 
-    getDodaxSitesAlbums(cadenaBusqueda, firstCall, updateAlbum, servers)
+    getDodaxSitesAlbums(cadenaBusqueda, firstCall, updateAlbum, servers, callback)
       .then(content => {
 
         var hayResultados = false;
@@ -408,17 +405,15 @@ const getUrlsDodax = function (updateAlbum, servers){
         if (!updateAlbum){
           //Quedan más resultados.
           if (nextUrls.length > 0 && index < 0) {
-            getAlbums(cadenaBusqueda, false, false, index + 1);
+            getAlbums(cadenaBusqueda, false, false, index + 1, [], callback);
           }
           else{
 
             if (mostrarMasResultados){
-                //showElement("div-button-more");
                 infiniteScroll.disabled = false;
                 sessionStorage.setItem("moreItems", "1");
             }
             else{
-                  //hideElement("div-button-more");
                   sessionStorage.setItem("moreItems", "0");
                   infiniteScroll.disabled = true;
             }
@@ -439,6 +434,10 @@ const getUrlsDodax = function (updateAlbum, servers){
         }
         else{
             removePendingPrices(cadenaBusqueda);
+        }
+
+        if (typeof callback === "function"){
+          callback();
         }
 
       });

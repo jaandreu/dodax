@@ -1,6 +1,3 @@
-/*jshint esversion: 6 */
-/*jshint esversion: 6 */
-
 window.onbeforeunload = function(event){
 
     var conf = [];
@@ -37,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
        document.getElementById("div-resultados").innerHTML = lastSearchResult;
        document.getElementById("search").value = lastSearch;
        if (sessionStorage.getItem("moreItems") === "1"){
-           //showElement("div-button-more");
            infiniteScroll.disabled = false;
        }
  
@@ -55,15 +51,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
     
   });
-
-  //  document.getElementById("button-more").addEventListener('click', function(){
-
-  //      //hideElement("div-error")
-  //      showSpinner(true);
-  //      var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
-  //      getAlbums(cadenaBusquedaActual, false, false, 0);
-
-  //  });
 
   document.getElementById("formulario").addEventListener('submit', function(){
 
@@ -92,14 +79,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //hideElement("div-error")
     //hideElement("div-noresult");
     hideElement("div-resultados");
-    //hideElement("div-button-more");
 
     Array.from(document.getElementsByClassName("resultados-items")).forEach(element => {
         element.parentNode.removeChild(element);
     });
 
     sessionStorage.setItem("lastSearchIndex", "0");
-    getAlbums(cadenaBusqueda, true, false, 0);
+    getAlbums(cadenaBusqueda, true, false, 0, []);
     
     showElement("div-resultados");
 
@@ -114,9 +100,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
       console.log('Loading data...');
       showSpinner(true);
       var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
-      getAlbums(cadenaBusquedaActual, false, false, 0);
-      //llamamos a la obtención de albums
-      infiniteScroll.complete();
+      getAlbums(cadenaBusquedaActual, false, false, 0, [], function(){
+        infiniteScroll.complete();
+      });
     }
     else{
       console.log('No More Data');
