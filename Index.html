@@ -430,9 +430,8 @@
           removePrices(idAlbum);
       }
 
-      //showSpinner(true);
       hideElement("div-error")
-      getAlbums(idAlbum, false, true, 0, servers)
+      getAlbums(idAlbum, false, true, 0, servers);
       console.log(event);
 
     };
@@ -462,11 +461,27 @@
       });
 
       Array.from(fichaAlbum.getElementsByClassName('col-price')).forEach(col => {
-        col.innerHTML = "<ion-spinner color='secondary' name='dots'></ion-spinner>";
+        col.innerHTML = "<ion-spinner class='spinner-price' color='secondary' name='dots'></ion-spinner>";
       });
 
       Array.from(fichaAlbum.getElementsByClassName('col-originalprice')).forEach(col => {
         col.innerHTML = ""
+      });
+
+    }
+
+    const removePendingPrices = function(idAlbum){
+
+      var fichaAlbum = document.getElementById(idAlbum);
+      fichaAlbum.setAttribute("pending-servers", 0);
+
+      Array.from(fichaAlbum.getElementsByClassName('tr-albumprice')).forEach(tr => {
+          tr.classList.remove('waiting-price');
+      });
+
+      Array.from(fichaAlbum.getElementsByClassName('spinner-price')).forEach(col => {
+        col.setAttribute("color", "danger");
+        col.setAttribute("paused", true);
       });
 
     }
@@ -553,7 +568,7 @@
         trElement.innerHTML = "<ion-grid class='no-padding'>"
                            +   "<ion-row>" 
                            +      "<ion-col class='col-server' size='2'>" + url.text + "</ion-col>"
-                           +      "<ion-col class='col-price' size='5' id='" + idPrecio + "-PRICE'><ion-spinner color='secondary' name='dots'></ion-spinner></ion-col>"
+                           +      "<ion-col class='col-price' size='5' id='" + idPrecio + "-PRICE'><ion-spinner class='spinner-price' color='secondary' name='dots'></ion-spinner></ion-col>"
                            +      "<ion-col class='col-originalprice' size='5' id='" + idPrecio + "-ORIGINALPRICE'></ion-col>"
                            +   "</ion-row>"
                            + "</ion-grid>";
@@ -693,38 +708,42 @@
             showElement("div-noresult");
           }
 
-          sessionStorage.setItem('nextUrls', JSON.stringify(nextUrls));
-
-          //Quedan más resultados.
-          if (nextUrls.length > 0 && index < 0 && !updateAlbum) {
-            getAlbums(cadenaBusqueda, false, false, index + 1);
+          if (!updateAlbum){
+            sessionStorage.setItem('nextUrls', JSON.stringify(nextUrls));
           }
-          else{
 
-            if (mostrarMasResultados){
-                showElement("div-button-more");
-                sessionStorage.setItem("moreItems", "1");
+          if (!updateAlbum){
+            //Quedan más resultados.
+            if (nextUrls.length > 0 && index < 0) {
+              getAlbums(cadenaBusqueda, false, false, index + 1);
             }
             else{
-                hideElement("div-button-more");
-                sessionStorage.setItem("moreItems", "0");
+
+              if (mostrarMasResultados){
+                  showElement("div-button-more");
+                  sessionStorage.setItem("moreItems", "1");
+              }
+              else{
+                    hideElement("div-button-more");
+                    sessionStorage.setItem("moreItems", "0");
+              }
             }
-  
-            var htmlToSave = document.getElementById("div-resultados").innerHTML;
-            sessionStorage.setItem('lastSearchResult', htmlToSave);
+          }
+    
+          var htmlToSave = document.getElementById("div-resultados").innerHTML;
+          sessionStorage.setItem('lastSearchResult', htmlToSave);
+          
+          //completamos los albums pendientes.
+          if (!updateAlbum){
             showSpinner(false);   
-
-            //completamos los albums pendientes.
-            if (!updateAlbum){
-              Array.from(document.getElementsByTagName('ion-col')).forEach( col => {
-
+            Array.from(document.getElementsByTagName('ion-col')).forEach( col => {
                 if (parseInt(col.getAttribute("pending-servers")) > 0){
                     updateAlbumPrices(col.id, false);
                 }
-
               });
-            }
-
+          }
+          else{
+              removePendingPrices(cadenaBusqueda);
           }
 
         });
