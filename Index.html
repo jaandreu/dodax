@@ -127,13 +127,13 @@
           <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
         </ion-item>
       </ion-list>
-      <ion-list style="display: none;" lines="none">
+      <ion-list lines="none">
         <ion-list-header>
           <ion-text color="primary"><h1>Otras opciones</h1></ion-text>
         </ion-list-header>
         <ion-item>
-          <ion-label>Buscar solo en la sección de música.</ion-label>
-          <ion-toggle slot="start" id="solo-musica" name="solo-musica" color="secondary" class="seccion" checked></ion-toggle>
+          <ion-label>Buscar en la sección de electrónica.</ion-label>
+          <ion-toggle slot="start" id="solo-electronica" name="solo-electronica" color="secondary" class="seccion"></ion-toggle>
         </ion-item>
       </ion-list>  
     </ion-content>
@@ -175,7 +175,6 @@
               </ion-col>
             </ion-row>
        </ion-grid>
-
         <ion-infinite-scroll threshold="100px" id="infinite-scroll">
           <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="más resultados ...">
           </ion-infinite-scroll-content>

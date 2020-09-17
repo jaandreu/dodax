@@ -3,7 +3,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     //Obtenemos las opciones de búsqueda.
     var filtro = "";
 
-    var onlyMusic = document.getElementById('solo-musica').checked;
+    var electronicDepartment = document.getElementById('solo-electronica').checked;
 
     if (!updateAlbum){
 
@@ -35,7 +35,7 @@ const getUrlsDodax = function (updateAlbum, servers){
             var newUrl = {
                 url: urlDodax.url,
                 text: urlDodax.text,
-                params: (onlyMusic ? (urlDodax.params + filtro) : urlDodax.all) + "/?s="
+                params: (electronicDepartment ? urlDodax.electronica : urlDodax.params) + filtro + "/?s="
             };
 
             return newUrl;
@@ -424,18 +424,25 @@ const getUrlsDodax = function (updateAlbum, servers){
   
         var htmlToSave = document.getElementById("div-resultados").innerHTML;
         sessionStorage.setItem('lastSearchResult', htmlToSave);
-        
+
         //completamos los albums pendientes.
         if (!updateAlbum){
           showSpinner(false);   
-          Array.from(document.getElementsByTagName('ion-col')).forEach( col => {
-              if (parseInt(col.getAttribute("pending-servers")) > 0){
-                 updateAlbumPrices(col.id, false);
-              }
-            });
         }
         else{
             removePendingPrices(cadenaBusqueda);
+        }
+
+        var firstAlbum = true;
+        Array.from(document.getElementsByTagName('ion-col')).forEach( col => {
+          if (parseInt(col.getAttribute("pending-servers")) > 0 && firstAlbum){
+            firstAlbum = false;
+            sessionStorage.setItem('updating', "1");
+            updateAlbumPrices(col.id, false);
+          }
+        });
+        if (firstAlbum){
+          sessionStorage.setItem('updating', "0");
         }
 
         if (typeof callback === "function"){

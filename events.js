@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
     else{
       console.log('No More Data');
-      infiniteScroll.disabled = true;
+        infiniteScroll.disabled = true;
     }
   });
 
@@ -129,4 +129,3 @@ document.addEventListener("DOMContentLoaded", function(event) {
     return toast.present();
   };
 
-  
