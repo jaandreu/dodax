@@ -103,13 +103,16 @@
         </ion-fab-button>
       </ion-fab>
       <ion-list lines="none">
+        <ion-list-header>
+          <ion-text color="primary"><h1>Formato</h1></ion-text>
+        </ion-list-header>
         <ion-item>
           <ion-label>LP (Vinyl)</ion-label>
-          <ion-toggle slot="start" name="lp-vinyl" id="lp-vinyl" class="formato" checked></ion-toggle>
+          <ion-toggle slot="start" name="lp-vinyl" color="secondary" id="lp-vinyl" class="formato" checked></ion-toggle>
         </ion-item>
         <ion-item>
           <ion-label>Single (Vinyl)</ion-label>
-          <ion-toggle slot="start" id="single-vinyl" name="single-vinyl" class="formato" checked></ion-toggle>
+          <ion-toggle slot="start" id="single-vinyl" color="secondary" name="single-vinyl" class="formato" checked></ion-toggle>
         </ion-item>
         <ion-item>
           <ion-label>CD</ion-label>
@@ -124,8 +127,16 @@
           <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
         </ion-item>
       </ion-list>
+      <ion-list style="display: none;" lines="none">
+        <ion-list-header>
+          <ion-text color="primary"><h1>Otras opciones</h1></ion-text>
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Buscar solo en la sección de música.</ion-label>
+          <ion-toggle slot="start" id="solo-musica" name="solo-musica" color="secondary" class="seccion" checked></ion-toggle>
+        </ion-item>
+      </ion-list>  
     </ion-content>
-
 
     <!-- content -->
     <ion-content id="content-search" fullscreen color="light">
@@ -171,17 +182,6 @@
         </ion-infinite-scroll>
     </ion-content>      
   </ion-app>
-
-  <!-- <body class="has-navbar-fixed-top">
-
-    <div style="display:none" id="div-error" class="notificacion notification is-danger">
-        Ha fallado la conexión con alguno de los servidores, repita la búsqueda
-      </div>
-
-      <div style="display: none;" id="div-noresult" class="noresult notification is-info">
-        No se han encontrado coincidencias
-      </div>
- --> 
 
   <!-- Ionic -->
   <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>

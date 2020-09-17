@@ -3,7 +3,10 @@ const getUrlsDodax = function (updateAlbum, servers){
     //Obtenemos las opciones de búsqueda.
     var filtro = "";
 
+    var onlyMusic = document.getElementById('solo-musica').checked;
+
     if (!updateAlbum){
+
       filtro = tiposBusqueda.filter((t) => {
           return document.getElementById(t.name).checked;
       }).map( tb => {
@@ -32,7 +35,7 @@ const getUrlsDodax = function (updateAlbum, servers){
             var newUrl = {
                 url: urlDodax.url,
                 text: urlDodax.text,
-                params: urlDodax.params + filtro + "/?s="
+                params: (onlyMusic ? (urlDodax.params + filtro) : urlDodax.all) + "/?s="
             };
 
             return newUrl;
@@ -120,7 +123,6 @@ const getUrlsDodax = function (updateAlbum, servers){
         removePrices(idAlbum);
     }
 
-    hideElement("div-error")
     getAlbums(idAlbum, false, true, 0, servers);
 
   };
@@ -322,7 +324,7 @@ const getUrlsDodax = function (updateAlbum, servers){
           //Si ha habido un error mostramos el mensaje pero procesamos la respuesta.
           if (resultado.error !== ""){
             console.log(resultado.error);
-            showElement("div-error");
+            presentToast('Ha fallado alguna de las conexiones ...')
           }
           
           mostrarMasResultados = resultado.nextUrl != null && index === 0;
@@ -395,7 +397,7 @@ const getUrlsDodax = function (updateAlbum, servers){
         });
 
         if (firstCall && !hayResultados){
-          showElement("div-noresult");
+          presentToast('Sin resultados, cambie los términos de búsqueda');
         }
 
         if (!updateAlbum){
@@ -428,7 +430,7 @@ const getUrlsDodax = function (updateAlbum, servers){
           showSpinner(false);   
           Array.from(document.getElementsByTagName('ion-col')).forEach( col => {
               if (parseInt(col.getAttribute("pending-servers")) > 0){
-                  updateAlbumPrices(col.id, false);
+                 updateAlbumPrices(col.id, false);
               }
             });
         }

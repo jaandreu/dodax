@@ -119,3 +119,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
     hideElement("content-settings");
 
   });
+
+  async function presentToast() {
+    const toast = document.createElement('ion-toast');
+    toast.message = 'No se han encontrado coincidencias';
+    toast.duration = 3000;
+  
+    document.body.appendChild(toast);
+    return toast.present();
+  };
+
+  
