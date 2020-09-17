@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
        document.getElementById("div-resultados").innerHTML = lastSearchResult;
        document.getElementById("search").value = lastSearch;
        if (sessionStorage.getItem("moreItems") === "1"){
-           showElement("div-button-more");
+           //showElement("div-button-more");
+           infiniteScroll.disabled = false;
        }
  
      }
@@ -55,14 +56,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
   });
 
-   document.getElementById("button-more").addEventListener('click', function(){
+  //  document.getElementById("button-more").addEventListener('click', function(){
 
-       //hideElement("div-error")
-       showSpinner(true);
-       var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
-       getAlbums(cadenaBusquedaActual, false, false, 0);
+  //      //hideElement("div-error")
+  //      showSpinner(true);
+  //      var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
+  //      getAlbums(cadenaBusquedaActual, false, false, 0);
 
-   });
+  //  });
 
   document.getElementById("formulario").addEventListener('submit', function(){
 
@@ -91,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //hideElement("div-error")
     //hideElement("div-noresult");
     hideElement("div-resultados");
-    hideElement("div-button-more");
+    //hideElement("div-button-more");
 
     Array.from(document.getElementsByClassName("resultados-items")).forEach(element => {
         element.parentNode.removeChild(element);
@@ -102,4 +103,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
     showElement("div-resultados");
 
+  });
+
+  /*Infinite scroll*/
+  const infiniteScroll = document.getElementById('infinite-scroll');
+  
+  infiniteScroll.addEventListener('ionInfinite', async function () {
+    
+    if (sessionStorage.getItem("moreItems") == "1"){
+      console.log('Loading data...');
+      showSpinner(true);
+      var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
+      getAlbums(cadenaBusquedaActual, false, false, 0);
+      //llamamos a la obtención de albums
+      infiniteScroll.complete();
+    }
+    else{
+      console.log('No More Data');
+      infiniteScroll.disabled = true;
+    }
   });

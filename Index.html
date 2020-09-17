@@ -122,9 +122,14 @@
             </ion-row>
         </ion-grid>
 
-        <section id="div-button-more" style="display: none;" class="full-width">
+        <ion-infinite-scroll threshold="100px" id="infinite-scroll">
+          <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="más resultados ...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+
+        <!-- <section id="div-button-more" style="display: none;" class="full-width">
           <ion-button id="button-more" expand="full" color="secondary">más resultados ...</ion-button>
-        </section>
+        </section> -->
 
       </ion-content>      
       </ion-tab>

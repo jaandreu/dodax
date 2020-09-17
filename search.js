@@ -413,12 +413,14 @@ const getUrlsDodax = function (updateAlbum, servers){
           else{
 
             if (mostrarMasResultados){
-                showElement("div-button-more");
+                //showElement("div-button-more");
+                infiniteScroll.disabled = false;
                 sessionStorage.setItem("moreItems", "1");
             }
             else{
-                  hideElement("div-button-more");
+                  //hideElement("div-button-more");
                   sessionStorage.setItem("moreItems", "0");
+                  infiniteScroll.disabled = true;
             }
           }
         }
