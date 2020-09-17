@@ -1,799 +1,207 @@
-<!doctype html>
 <html>
 
 <head>
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>XADOD</title>
-    <!-- Bulma CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">    
+
+    <!-- Ionic CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+
 <style>
       
-      html {
-        background-color: hsl(201, 29%, 88%);
-      }
+  * {
+    font-family: 'Open Sans', sans-serif;
+  }
 
-      body, button, input, select, textarea {
-        font-family:  'Open Sans Condensed', sans-serif, BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-      }
+  ion-text, ion-card-title, ion-card-subtitle, .searchbar-input {
+    font-family: 'Open Sans Condensed', sans-serif !important;
+  }
+  ion-text {
+    padding-right: 5px;
+  }
+  .is-title{
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .is-subtitle{
+    font-size: 1.25rem;
+  }
 
-      table {
-        font-family:  'Open Sans', sans-serif, BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-        font-size: 100%;
-      }
+  .searchbar-input {
+      font-size: 1.5rem !important;
+  }
 
-      .base {
-        display: none;
-      }
+  /*Colores de ionic*/
+  :root {
+  --ion-color-primary: #222428;
+  --ion-color-primary-rgb: 34,36,40;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #1e2023;
+  --ion-color-primary-tint: #383a3e;
 
-      p.album, p.artist {
-        text-transform: capitalize;
-      }
+  --ion-color-secondary: #ffc409;
+  --ion-color-secondary-rgb: 255,196,9;
+  --ion-color-secondary-contrast: #000000;
+  --ion-color-secondary-contrast-rgb: 0,0,0;
+  --ion-color-secondary-shade: #e0ac08;
+  --ion-color-secondary-tint: #ffca22;
 
-      @-webkit-keyframes spinAround{from{-webkit-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}@keyframes spinAround{from{-webkit-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}.pageloader{bottom:0;left:0;position:absolute;right:0;top:0}.pageloader{position:fixed;padding-top:2em;background:#00d1b2;background:#00d1b2;z-index:999998;transition:transform .35s ease-out,-webkit-transform .35s ease-out;will-change:transform}.pageloader.is-white{background-color:#fff;background:#fff}.pageloader.is-white::after{border-color:#0a0a0a;-webkit-animation:loader-figure-white 1.15s infinite cubic-bezier(.215,.61,.355,1);animation:loader-figure-white 1.15s infinite cubic-bezier(.215,.61,.355,1)}.pageloader.is-white .title{color:#0a0a0a}.pageloader.is-black{background-color:#0a0a0a;background:#0a0a0a}.pageloader.is-black::after{border-color:#fff;-webkit-animation:loader-figure-black 1.15s infinite cubic-bezier(.215,.61,.355,1);animation:loader-figure-black 1.15s infinite cubic-bezier(.215,.61,.355,1)}.pageloader.is-black .title{color:#fff}.pageloader.is-light{background-color:#f5f5f5;background:#f5f5f5}.pageloader.is-light::after{border-color:#363636;-webkit-animation:loader-figure-light 1.15s infinite cubic-bezier(.215,.61,.355,1);animation:loader-figure-light 1.15s infinite cubic-bezier(.215,.61,.355,1)}.pageloader.is-light .title{color:#363636}.pageloader.is-dark{background-color:#363636;background:#363636}.pageloader.is-dark::after{border-color:#f5f5f5;-webkit-animation:loader-figure-dark 1.15s infinite cubic-bezier(.215,.61,.355,1);animation:loader-figure-dark 1.15s infinite cubic-bezier(.215,.61,.355,1)}.pageloader.is-dark .title{color:#f5f5f5}.pageloader.is-primary{background-color:#00d1b2;background:#00d1b2}.pageloader.is-primary::after{border-color:#fff;-webkit-animation:loader-figure-primary 1.15s infinite cubic-bezier(.215,.61,.355,1);animation:loader-figure-primary 1.15s infinite cubic-bezier(.215,.61,.355,1)}.pageloader.is-primary .title{color:#fff}.pageloader.is-link{background-color:#3273dc;background:#3273dc}.pageloader.is-link::after{border-color:#fff;-webkit-animation:loader-figure-link 1.15s infinite cubic-bezier(.215,.61,.355,1);animation:loader-figure-link 1.15s infinite cubic-bezier(.215,.61,.355,1)}.pageloader.is-link .title{color:#fff}.pageloader.is-info{background-color:#209cee;background:#209cee}.pageloader.is-info::after{border-color:#fff;-webkit-animation:loader-figure-info 1.15s infinite cubic-bezier(.215,.61,.355,1);animation:loader-figure-info 1.15s infinite cubic-bezier(.215,.61,.355,1)}.pageloader.is-info .title{color:#fff}.pageloader.is-success{background-color:#23d160;background:#23d160}.pageloader.is-success::after{border-color:#fff;-webkit-animation:loader-figure-success 1.15s infinite cubic-bezier(.215,.61,.355,1);animation:loader-figure-success 1.15s infinite cubic-bezier(.215,.61,.355,1)}.pageloader.is-success .title{color:#fff}.pageloader.is-warning{background-color:#ffdd57;background:#ffdd57}.pageloader.is-warning::after{border-color:rgba(0,0,0,.7);-webkit-animation:loader-figure-warning 1.15s infinite cubic-bezier(.215,.61,.355,1);animation:loader-figure-warning 1.15s infinite cubic-bezier(.215,.61,.355,1)}.pageloader.is-warning .title{color:rgba(0,0,0,.7)}.pageloader.is-danger{background-color:#ff3860;background:#ff3860}.pageloader.is-danger::after{border-color:#fff;-webkit-animation:loader-figure-danger 1.15s infinite cubic-bezier(.215,.61,.355,1);animation:loader-figure-danger 1.15s infinite cubic-bezier(.215,.61,.355,1)}.pageloader.is-danger .title{color:#fff}.pageloader:not(.is-bottom-to-top){-webkit-transform:translateY(-100%);transform:translateY(-100%)}.pageloader.is-bottom-to-top{-webkit-transform:translateY(100%);transform:translateY(100%)}.pageloader.is-left-to-right{-webkit-transform:translateX(-100%);transform:translateX(-100%)}.pageloader.is-right-to-left{-webkit-transform:translateX(100%);transform:translateX(100%)}.pageloader.is-active:not(.is-left-to-right),.pageloader.is-active:not(.is-right-to-left){-webkit-transform:translateY(0);transform:translateY(0)}.pageloader.is-active.is-left-to-right,.pageloader.is-active.is-right-to-left{-webkit-transform:translateX(0);transform:translateX(0)}.pageloader::after{position:absolute;top:50%;left:50%;display:block;border-radius:100%;content:'';z-index:9999;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);width:0;height:0;box-sizing:border-box;border:0 solid #fff;-webkit-animation:loader-figure 1.15s infinite cubic-bezier(.215,.61,.355,1);animation:loader-figure 1.15s infinite cubic-bezier(.215,.61,.355,1)}.pageloader .title{position:absolute;top:50%;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);margin:2em 0 0 0;font-size:.875em;letter-spacing:.1em;line-height:1.5em;color:#fff;white-space:nowrap}@-webkit-keyframes loader-figure{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@keyframes loader-figure{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@-webkit-keyframes loader-figure-white{0%{height:0;width:0;background-color:#0a0a0a}29%{background-color:#0a0a0a}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@keyframes loader-figure-white{0%{height:0;width:0;background-color:#0a0a0a}29%{background-color:#0a0a0a}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@-webkit-keyframes loader-figure-black{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@keyframes loader-figure-black{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@-webkit-keyframes loader-figure-light{0%{height:0;width:0;background-color:#363636}29%{background-color:#363636}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@keyframes loader-figure-light{0%{height:0;width:0;background-color:#363636}29%{background-color:#363636}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@-webkit-keyframes loader-figure-dark{0%{height:0;width:0;background-color:#f5f5f5}29%{background-color:#f5f5f5}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@keyframes loader-figure-dark{0%{height:0;width:0;background-color:#f5f5f5}29%{background-color:#f5f5f5}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@-webkit-keyframes loader-figure-primary{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@keyframes loader-figure-primary{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@-webkit-keyframes loader-figure-link{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@keyframes loader-figure-link{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@-webkit-keyframes loader-figure-info{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@keyframes loader-figure-info{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@-webkit-keyframes loader-figure-success{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@keyframes loader-figure-success{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@-webkit-keyframes loader-figure-warning{0%{height:0;width:0;background-color:rgba(0,0,0,.7)}29%{background-color:rgba(0,0,0,.7)}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@keyframes loader-figure-warning{0%{height:0;width:0;background-color:rgba(0,0,0,.7)}29%{background-color:rgba(0,0,0,.7)}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@-webkit-keyframes loader-figure-danger{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}@keyframes loader-figure-danger{0%{height:0;width:0;background-color:#fff}29%{background-color:#fff}30%{height:2em;width:2em;background-color:transparent;border-width:1em;opacity:1}100%{height:2em;width:2em;border-width:0;opacity:0;background-color:transparent}}
-      
-      .pageloader{
-        background-color: black;
-        opacity: 70%;
-      }
+  --ion-color-tertiary: #d7d8da;
+  --ion-color-tertiary-rgb: 215,216,218;
+  --ion-color-tertiary-contrast: #000000;
+  --ion-color-tertiary-contrast-rgb: 0,0,0;
+  --ion-color-tertiary-shade: #bdbec0;
+  --ion-color-tertiary-tint: #dbdcde;
 
-      div.navbar-menu {
-        background-color: hsl(198, 100%, 21%);
-      }
+  }
 
-      .flexgrow {
-        flex-grow: 1;
-      }
-      .desactivado {
-        opacity: 20%;
-      }
+  img.img-album-cover {
+    width: 100%;
+  }
+  
+  .toolbar-search {
+    padding-top: 15px !important;
+  }
 
-      .update {
-        color: hsl(93, 67%, 38%);
-      }
+  .base {
+    display: none;
+  }
 
-      .button.is-green {
-         background-color: hsl(93, 67%, 38%);
-         border-color: transparent;
-         color: #fff;
-      }
+  .album, .artist {
+    text-transform: capitalize;
+  }
+  .no-padding {
+    padding: 0px 0px 0px 0px !important;
+  }
 
-      tr.best-price {
-        background-color:hsl(282, 100%, 95%);
-      }
-      .ayuda, .notificacion, .modal {font-size: 1.3rem;}
-      
-      div.sticky {
-        position: -webkit-sticky; /* Safari */
-        position: sticky;
-        top: 80px;
-        padding-left: 10px;
-        z-index: 39;
-      }
-
-    </style>
-
+</style>
 </head>
-<body class="has-navbar-fixed-top">
 
-  <!--Navbar (buscador)-->
-  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-    <div class="navbar-menu is-active">
-      <div class="navbar-start flexgrow">
-        <div class="navbar-item flexgrow">
-          <div class="container">
-            <div class="columns">
-              <div class="column">
-                <form id="formulario" method='GET' action='javascript:void(0); return false;'>
-                  <div class="field has-addons">
-                    <div class="control flexgrow">
-                      <input class="input is-large is-info is-expanded" id="search" type="text"
-                        placeholder="last shadow puppets ..." style="text-transform:uppercase">
-                    </div>
-                    <div class="control">
-                      <button type="submit" class="button is-green is-large"> <i class="fas fa-search"></i></button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Loading -->
-  <div id="div-pageloader" class="pageloader"><span class="title">Buscando...</span></div>
-
-  <!--Botón para la página de configuración-->
-  <div class="sticky">
-    <button id="button-conf" class="button is-green is-rounded"><span class="icon is-small">
-      <i class="fas fa-cog"></i>
-    </span></button>
-  </div>
-  <section class="section">
-
-  <!--Página de configuración-->
-  <div class="columns">
-    <div class="column">
-  <div id="div-modal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Qué buscamos?</p>
-      </header>
-      <section class="modal-card-body">
-
-        <div class="field">
-          <input id="lp-vinyl" type="checkbox" name="lp-vinyl" class="formato switch is-thin is-medium is-info" checked="checked">
-          <label for="lp-vinyl">LP (Vinyl)</label>
-        </div>
-        <div class="field">
-          <input id="single-vinyl" type="checkbox" name="single-vinyl" class="formato switch is-thin is-medium is-info" checked="checked">
-          <label for="single-vinyl">Single (Vinyl)</label>
-        </div>
-        <div class="field">
-          <input id="cd" type="checkbox" name="cd" class="formato switch is-thin is-medium is-info">
-          <label for="cd">CD</label>
-        </div>
-        <div class="field">
-          <input id="sacd" type="checkbox" name="sacd" class="formato switch is-thin is-medium is-info">
-          <label for="sacd">SACD</label>
-        </div>
-        <div class="field">
-          <input id="dvd" type="checkbox" name="dvd" class="formato switch is-thin is-medium is-info">
-          <label for="dvd">DVD</label>
-        </div>
-
-      </section>
-      <footer class="modal-card-foot">
-        <button id="button-aceptar" class="button is-green">
-          <span class="icon is-small">
-          <i class="far fa-thumbs-up"></i>
-          </span> 
-          <span>Guay!</span>
-        </button>
-      </footer>
-    </div>
-  </div>
-</div>
-</div>  
-
-    <!-- Container para las fichas de resultados.-->
-    <div class="container">
-      <!-- Resultados -->
-      <div id="div-resultados" class="columns resultados is-multiline">
-        <div id="div-base" class=" base column is-one-quarter is-half-tablet">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-square">
-                <img  id="img-cover" class="cover" src="" alt="Album cover">
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <p id="p-album" class="album title is-4"></p>
-                  <p id="p-artist" class="artist subtitle is-5"></p>
-                </div>
-              </div>
-              <div class="content">
-                <div class="table-container">
-                  <table id="table-precios"  class="table is-hoverable is-fullwidth">
-                    <tbody id="table-precios-body">
-                      <!-- Items con los precios-->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <footer class="card-footer">
-              <a id='a-discogs' class="desactivado discogs card-footer-item" href='javascript:void(0);'><img src="discogs.png"></img></a>
-              <a id='a-amazon' class="desactivado amazon card-footer-item" href='javascript:void(0);'><img src="amazon.png"></img></a>
-              <a id='a-spotify' class="spotify card-footer-item" href='javascript:void(0);'><img src="spotify.png"></img></a>
-              <a id='update-album' class="card-footer-item" href='javascript:void(0);'><i class='update fas fa-sync-alt'></i></a>
-            </footer>
-          </div>
-        </div>
-      </div>
-
-      <!--Mensaje para no se han encontrado datos-->
-      <div style="display:none" id="div-error" class="notificacion notification is-danger">
-        Ha fallado la conexión con alguno de los servidores, repita la búsqueda
-      </div>
-
-      <!-- Botón para obtener más resultados.-->
-      <div id="div-button-more" style="display: none" class="columns">
-        <div class="column">
-            <button id="button-more" class="button is-info is-fullwidth is-outlined">
-              <span class="icon is-small">
-                <i class="fas fa-caret-down"></i>
-              </span>
-              <span>Más resultados</span>
-            </button>
-        </div>
-      </div>
-        
-      <!-- Cuadro de ayuda-->
-      <article id="div-info" class="message is-info ayuda">
-        <div class="message-header">
-          <p>Ayuda</p>
-        </div>
-        <div class="message-body">
-          <ul>
-            <li>- <b>Búsqueda en la sección de vinilos y singles:</b> no hace falta poner <b>VINILO</b>, <b>VINYL</b> ni <b>LP</b>.</li>
-            <li>- <b>Criterios de búsqueda:</b> Cualquier cosa que funcione en dodax aquí funcionará <b>;-).</b></li>
-            <li>- <b>Ficha:</b> podemos acceder a Dodax clicando en el importe, podemos acceder a Discogs, Amazon o Spotify clicando en los iconos del pie de la ficha.</li>
-            <li>- <b>El icono de la estrella representa los mejores precios.</b></li>
-            <li>- <b>Cambio de moneda:</b> para el cambio de moneda se usan los datos oficiales en el momento de la consulta, aunque servicios como Paypal suelen aplicar otros tipos de cambio.</li>
-            <li>- <b>Sugerencias:</b> cualquier sugerencia de cambio la podéir reportar en el grupo de Facebook <b><a href="https://www.facebook.com/groups/307523296709864">Ofertas de Vinilos en amazon, dodax, etc...sin censuras todos los estilos</a></b></li>
-          </ul>
-        </div>
-      </article>
-
-      <!--Mensaje para no se han encontrado datos-->
-      <div style="display: none;" id="div-noresult" class="noresult notification is-info">
-        No se han encontrado coincidencias
-      </div>
-
-    </div>
-
-  </section>
- 
-  <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
-  
-  <script>
-
-    //Método que muestra u oculta el frame de buscando.
-    const showSpinner = function (show) {
-
-      if (show)
-        addClass("div-pageloader", "is-active");  
-      else
-        removeClass("div-pageloader", "is-active");  
-
-    }
-    //Tipos de búsqueda
-    var tiposBusqueda = [
-       {"name":"lp-vinyl", "filter": "lpvinyl-K6IQQ1BLV9"},
-       {"name":"single-vinyl", "filter":"singlevinyl-TVBN098J7D"},
-       {"name":"cd", "filter":"cd-QQQ6F29MQA"},
-       {"name":"dvd", "filter":"dvd-DBRGQD0GK"},
-       {"name" :"sacd", "filter":"sacd-TKLFV1USKM"}
-    ];
-
-    //Listado de servidores a los que consultaremos.
-    var urlsDodax = [
-    {
-      text: "DE",
-      url: "https://www.dodax.de",
-      params: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H"
-     }
-     , {
-      text: "AT",
-      url: "https://www.dodax.at",
-      params: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H"
-    }
-    , {
-      text: "FR",
-      url: "https://www.dodax.fr",
-      params: "/fr-fr/musique-cd-dvd-vinyles-cLOFV6FFU7H"
-    }
-    , {
-      text: "UK",
-      url: "https://www.dodax.co.uk",
-      params: "/en-gb/music-cds-dvds-vinyl-cLOFV6FFU7H"
-    }
-    , {
-      text: "ES",
-      url: "https://www.dodax.es",
-      params: "/es-es/musica-cds-dvds-vinilos-cLOFV6FFU7H"
-    }
-    , {
-      text: "IT",
-      url: "https://www.dodax.it",
-      params: "/it-it/musica-cd-dvd-vinili-cLOFV6FFU7H"
-    }
-    , {
-      text: "PL",
-      url: "https://www.dodax.pl",
-      params: "/pl-pl/muzyka-cd-dvd-winyle-cLOFV6FFU7H"
-    }
-    , {
-      text: "NL",
-      url: "https://www.dodax.nl",
-      params: "/nl-nl/muziek-cds-dvds-vinylplaten-cLOFV6FFU7H"
-    }
-    ]
-
-    const getUrlsDodax = function (updateAlbum){
-
-      //Obtenemos las opciones de búsqueda.
-      var filtro = "";
-
-      if (!updateAlbum){
-        filtro = tiposBusqueda.filter((t) => {
-            return document.getElementById(t.name).checked;
-        }).map( tb => {
-          return tb.filter;
-        }).join("-");
-
-        if (filtro !== ""){
-          filtro = "-f-" +  filtro;
-        }
-        else{
-          return [];
-        }
-      }
-
-      return urlsDodax.map(urlDodax => {
-         
-           var newUrl = {
-              url: urlDodax.url,
-              text: urlDodax.text,
-              params: urlDodax.params + filtro + "/?s="
-           }
-
-          return newUrl;
-
-      });
-
-    }
-
-    //Proxy para evitar el CORS
-    const proxyurl = window.location.host.includes('netlify') ? "https://dodax-proxy.herokuapp.com/" : "https://cors-anywhere.herokuapp.com/";
-
-    //Funciones auxiliares DOM
-    const showElement = function(idElement){
-       var elem = document.getElementById(idElement);
-       if (elem != null) {
-         elem.style.display = "";
-       }
-    }
-
-    const hideElement = function(idElement){
-       var elem = document.getElementById(idElement);
-       if (elem != null) {
-         elem.style.display = "none";
-       }
-    }
-
-    const addClass = function(idElement, className){
-       var elem = document.getElementById(idElement);
-       if (elem != null) {
-        elem.classList.add(className)
-       }
-    }
-
-    const removeClass = function(idElement, className){
-       var elem = document.getElementById(idElement);
-       if (elem != null) {
-        elem.classList.remove(className)
-       }
-    }
-
-    //Obtiene un JSON con los rates de las monedas en base al EUR.
-    const getCurrencyRates = async (url) => {
-
-        let response = await fetch("https://api.exchangeratesapi.io/latest");
-        let data = await response.json();
-        return data;
-    }
-
-    //Obtiene un importe en euros.
-    const getPrice = function (price, codigo) {
-      if (rates != null) {
-
-        switch (codigo) {
-          case "UK":
-            salida = (parseFloat(price.replace(",", ".")) * (1 / rates.rates["GBP"])).toFixed(2);
-            break;
-          case "PL":
-            salida = (parseFloat(price.replace(",", ".")) * (1 / rates.rates["PLN"])).toFixed(2);
-            break;
-          default:
-            salida = parseFloat(price.replace(",", ".")).toFixed(2);
-        }
-      } else {
-        salida = parseFloat(price.replace(",", ".")).toFixed(2);
-      }
-      return salida;
-    }
-
-    //Obtiene el caracter de moneda en función del código de pais.
-    const getCurrency = function (price, codigo) {
-      var salida = "";
-      switch (codigo) {
-        case "UK":
-          salida = price + " £";
-          break;
-        case "PL":
-          salida = price + " zł";
-          break;
-        default:
-          salida = "";
-
-      }
-      return salida;
-    }
-  
-    //Devuelve la información de los albums de una url de Dodax.
-    const getDodaxAlbums = async (url) => {
-
-      console.log("Conectando:" + url);
-      let response = await fetch(url);
-      let data = await response.text()
-
-      return {
-           status: response.status
-          ,data: data
-      };
-
-    }
-    const updateAlbum = function(idAlbum) {
-
-      showSpinner(true);
-      hideElement("div-error")
-      getAlbums(idAlbum, false, true, 0)
-      console.log(event);
-
-    };
-
-    const updateBestsPrices = function(idAlbum, minPrice){
-
-       var fichaAlbum = document.getElementById(idAlbum);
-
-       Array.from(fichaAlbum.getElementsByClassName('tr-albumprice')).forEach(tr => {
-          if (tr.getAttribute('price-int') === minPrice){
-              tr.classList.add('best-price');
-              (tr.getElementsByClassName("td-albumminprice")[0]).innerHTML = "<i class='fas fa-star has-text-info''></i>";
-          }
-          else{
-            tr.classList.remove('best-price');
-            (tr.getElementsByClassName("td-albumminprice")[0]).innerHTML = "";
-          }
-          
-       });
-
-    }
-
-    const setHTMLPrice = function(idAlbum, price, gtin){
-        
-         var ficha = document.getElementById(idAlbum);
-         var minPrice = parseFloat(ficha.getAttribute('min-price'));
-         var gtinFicha = ficha.getAttribute("gtin-ficha");
-
-         if (gtinFicha === "" && gtin != ""){
-           ficha.setAttribute("gtin-ficha", gtin);
-           (ficha.getElementsByClassName("discogs")[0]).setAttribute("href", "https://www.discogs.com/search/?q=" + gtin +"&type=all"); 
-           (ficha.getElementsByClassName("amazon")[0]).setAttribute("href", "https://www.amazon.es/s?k=" + gtin + "&i=popular&ref=nb_sb_noss"); 
-           (ficha.getElementsByClassName("discogs")[0]).classList.remove("desactivado");
-           (ficha.getElementsByClassName("amazon")[0]).classList.remove("desactivado");
-
-         }
-
-         var idPrecio = price.text + "-" + idAlbum;
-         var trElement = document.getElementById(idPrecio);
-         trElement.setAttribute('price-int', price.priceInt);
-         trElement.classList.add('tr-albumprice');
-
-         document.getElementById(idPrecio + "-PRICE").innerHTML = "<a href='" + price.url + "'>" + price.price + " " + price.currency + "</a>"
-         document.getElementById(idPrecio + "-ORIGINALPRICE").innerText = price.priceOriginal;
-
-         if (parseFloat(minPrice) >= parseFloat(price.priceInt)) {
-             ficha.setAttribute("min-price", price.priceInt);
-             updateBestsPrices(idAlbum, price.priceInt);
-         }
-
-    }
-
-    //Establece el HTML de un disco completo.
-    const setHTMLAlbum = function(disco){
-
-      var parser = new DOMParser();
-      var base = parser.parseFromString(document.getElementById("div-base").outerHTML, "text/html");
-
-      base.getElementById("div-base").setAttribute("id", disco.id);
-      base.getElementById(disco.id).classList.remove('base');
-      base.getElementById(disco.id).classList.add("resultados-items");
-      base.getElementById(disco.id).setAttribute("min-price",disco.price.priceInt);
-      base.getElementById(disco.id).setAttribute("gtin-ficha", disco.gtin);
-
-      base.getElementById("p-album").innerHTML = 
-          "<span style='padding-right:4px;'>" + disco.title.toLowerCase() + "</span>" 
-        + (disco.type !== "" ? "<span class='tag is-info is-rounded'>" + disco.type + "</span>" : "");
-
-      base.getElementById("update-album").setAttribute("onclick", "updateAlbum('"+ disco.id + "')");
-      var spotifyString = encodeURIComponent(disco.from.toLowerCase() + " " + disco.title.toLowerCase().replace(/ \([\s\S]*?\)/g, ''));
-      base.getElementById("a-spotify").setAttribute("href", "https://open.spotify.com/search/" + spotifyString);
-
-      if (disco.gtin != ""){
-        base.getElementById("a-discogs").setAttribute("href", "https://www.discogs.com/search/?q=" + disco.gtin +"&type=all");
-        base.getElementById("a-amazon").setAttribute("href", "https://www.amazon.es/s?k=" + disco.gtin + "&i=popular&ref=nb_sb_noss");
-        base.getElementById("a-discogs").classList.remove("desactivado");
-        base.getElementById("a-amazon").classList.remove("desactivado");
-      }
-      base.getElementById("p-artist").innerText = disco.from.toLowerCase();
-      base.getElementById("img-cover").setAttribute("src", disco.image);
-
-      urlsDodax.forEach(url => {
-
-        var idPrecio = url.text + "-" + disco.id;
-        var trElement = document.createElement("tr");
-        trElement.setAttribute("id", idPrecio);
-
-        trElement.innerHTML = "<td>" + url.text + "</td>" 
-                            + "<td id='" + idPrecio + "-PRICE'>--</td>"
-                            + "<td id='" + idPrecio + "-ORIGINALPRICE'></td>"
-                            + "<td class='td-albumminprice' id='" + idPrecio + "-MINPRICE'></td>";
-
-        base.getElementById("table-precios-body").appendChild(trElement);
-
-      })
-
-      document.getElementById("div-resultados").appendChild(base.getElementById(disco.id));
-      setHTMLPrice(disco.id, disco.price, disco.gtin);
-    }
-
-    //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
-    const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum) => {
-
-      var urls = firstCall || updateAlbum ? getUrlsDodax(updateAlbum) : (JSON.parse(sessionStorage.getItem("nextUrls")));
-
-      const requests = urls.map((urlDodax) => {
-
-      const urlCompleta = proxyurl + urlDodax.url + urlDodax.params + (firstCall || updateAlbum ? cadenaBusqueda : "");
-
-        return getDodaxAlbums(urlCompleta)
-          .then((salida) => {
-
-              var parser = new DOMParser();
-              var doc = parser.parseFromString(salida.data, "text/html");
-              var nextUrlElement = doc.getElementsByClassName('related_list')[0];
-
-              return {
-
-                  url : urlDodax.url
-                 ,params: urlDodax.params
-                 ,text: urlDodax.text
-                 ,listaAlbums: doc.getElementsByClassName('product')
-                 ,nextUrl: nextUrlElement != null ? nextUrlElement.getAttribute('data-scroller-next-url') : null
-                 ,error: (salida.status !== 200 ? salida.data : "")
-
-              };
-
-          });
-      })
-
-      return Promise.all(requests)
-    }
-
-    //Variables globales.
-    var rates = null;
-
-    //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
-    const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum, index) {
-
-      getDodaxSitesAlbums(cadenaBusqueda, firstCall, updateAlbum)
-        .then(content => {
-
-          var hayResultados = false;
-          var mostrarMasResultados = false;
-          var nextUrls = [];
-
-          content.forEach(resultado => {
-
-            //Si ha habido un error mostramos el mensaje pero procesamos la respuesta.
-            if (resultado.error !== ""){
-              console.log(resultado.error);
-              showElement("div-error");
-            }
-            
-            mostrarMasResultados = resultado.nextUrl != null && index === 2;
-
-            if (resultado.nextUrl != null) {
-              
-              nextUrls.push({
-                url: resultado.url
-               ,params: resultado.nextUrl
-               ,text: resultado.text
-              });
-
-            }
-
-            Array.from(resultado.listaAlbums).forEach(album => {
-
-               hayResultados = true;
-
-               //Identificador del album
-               var idAlbum = (album.getElementsByClassName('js-product')[0]).getAttribute('id');
-               //Precio del disco.
-               var precio = ((album.getElementsByClassName('buy-button')[0]).getElementsByTagName('span')[0]).innerText
-                 .replace("€", "")
-                 .replace("£", "")
-                 .replace("zł", "")
-                 .replace(".", ",")
-                 .replace(" ", "")
-                 .replace(String.fromCharCode(160), "")
-                 .replace("&nbsp;", "");
-
-               //Código de barras.
-               var gtin =  (album.getElementsByClassName('buy-button')[0]).getAttribute('onmousedown');
-               gtin = (gtin !== null) ? gtin.replace("RetailRocket.addToCartRetailRocket('", "").replace("');", "") : "";
-
-               //Url del detalle del disco.
-               var urlRelativa = (album.getElementsByClassName('js-product')[0]).getAttribute('href');
-               //Existe ya la ficha?
-               var encontrado = document.getElementById(idAlbum) != null;
-               //Datos del precio.
-               var precioObj = {
-                 url: resultado.url + urlRelativa,
-                 price: getPrice(precio, resultado.text).replace(".", ","),
-                 priceInt: getPrice(precio, resultado.text),
-                 priceOriginal: getCurrency(precio, resultado.text),
-                 currency: "€",
-                 text: resultado.text,
-               };
-
-              if (encontrado) {
-                setHTMLPrice(idAlbum, precioObj, gtin)
-              } else {
-
-                //El disco no está cargado en la página.  
-                var obj = {};
-                obj.id = idAlbum;
-                obj.image =  (album.getElementsByTagName('img')[0]).getAttribute('src');
-                obj.title = (album.getElementsByClassName('product_title')[0]).innerText;
-                obj.from = (album.getElementsByClassName('product_from')[0]).innerText;
-                obj.type = (album.getElementsByClassName('product_type')[0]).innerText;
-                obj.price = precioObj;
-                obj.minPrice = precioObj.priceInt;
-                obj.gtin = gtin;
-
-                setHTMLAlbum(obj);
-
-              }
-
-            });
-
-          });
-
-          if (firstCall && !hayResultados){
-            showElement("div-noresult");
-          }
-
-          sessionStorage.setItem('nextUrls', JSON.stringify(nextUrls));
-
-          //Quedan más resultados.
-          if (nextUrls.length > 0 && index < 2 && !updateAlbum) {
-            getAlbums(cadenaBusqueda, false, false, index + 1);
-          }
-          else{
-
-            if (mostrarMasResultados){
-                showElement("div-button-more");
-                sessionStorage.setItem("moreItems", "1");
-            }
-            else{
-                hideElement("div-button-more");
-                sessionStorage.setItem("moreItems", "0");
-            }
-  
-            var htmlToSave = document.getElementById("div-resultados").innerHTML;
-            sessionStorage.setItem('lastSearchResult', htmlToSave);
-            showSpinner(false);              
-
-          }
-
-        });
-
-    }
-
-    document.addEventListener("DOMContentLoaded", function(event) { 
-
-      getCurrencyRates()
-        .then((salida) => {
-          rates = salida;
-        });
-
-      //última búsqueda
-      var lastSearchResult = sessionStorage.getItem('lastSearchResult');
-      var lastSearch = sessionStorage.getItem('lastSearch');
-
-      if (lastSearchResult != null){
-        document.getElementById("div-resultados").innerHTML = lastSearchResult;
-        document.getElementById("search").value = lastSearch;
-        hideElement("div-info")
-        if (sessionStorage.getItem("moreItems") === "1"){
-            showElement("div-button-more");
-        }
-    
-      }
-
-      //última configuración.
-      var lastConf = localStorage.getItem("conf");
-      if (lastConf !== null){
-
-        JSON.parse(lastConf).forEach(item => {
-            document.getElementById(item.name).checked = item.checked;
-        });
-
-      }
-
-    });
-
-    document.getElementById("button-more").addEventListener('click', function(){
-
-        hideElement("div-error")
-        showSpinner(true);
-        var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
-        getAlbums(cadenaBusquedaActual, false, false, 0);
-    });
-
-
-   document.getElementById("button-aceptar").addEventListener('click', function(){
-
-    //guardamos la configuración en el storage del navegador.
-    var conf = [];
-
-    Array.from(document.getElementsByClassName("formato")).forEach(check => {
-      conf.push({name: check.name, checked: check.checked});
-    });
-
-    localStorage.setItem("conf", JSON.stringify(conf));
-
-    document.getElementById("div-modal").classList.remove("is-active");
-   });
-   
-   document.getElementById("button-conf").addEventListener('click', function(){
-    document.getElementById("div-modal").classList.add("is-active");
-   });
-   
-    document.getElementById("formulario").addEventListener('submit', function(){
-
-      cadenaBusqueda = document.getElementById("search").value
-                          .toUpperCase()
-                          .replace("VINILO", "")
-                          .replace("VINYL", "")
-                          .replace(" CD", "")
-                          .replace(" LP","")
-                          .replace("CD ", "")
-                          .replace("LP ","")
-                          .trim()
-                          .replace(/ /g, '+');
-
-      //Como mínimo 6 caracteres de búsqueda.
-      if (cadenaBusqueda.length < 2)
-        return false;
-
-      sessionStorage.setItem('lastSearch', cadenaBusqueda);
-      //Inicializamos las rutas de las siguientes llamadas.
-      sessionStorage.setItem('nextUrls', JSON.stringify([]));
-
-      showSpinner(true);
-
-      hideElement("div-info")
-      hideElement("div-error")
-      hideElement("div-noresult");
-      hideElement("div-resultados");
-      hideElement("div-button-more");
-
-      Array.from(document.getElementsByClassName("resultados-items")).forEach(element => {
-          element.parentNode.removeChild(element);
-      });
-
-      sessionStorage.setItem("lastSearchIndex", "0");
-      getAlbums(cadenaBusqueda, true, false, 0);
-      showElement("div-resultados");
-
-      event.preventDefault();
-
-    });
-
+<body>
+  <ion-app>
+    <!-- header -->
+    <ion-header translucent>
+      <ion-toolbar class="toolbar-search" color="primary">
+        <form id="formulario" method='GET' action='javascript:void(0);'>
+          <ion-searchbar id="search" style="text-transform:uppercase" type="search" inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
+        </form>
+      </ion-toolbar>
+    </ion-header>
+
+
+    <ion-content fullscreen id="content-settings" style="display: none" color="light">
+      <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+        <ion-fab-button id="button-check" color="secondary">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <ion-list lines="none">
+        <ion-list-header>
+          <ion-text color="primary"><h1>Formato</h1></ion-text>
+        </ion-list-header>
+        <ion-item>
+          <ion-label>LP (Vinyl)</ion-label>
+          <ion-toggle slot="start" name="lp-vinyl" color="secondary" id="lp-vinyl" class="formato" checked></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>Single (Vinyl)</ion-label>
+          <ion-toggle slot="start" id="single-vinyl" color="secondary" name="single-vinyl" class="formato" checked></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>CD</ion-label>
+          <ion-toggle slot="start" id="cd" name="cd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>SACD</ion-label>
+          <ion-toggle slot="start" id="sacd" name="sacd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>DVD</ion-label>
+          <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+      </ion-list>
+      <ion-list lines="none">
+        <ion-list-header>
+          <ion-text color="primary"><h1>Otras opciones</h1></ion-text>
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Sección de electrónica.</ion-label>
+          <ion-toggle slot="start" id="solo-electronica" name="solo-electronica" color="secondary" class="seccion"></ion-toggle>
+        </ion-item>
+      </ion-list>  
+    </ion-content>
+
+    <!-- content -->
+    <ion-content id="content-search" fullscreen color="light">
+
+      <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+            <ion-fab-button id="button-settings" color="secondary">
+              <ion-icon name="settings-outline"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+
+          <!-- grid para el listado de albums-->
+        <ion-grid>
+            <ion-row id="div-resultados" class="resultados">
+              <ion-col id="div-base" class="base" size-xs="12" size-sm="6" size-lg="4" size-xl="3">
+                <ion-card>
+                  <img id="img-cover" alt="Album cover" class="img-album-cover" src="#" />
+                  <ion-card-content>
+                    <ion-card-title class="album is-title" id="p-album">#album#</ion-card-title>
+                    <ion-card-subtitle class="artist is-subtitle" id="p-artist">#artist#</ion-card-subtitle>
+                    <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+                        <ion-fab-button color="primary">
+                          <ion-icon name="chevron-back-outline"></ion-icon>
+                        </ion-fab-button>
+                        <ion-fab-list side="start">
+                          <ion-fab-button id="update-album" color="secondary"><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
+                          <ion-fab-button id="a-discogs" class="discogs"  color="secondary"><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
+                          <ion-fab-button id="a-amazon" class="amazon" color="secondary"><ion-icon name="logo-amazon"></ion-icon></ion-fab-button>
+                          <ion-fab-button id="a-spotify" class="spotify" color="secondary"><ion-icon name="musical-notes-outline"></ion-icon></ion-fab-button>
+                        </ion-fab-list>
+                      </ion-fab>
+                    <ion-list id="table-precios-body">
+                        <!--lista de precios-->
+                      </ion-list>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+       </ion-grid>
+        <ion-infinite-scroll threshold="100px" id="infinite-scroll">
+          <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="más resultados ...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </ion-content>      
+  </ion-app>
+
+  <!-- Ionic -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+  <script src="constants.js"></script>
+  <script src="utils.js"></script>
+  <script src="search.js"></script>
+  <script src="events.js"></script>
+
+  <!-- Componente de loading-->
+  <script type="module">
+    import { loadingController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+    window.loadingController = loadingController;
+  </script>
+
+  <!-- Componente para tablas modales.-->
+  <script type="module">
+    import { modalController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
+    window.modalController = modalController;
   </script>
 
 </body>
