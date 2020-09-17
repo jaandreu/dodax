@@ -1,3 +1,6 @@
+/*jshint esversion: 6 */
+/*jshint esversion: 6 */
+
 const getUrlsDodax = function (updateAlbum, servers){
 
     //Obtenemos las opciones de búsqueda.
@@ -29,25 +32,26 @@ const getUrlsDodax = function (updateAlbum, servers){
         })
         .map(urlDodax => {
        
-         var newUrl = {
-            url: urlDodax.url,
-            text: urlDodax.text,
-            params: urlDodax.params + filtro + "/?s="
-         }
+            var newUrl = {
+                url: urlDodax.url,
+                text: urlDodax.text,
+                params: urlDodax.params + filtro + "/?s="
+            };
 
-        return newUrl;
+            return newUrl;
 
-    });
+        });
 
-  }
+  };
 
   //Obtiene un JSON con los rates de las monedas en base al EUR.
-  const getCurrencyRates = async (url) => {
+  const getCurrencyRates = async () => {
 
-      let response = await fetch("https://api.exchangeratesapi.io/latest");
-      let data = await response.json();
+      let respuesta = await fetch("https://api.exchangeratesapi.io/latest");
+      let data = await respuesta.json();
       return data;
-  }
+
+}  
 
   //Obtiene un importe en euros.
   const getPrice = function (price, codigo) {
@@ -67,7 +71,7 @@ const getUrlsDodax = function (updateAlbum, servers){
       salida = parseFloat(price.replace(",", ".")).toFixed(2);
     }
     return salida;
-  }
+  };
 
   //Obtiene el caracter de moneda en función del código de pais.
   const getCurrency = function (price, codigo) {
@@ -84,21 +88,22 @@ const getUrlsDodax = function (updateAlbum, servers){
 
     }
     return salida;
-  }
+  };
 
   //Devuelve la información de los albums de una url de Dodax.
   const getDodaxAlbums = async (url) => {
 
     console.log("Conectando:" + url);
-    let response = await fetch(url);
-    let data = await response.text()
+    let respuesta = await fetch(url);
+    let data = await respuesta.text();
 
     return {
-         status: response.status
-        ,data: data
+         status: respuesta.status,
+         data: data
     };
 
-  }
+  };
+
   const updateAlbumPrices = function(idAlbum, updateAllServers) {
 
     var servers = [];
@@ -120,7 +125,6 @@ const getUrlsDodax = function (updateAlbum, servers){
 
     hideElement("div-error")
     getAlbums(idAlbum, false, true, 0, servers);
-    console.log(event);
 
   };
 
@@ -139,7 +143,8 @@ const getUrlsDodax = function (updateAlbum, servers){
         
      });
 
-  }
+  };
+
   const removePrices = function(idAlbum){
 
     var fichaAlbum = document.getElementById(idAlbum);
@@ -156,7 +161,7 @@ const getUrlsDodax = function (updateAlbum, servers){
       col.innerHTML = ""
     });
 
-  }
+  };
 
   const removePendingPrices = function(idAlbum){
 
@@ -172,7 +177,7 @@ const getUrlsDodax = function (updateAlbum, servers){
       col.setAttribute("paused", true);
     });
 
-  }
+  };
 
   const setHTMLPrice = function(idAlbum, price, gtin){
       
@@ -207,7 +212,7 @@ const getUrlsDodax = function (updateAlbum, servers){
            updateBestsPrices(idAlbum, price.priceInt);
        }
 
-  }
+  };
 
   //Establece el HTML de un disco completo.
   const setHTMLAlbum = function(disco){
@@ -267,7 +272,7 @@ const getUrlsDodax = function (updateAlbum, servers){
 
     document.getElementById("div-resultados").appendChild(base.getElementById(disco.id));
     setHTMLPrice(disco.id, disco.price, disco.gtin);
-  }
+  };
 
   //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
   const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum, servers) => {
@@ -300,7 +305,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     })
 
     return Promise.all(requests)
-  }
+  };
 
   //Variables globales.
   var rates = null;
@@ -435,5 +440,4 @@ const getUrlsDodax = function (updateAlbum, servers){
         }
 
       });
-
-  }
+  };

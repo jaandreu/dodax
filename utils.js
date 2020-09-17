@@ -1,4 +1,6 @@
-    //Método que muestra u oculta el frame de buscando.
+/*jshint esversion: 6 */
+
+//Método que muestra u oculta el frame de buscando.
     const showSpinner = function(show, customMessage) {
        
         var loadingMessage = typeof customMessage !== "undefined" ? customMessage : "Hey Ho! Let's Go!";
@@ -21,7 +23,7 @@
          });
  
         }
-      }
+      };
 
           //Funciones auxiliares DOM
     const showElement = function(idElement){
@@ -29,27 +31,27 @@
         if (elem != null) {
           elem.style.display = "";
         }
-     }
+     };
  
      const hideElement = function(idElement){
         var elem = document.getElementById(idElement);
         if (elem != null) {
           elem.style.display = "none";
         }
-     }
+     };
  
      const addClass = function(idElement, className){
         var elem = document.getElementById(idElement);
         if (elem != null) {
-         elem.classList.add(className)
+         elem.classList.add(className);
         }
-     }
+     };
  
      const removeClass = function(idElement, className){
         var elem = document.getElementById(idElement);
         if (elem != null) {
-         elem.classList.remove(className)
+         elem.classList.remove(className);
         }
-     }
+     };
  
       
