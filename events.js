@@ -117,6 +117,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   });
 
+  const copyButtonEvent = function(url){
+
+    var tempInput = document.createElement("input");
+        tempInput.setAttribute("readonly", "readonly");
+        tempInput.value = url;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+
+        presentToast("Url Copiada!", 1000, "info");
+  }
+
   async function presentToast(message, duration, type) {
     const toast = document.createElement('ion-toast');
     toast.message = message;
