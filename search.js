@@ -195,7 +195,6 @@ const getUrlsDodax = function (updateAlbum, servers){
          (ficha.getElementsByClassName("amazon")[0]).setAttribute("href", "https://www.amazon.es/s?k=" + gtin + "&i=popular&ref=nb_sb_noss"); 
          (ficha.getElementsByClassName("discogs")[0]).setAttribute("disabled", "false");
          (ficha.getElementsByClassName("amazon")[0]).setAttribute("disabled", "false");
-
        }
 
        var idPrecio = price.text + "-" + idAlbum;
@@ -204,6 +203,9 @@ const getUrlsDodax = function (updateAlbum, servers){
        trElement.setAttribute('price-int', price.priceInt);
        trElement.classList.add('tr-albumprice');
        trElement.setAttribute('href', price.url);
+
+       var copyButton = document.getElementById(idPrecio + "-Url");
+       copyButton.setAttribute("onclick", "copyButtonEvent('" + price.url + "');");
 
        document.getElementById(idPrecio + "-PRICE").innerText = price.price + " " + price.currency;
        document.getElementById(idPrecio + "-ORIGINALPRICE").innerText = price.priceOriginal;
@@ -253,19 +255,28 @@ const getUrlsDodax = function (updateAlbum, servers){
     urlsDodax.forEach(url => {
 
       var idPrecio = url.text + "-" + disco.id;
-      var trElement = document.createElement("ion-item");
-      trElement.setAttribute("id", idPrecio);
+      var trElement = document.createElement("ion-item-sliding");
+      /*trElement.setAttribute("id", idPrecio);
       trElement.setAttribute("server", url.text);
       trElement.classList.add("ion-no-padding");
-      trElement.classList.add("waiting-price");
+      trElement.classList.add("waiting-price");*/
+      var ionItem = "<ion-item "
+                  +    " id = '" + idPrecio + "' "
+                  +    " server = '" + url.text + "' "
+                  +    " class= 'ion-no-padding waiting-price'>";
 
-      trElement.innerHTML = "<ion-grid class='no-padding'>"
+      var copyButton = "<ion-item-options id='" + idPrecio +"-Url' side='start'><ion-item-option color='primary'><ion-icon name='copy-outline'></ion-icon></ion-item-option></ion-item-options>";
+
+      trElement.innerHTML = ionItem 
+                         + "<ion-grid class='no-padding'>"
                          +   "<ion-row>" 
                          +      "<ion-col class='col-server' size='2'>" + url.text + "</ion-col>"
                          +      "<ion-col class='col-price' size='5' id='" + idPrecio + "-PRICE'><ion-spinner class='spinner-price' color='secondary' name='dots'></ion-spinner></ion-col>"
                          +      "<ion-col class='col-originalprice' size='5' id='" + idPrecio + "-ORIGINALPRICE'></ion-col>"
                          +   "</ion-row>"
-                         + "</ion-grid>";
+                         + "</ion-grid>"
+                         + "</ion-item>"
+                         +  copyButton;
 
       base.getElementById("table-precios-body").appendChild(trElement);
 
