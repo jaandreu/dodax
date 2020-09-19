@@ -65,9 +65,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     sessionStorage.setItem('nextUrls', JSON.stringify([]));
 
     showSpinner(true);
-
-    //hideElement("div-error")
-    //hideElement("div-noresult");
     hideElement("div-resultados");
 
     Array.from(document.getElementsByClassName("resultados-items")).forEach(element => {
@@ -75,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 
     sessionStorage.setItem("lastSearchIndex", "0");
-    getAlbums(cadenaBusqueda, true, false, 0, []);
+    getAlbums(cadenaBusqueda, true, false, []);
     
     showElement("div-resultados");
 
@@ -90,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       console.log('Loading data...');
       showSpinner(true);
       var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
-      getAlbums(cadenaBusquedaActual, false, false, 0, [], function(){
+      getAlbums(cadenaBusquedaActual, false, false, [], function(){
         infiniteScroll.complete();
       });
     }
@@ -120,11 +117,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   });
 
-  async function presentToast() {
+  async function presentToast(message, duration, type) {
     const toast = document.createElement('ion-toast');
-    toast.message = 'No se han encontrado coincidencias';
-    toast.duration = 3000;
-  
+    toast.message = message;
+    toast.duration = duration;
+    toast.color = type == "error" ? "danger" : "secondary";
+    toast.position = "bottom";
+    toast.translucent = true;
     document.body.appendChild(toast);
     return toast.present();
   };

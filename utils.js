@@ -23,6 +23,13 @@
         }
       };
 
+    const changeSpinnerMessage = function(message){
+      const elem = document.querySelector("div.loading-wrapper div.loading-content");
+       if(elem){
+          elem.innerHTML = message;
+       }
+    }
+
           //Funciones auxiliares DOM
     const showElement = function(idElement){
         var elem = document.getElementById(idElement);
@@ -52,4 +59,16 @@
         }
      };
  
-      
+    /**
+    * Timeout function
+    * @param {Integer} time (miliseconds)
+    * @param {Promise} promise
+    */
+    const timeout = (time, promise) => {
+      return new Promise(function(resolve, reject) {
+        setTimeout(() => {
+          reject(new Error('Request timed out.'))
+        }, time);
+        promise.then(resolve, reject);
+      });
+    } 

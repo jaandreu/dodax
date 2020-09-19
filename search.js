@@ -1,9 +1,11 @@
+//Obtiene la lista de servidores a los que nos conectaremos.
 const getUrlsDodax = function (updateAlbum, servers){
 
     //Obtenemos las opciones de búsqueda.
     var filtro = "";
 
-    var electronicDepartment = document.getElementById('solo-electronica').checked;
+    var seccion = document.getElementById("opt-seccion").value;
+
 
     if (!updateAlbum){
 
@@ -35,7 +37,7 @@ const getUrlsDodax = function (updateAlbum, servers){
             var newUrl = {
                 url: urlDodax.url,
                 text: urlDodax.text,
-                params: (electronicDepartment ? urlDodax.electronica : urlDodax.params) + filtro + "/?s="
+                params: urlDodax[seccion] + filtro + "/?s="
             };
 
             return newUrl;
@@ -51,7 +53,7 @@ const getUrlsDodax = function (updateAlbum, servers){
       let data = await respuesta.json();
       return data;
 
-}  
+  }  
 
   //Obtiene un importe en euros.
   const getPrice = function (price, codigo) {
@@ -123,7 +125,7 @@ const getUrlsDodax = function (updateAlbum, servers){
         removePrices(idAlbum);
     }
 
-    getAlbums(idAlbum, false, true, 0, servers);
+    getAlbums(idAlbum, false, true, servers);
 
   };
 
@@ -310,7 +312,7 @@ const getUrlsDodax = function (updateAlbum, servers){
   var rates = null;
 
   //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
-  const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum, index, servers, callback) {
+  const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum, servers, callback) {
 
     getDodaxSitesAlbums(cadenaBusqueda, firstCall, updateAlbum, servers, callback)
       .then(content => {
@@ -324,12 +326,12 @@ const getUrlsDodax = function (updateAlbum, servers){
           //Si ha habido un error mostramos el mensaje pero procesamos la respuesta.
           if (resultado.error !== ""){
             console.log(resultado.error);
-            presentToast('Ha fallado alguna de las conexiones ...')
+            presentToast('Ha fallado alguna de las conexiones ...',2000, "error")
           }
           
-          mostrarMasResultados = resultado.nextUrl != null && index === 0;
+          mostrarMasResultados = resultado.nextUrl != null;
 
-          if (resultado.nextUrl != null) {
+          if (mostrarMasResultados) {
             
             nextUrls.push({
               url: resultado.url
@@ -338,6 +340,8 @@ const getUrlsDodax = function (updateAlbum, servers){
             });
 
           }
+
+          changeSpinnerMessage("God Save The Queen!")
 
           Array.from(resultado.listaAlbums).forEach(album => {
 
@@ -396,8 +400,8 @@ const getUrlsDodax = function (updateAlbum, servers){
 
         });
 
-        if (firstCall && !hayResultados){
-          presentToast('Sin resultados, cambie los términos de búsqueda');
+        if (firstCall && !hayResultados && !updateAlbum){
+          presentToast('Sin resultados, cambie los términos de búsqueda', 3000, "info");
         }
 
         if (!updateAlbum){
@@ -405,12 +409,6 @@ const getUrlsDodax = function (updateAlbum, servers){
         }
 
         if (!updateAlbum){
-          //Quedan más resultados.
-          if (nextUrls.length > 0 && index < 0) {
-            getAlbums(cadenaBusqueda, false, false, index + 1, [], callback);
-          }
-          else{
-
             if (mostrarMasResultados){
                 infiniteScroll.disabled = false;
                 sessionStorage.setItem("moreItems", "1");
@@ -419,7 +417,6 @@ const getUrlsDodax = function (updateAlbum, servers){
                   sessionStorage.setItem("moreItems", "0");
                   infiniteScroll.disabled = true;
             }
-          }
         }
   
         var htmlToSave = document.getElementById("div-resultados").innerHTML;
@@ -434,6 +431,7 @@ const getUrlsDodax = function (updateAlbum, servers){
         }
 
         var firstAlbum = true;
+
         Array.from(document.getElementsByTagName('ion-col')).forEach( col => {
           if (parseInt(col.getAttribute("pending-servers")) > 0 && firstAlbum){
             firstAlbum = false;
@@ -441,6 +439,7 @@ const getUrlsDodax = function (updateAlbum, servers){
             updateAlbumPrices(col.id, false);
           }
         });
+
         if (firstAlbum){
           sessionStorage.setItem('updating', "0");
         }
