@@ -13,49 +13,49 @@
         {
           text: "DE",
           url: "https://www.dodax.de",
-          params: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H",
+          musica: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H",
           electronica: "/de-de/elektronik-cPPEA17VBM7"
          },
          {
           text: "AT",
           url: "https://www.dodax.at",
-          params: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H",
+          musica: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H",
           electronica: "/de-at/elektronik-cPPEA17VBM7"
         },
         {
           text: "FR",
           url: "https://www.dodax.fr",
-          params: "/fr-fr/musique-cd-dvd-vinyles-cLOFV6FFU7H",
+          musica: "/fr-fr/musique-cd-dvd-vinyles-cLOFV6FFU7H",
           electronica: "/fr-fr/elektronik-cPPEA17VBM7"
         },
         {
           text: "UK",
           url: "https://www.dodax.co.uk",
-          params: "/en-gb/music-cds-dvds-vinyl-cLOFV6FFU7H",
+          musica: "/en-gb/music-cds-dvds-vinyl-cLOFV6FFU7H",
           electronica: "/en-gb/elektronik-cPPEA17VBM7"
         }, 
         {
           text: "ES",
           url: "https://www.dodax.es",
-          params: "/es-es/musica-cds-dvds-vinilos-cLOFV6FFU7H",
+          musica: "/es-es/musica-cds-dvds-vinilos-cLOFV6FFU7H",
           electronica: "/es-es/elektronik-cPPEA17VBM7"
         }, 
         {
           text: "IT",
           url: "https://www.dodax.it",
-          params: "/it-it/musica-cd-dvd-vinili-cLOFV6FFU7H",
+          musica: "/it-it/musica-cd-dvd-vinili-cLOFV6FFU7H",
           electronica: "/it-it/elektronik-cPPEA17VBM7"
         },
         {
           text: "PL",
           url: "https://www.dodax.pl",
-          params: "/pl-pl/muzyka-cd-dvd-winyle-cLOFV6FFU7H",
+          musica: "/pl-pl/muzyka-cd-dvd-winyle-cLOFV6FFU7H",
           electronica: "/pl-pl/elektronik-cPPEA17VBM7"
         }, 
         {
           text: "NL",
           url: "https://www.dodax.nl",
-          params: "/nl-nl/muziek-cds-dvds-vinylplaten-cLOFV6FFU7H",
+          musica: "/nl-nl/muziek-cds-dvds-vinylplaten-cLOFV6FFU7H",
           electronica: "/nl-nl/elektronik-cPPEA17VBM7"
         }
         ];

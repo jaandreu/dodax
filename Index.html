@@ -19,9 +19,10 @@
     font-family: 'Open Sans', sans-serif;
   }
 
-  ion-text, ion-card-title, ion-card-subtitle, .searchbar-input {
+  ion-text, ion-card-title, ion-card-subtitle, .searchbar-input, h2 {
     font-family: 'Open Sans Condensed', sans-serif !important;
   }
+
   ion-text {
     padding-right: 5px;
   }
@@ -104,9 +105,9 @@
       </ion-fab>
       <ion-list lines="none">
         <ion-list-header>
-          <ion-text color="primary"><h1>Formato</h1></ion-text>
+          <ion-label>Formato</ion-label>
         </ion-list-header>
-        <ion-item>
+        <ion-item >
           <ion-label>LP (Vinyl)</ion-label>
           <ion-toggle slot="start" name="lp-vinyl" color="secondary" id="lp-vinyl" class="formato" checked></ion-toggle>
         </ion-item>
@@ -129,12 +130,18 @@
       </ion-list>
       <ion-list lines="none">
         <ion-list-header>
-          <ion-text color="primary"><h1>Otras opciones</h1></ion-text>
+          <ion-label>Sección</ion-label>
         </ion-list-header>
-        <ion-item>
-          <ion-label>Sección de electrónica.</ion-label>
-          <ion-toggle slot="start" id="solo-electronica" name="solo-electronica" color="secondary" class="seccion"></ion-toggle>
-        </ion-item>
+        <ion-radio-group id="opt-seccion" value="musica">
+            <ion-item>
+              <ion-label>Música</ion-label>
+              <ion-radio slot="start" color="secondary" value="musica"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Electrónica</ion-label>
+              <ion-radio slot="start" color="secondary" value="electronica"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
       </ion-list>  
     </ion-content>
 
@@ -196,12 +203,6 @@
   <script type="module">
     import { loadingController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
     window.loadingController = loadingController;
-  </script>
-
-  <!-- Componente para tablas modales.-->
-  <script type="module">
-    import { modalController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
-    window.modalController = modalController;
   </script>
 
 </body>
