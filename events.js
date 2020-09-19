@@ -120,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const copyButtonEvent = function(url){
 
     var tempInput = document.createElement("input");
+        tempInput.setAttribute("readonly", "readonly");
         tempInput.value = url;
         document.body.appendChild(tempInput);
         tempInput.select();
