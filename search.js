@@ -55,6 +55,18 @@ const getUrlsDodax = function (updateAlbum, servers){
 
   }  
 
+  const getDiscogsInfo = async(barcode) => {
+    
+    let url = "http://api.discogs.com/database/search?q=602527826486&type=barcode";
+    let respuesta = await fetch(url, 
+          {"User-Agent": "DodaxSearch/0.1 +https://dodax.netlify.app"});
+
+    let data = await respuesta.json();
+
+    return data;
+
+  }
+  
   //Obtiene un importe en euros.
   const getPrice = function (price, codigo) {
     if (rates != null) {
@@ -195,6 +207,7 @@ const getUrlsDodax = function (updateAlbum, servers){
          (ficha.getElementsByClassName("amazon")[0]).setAttribute("href", "https://www.amazon.es/s?k=" + gtin + "&i=popular&ref=nb_sb_noss"); 
          (ficha.getElementsByClassName("discogs")[0]).setAttribute("disabled", "false");
          (ficha.getElementsByClassName("amazon")[0]).setAttribute("disabled", "false");
+
        }
 
        var idPrecio = price.text + "-" + idAlbum;
