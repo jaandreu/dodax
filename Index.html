@@ -38,6 +38,14 @@
       font-size: 1.5rem !important;
   }
 
+  ion-content {
+    --background: none;
+    background-image: url('./joy_division.jpg');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
   /*Colores de ionic*/
   :root {
   --ion-color-primary: #222428;
@@ -97,7 +105,7 @@
     </ion-header>
 
 
-    <ion-content fullscreen id="content-settings" style="display: none" color="light">
+    <ion-content fullscreen id="content-settings" style="display: none">
       <ion-fab vertical="bottom" horizontal="start" slot="fixed">
         <ion-fab-button id="button-check" color="secondary">
           <ion-icon name="checkmark-outline"></ion-icon>
@@ -153,7 +161,7 @@
     </ion-content>
 
     <!-- content -->
-    <ion-content id="content-search" fullscreen color="light">
+    <ion-content id="content-search" fullscreen>
 
       <ion-fab vertical="bottom" horizontal="start" slot="fixed">
             <ion-fab-button id="button-settings" color="secondary">
