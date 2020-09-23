@@ -61,5 +61,9 @@
         ];
         
      //Proxy para evitar el CORS
-     const proxyurl = window.location.host.includes('netlify') ? "https://dodax-proxy.herokuapp.com/" : "https://cors-anywhere.herokuapp.com/";
+     let proxyurl = window.location.host.includes('netlify') ? "https://dodax-proxy.herokuapp.com/" : "https://cors-anywhere.herokuapp.com/";
+
+     //Parser para tratar el html que obtenemos.
+     let parser = new DOMParser();
+
 
