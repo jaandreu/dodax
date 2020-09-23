@@ -218,6 +218,11 @@ const getUrlsDodax = function (updateAlbum, servers){
        trElement.setAttribute('href', price.url);
 
        var copyButton = document.getElementById(idPrecio + "-Url");
+
+       document.getElementById(idPrecio + "-Url").addEventListener('ionSwipe', function(event){
+          copyButtonEvent(price.url);
+       });
+
        copyButton.setAttribute("onclick", "copyButtonEvent('" + price.url + "');");
 
        document.getElementById(idPrecio + "-PRICE").innerText = price.price + " " + price.currency;
@@ -269,16 +274,13 @@ const getUrlsDodax = function (updateAlbum, servers){
 
       var idPrecio = url.text + "-" + disco.id;
       var trElement = document.createElement("ion-item-sliding");
-      /*trElement.setAttribute("id", idPrecio);
-      trElement.setAttribute("server", url.text);
-      trElement.classList.add("ion-no-padding");
-      trElement.classList.add("waiting-price");*/
+
       var ionItem = "<ion-item "
                   +    " id = '" + idPrecio + "' "
                   +    " server = '" + url.text + "' "
                   +    " class= 'ion-no-padding waiting-price'>";
 
-      var copyButton = "<ion-item-options id='" + idPrecio +"-Url' side='start'><ion-item-option color='primary'><ion-icon name='copy-outline'></ion-icon></ion-item-option></ion-item-options>";
+      var copyButton = "<ion-item-options id='" + idPrecio +"-Url' side='start'><ion-item-option expandable color='primary'><ion-icon name='copy-outline'></ion-icon></ion-item-option></ion-item-options>";
 
       trElement.innerHTML = ionItem 
                          + "<ion-grid class='no-padding'>"
