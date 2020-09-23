@@ -95,130 +95,17 @@
 
 <body>
   <ion-app>
-    <!-- header -->
-    <ion-header translucent>
-      <ion-toolbar class="toolbar-search" color="primary">
-        <form id="formulario" method='GET' action='javascript:void(0);'>
-          <ion-searchbar id="search" style="text-transform:uppercase" type="search" inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
-        </form>
-      </ion-toolbar>
-    </ion-header>
-
-
-    <ion-content fullscreen id="content-settings" style="display: none">
-      <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-        <ion-fab-button id="button-check" color="secondary">
-          <ion-icon name="checkmark-outline"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-      <ion-list lines="none">
-        <ion-list-header>
-          <ion-label>Formato</ion-label>
-        </ion-list-header>
-        <ion-item >
-          <ion-label>LP (Vinyl)</ion-label>
-          <ion-toggle slot="start" name="lp-vinyl" color="secondary" id="lp-vinyl" class="formato" checked></ion-toggle>
-        </ion-item>
-        <ion-item>
-          <ion-label>Single (Vinyl)</ion-label>
-          <ion-toggle slot="start" id="single-vinyl" color="secondary" name="single-vinyl" class="formato" checked></ion-toggle>
-        </ion-item>
-        <ion-item>
-          <ion-label>CD</ion-label>
-          <ion-toggle slot="start" id="cd" name="cd" color="secondary" class="formato"></ion-toggle>
-        </ion-item>
-        <ion-item>
-          <ion-label>SACD</ion-label>
-          <ion-toggle slot="start" id="sacd" name="sacd" color="secondary" class="formato"></ion-toggle>
-        </ion-item>
-        <ion-item>
-          <ion-label>DVD</ion-label>
-          <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
-        </ion-item>
-      </ion-list>
-      <ion-list lines="none">
-        <ion-list-header>
-          <ion-label>Sección</ion-label>
-        </ion-list-header>
-        <ion-radio-group id="opt-seccion" value="musica">
-          <ion-row>
-            <ion-col>
-          <ion-item>
-              <ion-label>Música</ion-label>
-              <ion-radio slot="start" color="secondary" value="musica"></ion-radio>
-            </ion-item>
-          </ion-col>
-        <ion-col>
-            <ion-item>
-              <ion-label>Electrónica</ion-label>
-              <ion-radio slot="start" color="secondary" value="electronica"></ion-radio>
-            </ion-item>
-          </ion-col>
-
-          </ion-row>
-          </ion-radio-group>
-      </ion-list>  
-    </ion-content>
 
     <!-- content -->
     <ion-content id="content-search" fullscreen>
+        <ion-text color="secondary"><h1 style="text-align: center; font-size: 2.5rem;">Tiempo para tomarse una caña...</h1></ion-text>
 
-      <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-            <ion-fab-button id="button-settings" color="secondary">
-              <ion-icon name="settings-outline"></ion-icon>
-            </ion-fab-button>
-          </ion-fab>
-
-          <!-- grid para el listado de albums-->
-        <ion-grid>
-            <ion-row id="div-resultados" class="resultados">
-              <ion-col id="div-base" class="base" size-xs="12" size-sm="6" size-lg="4" size-xl="3">
-                <ion-card>
-                  <img id="img-cover" alt="Album cover" class="img-album-cover" src="#" />
-                  <ion-card-content>
-                    <ion-card-title class="album is-title" id="p-album">#album#</ion-card-title>
-                    <ion-card-subtitle class="artist is-subtitle" id="p-artist">#artist#</ion-card-subtitle>
-                    <ion-fab vertical="top" horizontal="end" edge slot="fixed">
-                        <ion-fab-button color="primary">
-                          <ion-icon name="chevron-back-outline"></ion-icon>
-                        </ion-fab-button>
-                        <ion-fab-list side="start">
-                          <ion-fab-button id="update-album" color="secondary"><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
-                          <ion-fab-button id="a-discogs" class="discogs"  color="secondary"><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
-                          <ion-fab-button id="a-amazon" class="amazon" color="secondary"><ion-icon name="logo-amazon"></ion-icon></ion-fab-button>
-                          <ion-fab-button id="a-spotify" class="spotify" color="secondary"><ion-icon name="musical-notes-outline"></ion-icon></ion-fab-button>
-                        </ion-fab-list>
-                      </ion-fab>
-                    <ion-list id="table-precios-body">
-                        <!--lista de precios-->
-                      </ion-list>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-            </ion-row>
-       </ion-grid>
-        <ion-infinite-scroll threshold="100px" id="infinite-scroll">
-          <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="más resultados ...">
-          </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
     </ion-content>      
   </ion-app>
 
   <!-- Ionic -->
   <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
   <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
-  <script src="constants.js"></script>
-  <script src="utils.js"></script>
-  <script src="search.js"></script>
-  <script src="events.js"></script>
-
-  <!-- Componente de loading-->
-  <script type="module">
-    import { loadingController } from 'https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/index.esm.js';
-    window.loadingController = loadingController;
-  </script>
 
 </body>
 </html>
