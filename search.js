@@ -34,15 +34,13 @@ const getUrlsDodax = function (updateAlbum, servers){
         })
         .map(urlDodax => {
        
-            var newUrl = {
+            return {
                 url: urlDodax.url,
                 text: urlDodax.text,
                 params: urlDodax[seccion] + filtro + "/?s="
             };
 
-            return newUrl;
-
-        });
+          });
 
   };
 
@@ -238,7 +236,6 @@ const getUrlsDodax = function (updateAlbum, servers){
   //Establece el HTML de un disco completo.
   const setHTMLAlbum = function(disco){
 
-    var parser = new DOMParser();
     var base = parser.parseFromString(document.getElementById("div-base").outerHTML, "text/html");
 
     base.getElementById("div-base").setAttribute("id", disco.id);
@@ -313,7 +310,6 @@ const getUrlsDodax = function (updateAlbum, servers){
       return getDodaxAlbums(urlCompleta)
         .then((salida) => {
 
-            var parser = new DOMParser();
             var doc = parser.parseFromString(salida.data, "text/html");
             var nextUrlElement = doc.getElementsByClassName('related_list')[0];
 
