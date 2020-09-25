@@ -1,11 +1,3 @@
-
-/*Se han cargado HTML y recursos completamente*/
-window.addEventListener('load', (event) => {
-
-    console.log('window.load');
-
-});
-  
 /*Se ha cargado el HTML completamente*/
 document.addEventListener("DOMContentLoaded", function(event) { 
 
@@ -55,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                         .trim()
                         .replace(/ /g, '+');
 
-    //Como mínimo 6 caracteres de búsqueda.
+    //Como mínimo 2 caracteres de búsqueda.
     if (cadenaBusqueda.length < 2)
       return false;
 
