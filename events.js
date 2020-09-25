@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     toast.duration = duration;
     toast.color = type == "error" ? "danger" : "secondary";
     toast.position = "bottom";
-    toast.translucent = true;
+    toast.translucent = false;
     document.body.appendChild(toast);
     return toast.present();
   };
