@@ -107,6 +107,9 @@ const getUrlsDodax = function (updateAlbum, servers){
   //Devuelve la información de los albums de una url de Dodax.
   const getDodaxAlbums = async (url) => {
 
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     //Aborta el controlador al pasar n milisegundos.
     const timer = setTimeout(() => {
       controller.abort();
