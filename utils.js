@@ -6,14 +6,15 @@
         if (show){
  
          this.loadingController.create({
-             message: loadingMessage
+             message: loadingMessage,
+             duration: 6000
            }).then((res) => {
              res.present();
            });
  
         }
         else{
- 
+          debugger;
          this.loadingController.dismiss().then((res) => {
            console.log("Quitando loading...");
          }).catch((error) => {

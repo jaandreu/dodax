@@ -66,4 +66,6 @@
      //Parser para tratar el html que obtenemos.
      let parser = new DOMParser();
 
-
+     //constantes para abortar un fetch.
+     const controller = new AbortController();
+     const signal = controller.signal;

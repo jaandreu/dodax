@@ -1,3 +1,5 @@
+//https://dmitripavlutin.com/javascript-fetch-async-await/
+
 //Obtiene la lista de servidores a los que nos conectaremos.
 const getUrlsDodax = function (updateAlbum, servers){
 
@@ -105,14 +107,27 @@ const getUrlsDodax = function (updateAlbum, servers){
   //Devuelve la información de los albums de una url de Dodax.
   const getDodaxAlbums = async (url) => {
 
+    //Aborta el controlador al pasar n milisegundos.
+    const timer = setTimeout(() => {
+      controller.abort();
+    }, 5000);
+
     console.log("Conectando:" + url);
-    let respuesta = await fetch(url);
-    let data = await respuesta.text();
+    let error = "Vaya! algo ha pasado...:";
+    let respuesta = await fetch(url, { signal })
+                         .finally(() => {
+                              clearTimeout(timer);
+                              console.log("finalizado fetch.")
+                         })
+                         .catch(err => {
+                              error += err.name === 'AbortError' ? "timeout de la conexión." : err.message;
+                         });
+
 
     return {
-         status: respuesta.status,
-         data: data
-    };
+      status: respuesta ? respuesta.status : -1,
+      data:  respuesta ? await respuesta.text() : error
+    }                            
 
   };
 
@@ -305,23 +320,33 @@ const getUrlsDodax = function (updateAlbum, servers){
 
     const requests = urls.map((urlDodax) => {
 
-    const urlCompleta = proxyurl + urlDodax.url + urlDodax.params + (firstCall || updateAlbum ? cadenaBusqueda : "");
+      const urlCompleta = proxyurl + urlDodax.url + urlDodax.params + (firstCall || updateAlbum ? cadenaBusqueda : "");
 
       return getDodaxAlbums(urlCompleta)
         .then((salida) => {
 
-            var doc = parser.parseFromString(salida.data, "text/html");
-            var nextUrlElement = doc.getElementsByClassName('related_list')[0];
+           let vlistaAlbums = null;
+           let vnextUrl = null;
+ 
+           if (salida.status === 200){
 
-            return {
+            let doc = parser.parseFromString(salida.data, "text/html");
+            let nextUrlElement = doc.getElementsByClassName('related_list')[0];
+            if (nextUrlElement != null){
+              vnextUrl = nextUrlElement.getAttribute('data-scroller-next-url')
+            }
 
-                url : urlDodax.url
-               ,params: urlDodax.params
-               ,text: urlDodax.text
-               ,listaAlbums: doc.getElementsByClassName('product')
-               ,nextUrl: nextUrlElement != null ? nextUrlElement.getAttribute('data-scroller-next-url') : null
-               ,error: (salida.status !== 200 ? salida.data : "")
+            vlistaAlbums = doc.getElementsByClassName('product');
+           
+          }
 
+          return {
+            url : urlDodax.url
+            ,params: urlDodax.params
+            ,text: urlDodax.text
+            ,listaAlbums: vlistaAlbums
+            ,nextUrl: vnextUrl
+            ,error: (salida.status !== 200 ? salida.data : "")
             };
 
         });
@@ -348,82 +373,84 @@ const getUrlsDodax = function (updateAlbum, servers){
           //Si ha habido un error mostramos el mensaje pero procesamos la respuesta.
           if (resultado.error !== ""){
             console.log(resultado.error);
-            presentToast('Ha fallado alguna de las conexiones ...',2000, "error")
+            presentToast('Ha fallado alguna de las conexiones ...' + resultado.error,2000, "error")
           }
+          else{
           
-          mostrarMasResultados = resultado.nextUrl != null;
+              mostrarMasResultados = resultado.nextUrl != null;
 
-          if (mostrarMasResultados) {
-            
-            nextUrls.push({
-              url: resultado.url
-             ,params: resultado.nextUrl
-             ,text: resultado.text
-            });
+              if (mostrarMasResultados) {
+                
+                nextUrls.push({
+                  url: resultado.url
+                ,params: resultado.nextUrl
+                ,text: resultado.text
+                });
 
-          }
+              }
 
-          changeSpinnerMessage("God Save The Queen!")
+              changeSpinnerMessage("God Save The Queen!")
 
-          Array.from(resultado.listaAlbums).forEach(album => {
+              Array.from(resultado.listaAlbums).forEach(album => {
 
-             hayResultados = true;
+                hayResultados = true;
 
-             //Identificador del album
-             var idAlbum = (album.getElementsByClassName('js-product')[0]).getAttribute('id');
-             //Precio del disco.
-             var precio = ((album.getElementsByClassName('buy-button')[0]).getElementsByTagName('span')[0]).innerText
-               .replace("€", "")
-               .replace("£", "")
-               .replace("zł", "")
-               .replace(".", ",")
-               .replace(" ", "")
-               .replace(String.fromCharCode(160), "")
-               .replace("&nbsp;", "");
+                //Identificador del album
+                var idAlbum = (album.getElementsByClassName('js-product')[0]).getAttribute('id');
+                //Precio del disco.
+                var precio = ((album.getElementsByClassName('buy-button')[0]).getElementsByTagName('span')[0]).innerText
+                  .replace("€", "")
+                  .replace("£", "")
+                  .replace("zł", "")
+                  .replace(".", ",")
+                  .replace(" ", "")
+                  .replace(String.fromCharCode(160), "")
+                  .replace("&nbsp;", "");
 
-             //Código de barras.
-             var gtin =  (album.getElementsByClassName('buy-button')[0]).getAttribute('onmousedown');
-             gtin = (gtin !== null) ? gtin.replace("RetailRocket.addToCartRetailRocket('", "").replace("');", "") : "";
+                //Código de barras.
+                var gtin =  (album.getElementsByClassName('buy-button')[0]).getAttribute('onmousedown');
+                gtin = (gtin !== null) ? gtin.replace("RetailRocket.addToCartRetailRocket('", "").replace("');", "") : "";
 
-             //Url del detalle del disco.
-             var urlRelativa = (album.getElementsByClassName('js-product')[0]).getAttribute('href');
-             //Existe ya la ficha?
-             var encontrado = document.getElementById(idAlbum) != null;
-             //Datos del precio.
-             var precioObj = {
-               url: resultado.url + urlRelativa,
-               price: getPrice(precio, resultado.text).replace(".", ","),
-               priceInt: getPrice(precio, resultado.text),
-               priceOriginal: getCurrency(precio, resultado.text),
-               currency: "€",
-               text: resultado.text,
-             };
+                //Url del detalle del disco.
+                var urlRelativa = (album.getElementsByClassName('js-product')[0]).getAttribute('href');
+                //Existe ya la ficha?
+                var encontrado = document.getElementById(idAlbum) != null;
+                //Datos del precio.
+                var precioObj = {
+                  url: resultado.url + urlRelativa,
+                  price: getPrice(precio, resultado.text).replace(".", ","),
+                  priceInt: getPrice(precio, resultado.text),
+                  priceOriginal: getCurrency(precio, resultado.text),
+                  currency: "€",
+                  text: resultado.text,
+                };
 
-            if (encontrado) {
-              setHTMLPrice(idAlbum, precioObj, gtin)
-            } else {
+                if (encontrado) {
+                  setHTMLPrice(idAlbum, precioObj, gtin)
+                } else {
 
-              //El disco no está cargado en la página.  
-              var obj = {};
-              obj.id = idAlbum;
-              obj.image =  (album.getElementsByTagName('img')[0]).getAttribute('src');
-              obj.title = (album.getElementsByClassName('product_title')[0]).innerText;
-              obj.from = (album.getElementsByClassName('product_from')[0]).innerText;
-              obj.type = (album.getElementsByClassName('product_type')[0]).innerText;
-              obj.price = precioObj;
-              obj.minPrice = precioObj.priceInt;
-              obj.gtin = gtin;
+                  //El disco no está cargado en la página.  
+                  var obj = {};
+                  obj.id = idAlbum;
+                  obj.image =  (album.getElementsByTagName('img')[0]).getAttribute('src');
+                  obj.title = (album.getElementsByClassName('product_title')[0]).innerText;
+                  obj.from = (album.getElementsByClassName('product_from')[0]).innerText;
+                  obj.type = (album.getElementsByClassName('product_type')[0]).innerText;
+                  obj.price = precioObj;
+                  obj.minPrice = precioObj.priceInt;
+                  obj.gtin = gtin;
 
-              setHTMLAlbum(obj);
+                  setHTMLAlbum(obj);
 
-            }
+                }
 
-          });
-
+              });
+           }
         });
 
         if (firstCall && !hayResultados && !updateAlbum){
           presentToast('Sin resultados, cambie los términos de búsqueda', 3000, "info");
+          showSpinner(false);   
         }
 
         if (!updateAlbum){
