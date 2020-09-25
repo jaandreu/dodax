@@ -66,4 +66,3 @@
      //Parser para tratar el html que obtenemos.
      let parser = new DOMParser();
 
-
