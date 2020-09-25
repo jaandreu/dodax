@@ -116,7 +116,9 @@ const getUrlsDodax = function (updateAlbum, servers){
     }, 5000);
 
     console.log("Conectando:" + url);
+
     let error = "Vaya! algo ha pasado...:";
+    
     let respuesta = await fetch(url, { signal })
                          .finally(() => {
                               clearTimeout(timer);
@@ -145,7 +147,13 @@ const getUrlsDodax = function (updateAlbum, servers){
 
         Array.from(ficha.getElementsByClassName('waiting-price')).forEach(item => {
           servers.push(item.getAttribute('server'));
+
+          Array.from(item.getElementsByClassName('col-price')).forEach(col => {
+            col.innerHTML = "<ion-spinner class='spinner-price' color='primary' name='dots'></ion-spinner>";
+          });
+  
         });
+
 
     }
     else{
@@ -197,7 +205,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     var fichaAlbum = document.getElementById(idAlbum);
     fichaAlbum.setAttribute("pending-servers", 0);
 
-    Array.from(fichaAlbum.getElementsByClassName('tr-albumprice')).forEach(tr => {
+    Array.from(fichaAlbum.getElementsByClassName('waiting-price')).forEach(tr => {
         tr.classList.remove('waiting-price');
     });
 
@@ -301,7 +309,7 @@ const getUrlsDodax = function (updateAlbum, servers){
                          + "<ion-grid class='no-padding'>"
                          +   "<ion-row>" 
                          +      "<ion-col class='col-server' size='2'>" + url.text + "</ion-col>"
-                         +      "<ion-col class='col-price' size='5' id='" + idPrecio + "-PRICE'><ion-spinner class='spinner-price' color='secondary' name='dots'></ion-spinner></ion-col>"
+                         +      "<ion-col class='col-price' size='5' id='" + idPrecio + "-PRICE'><ion-spinner class='spinner-price' paused='true' color='primary' name='dots'></ion-spinner></ion-col>"
                          +      "<ion-col class='col-originalprice' size='5' id='" + idPrecio + "-ORIGINALPRICE'></ion-col>"
                          +   "</ion-row>"
                          + "</ion-grid>"
@@ -417,7 +425,7 @@ const getUrlsDodax = function (updateAlbum, servers){
                 //Url del detalle del disco.
                 var urlRelativa = (album.getElementsByClassName('js-product')[0]).getAttribute('href');
                 //Existe ya la ficha?
-                var encontrado = document.getElementById(idAlbum) != null;
+                var encontrado = document.getElemnetById(idAlbum) != null;
                 //Datos del precio.
                 var precioObj = {
                   url: resultado.url + urlRelativa,
