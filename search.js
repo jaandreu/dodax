@@ -113,7 +113,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     //Aborta el controlador al pasar n milisegundos.
     const timer = setTimeout(() => {
       controller.abort();
-    }, 5000);
+    }, 10000);
 
     console.log("Conectando:" + url);
 

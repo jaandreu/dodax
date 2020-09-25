@@ -7,7 +7,7 @@
  
          this.loadingController.create({
              message: loadingMessage,
-             duration: 6000
+             duration: 10000
            }).then((res) => {
              res.present();
            });
