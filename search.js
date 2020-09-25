@@ -425,7 +425,7 @@ const getUrlsDodax = function (updateAlbum, servers){
                 //Url del detalle del disco.
                 var urlRelativa = (album.getElementsByClassName('js-product')[0]).getAttribute('href');
                 //Existe ya la ficha?
-                var encontrado = document.getElemnetById(idAlbum) != null;
+                var encontrado = document.getElementById(idAlbum) != null;
                 //Datos del precio.
                 var precioObj = {
                   url: resultado.url + urlRelativa,
