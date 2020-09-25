@@ -376,7 +376,7 @@ const getUrlsDodax = function (updateAlbum, servers){
           //Si ha habido un error mostramos el mensaje pero procesamos la respuesta.
           if (resultado.error !== ""){
             console.log(resultado.error);
-            presentToast('Ha fallado alguna de las conexiones ...' + resultado.error,2000, "error")
+            presentToast('Ha fallado alguna de las conexiones ...',3000, "error")
           }
           else{
           
