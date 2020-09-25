@@ -1,4 +1,5 @@
-/*Se ha cargado el HTML completamente*/
+
+//Se ha cargado el HTML completamente.
 document.addEventListener("DOMContentLoaded", function(event) { 
 
     console.log('DOMContentLoaded');
@@ -8,21 +9,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
          rates = salida;
      });
 
-    // //última búsqueda
-     var lastSearchResult = sessionStorage.getItem('lastSearchResult');
-     var lastSearch = sessionStorage.getItem('lastSearch');
+    //última búsqueda
+    let lastSearchResult = sessionStorage.getItem('lastSearchResult');
+    let lastSearch = sessionStorage.getItem('lastSearch');
 
-     if (lastSearchResult != null){
-       document.getElementById("div-resultados").innerHTML = lastSearchResult;
-       document.getElementById("search").value = lastSearch;
-       if (sessionStorage.getItem("moreItems") === "1"){
-           infiniteScroll.disabled = false;
-       }
- 
-     }
+    if (lastSearchResult != null){
+      document.getElementById("div-resultados").innerHTML = lastSearchResult;
+      document.getElementById("search").value = lastSearch;
+      if (sessionStorage.getItem("moreItems") === "1"){
+          infiniteScroll.disabled = false;
+      }
+    }
 
     //última configuración.
-    var lastConf = localStorage.getItem("conf");
+    let lastConf = localStorage.getItem("conf");
 
     if (lastConf !== null){
 
@@ -34,9 +34,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     
   });
 
+  //Submit del formulario de búsqueda.
   document.getElementById("formulario").addEventListener('submit', function(){
 
-    cadenaBusqueda = document.getElementById("search").value
+    //Quitamos coletillas sobre el formato a buscar.
+    let cadenaBusqueda = document.getElementById("search").value
                         .toUpperCase()
                         .replace("VINILO", "")
                         .replace("VINYL", "")
@@ -70,34 +72,35 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   });
 
-  /*Infinite scroll*/
+  //Infinite scroll.
   const infiniteScroll = document.getElementById('infinite-scroll');
-  
+
+  //Se dispara cuando llegamos al final del scroll de la página.
   infiniteScroll.addEventListener('ionInfinite', async function () {
     
     if (sessionStorage.getItem("moreItems") == "1"){
-      console.log('Loading data...');
       showSpinner(true);
-      var cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
+      let cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
       getAlbums(cadenaBusquedaActual, false, false, [], function(){
         infiniteScroll.complete();
       });
     }
     else{
-      console.log('No More Data');
         infiniteScroll.disabled = true;
     }
   });
 
+  //Página de configuración.
   document.getElementById('button-settings').addEventListener('click', function(){
     showElement("content-settings");
     hideElement("content-search");
   });
 
+  //Click para guardar la configuración.
   document.getElementById('button-check').addEventListener('click', function(){
     showElement("content-search");
 
-    var conf = [];
+    let conf = [];
 
     Array.from(document.getElementsByClassName("formato")).forEach(check => {
         conf.push({name: check.name, checked: check.checked});
@@ -109,9 +112,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   });
 
+  //Evento para copiar una url al portapapeles.
   const copyButtonEvent = function(url){
 
-    var tempInput = document.createElement("input");
+    let tempInput = document.createElement("input");
         tempInput.setAttribute("readonly", "readonly");
         tempInput.value = url;
         document.body.appendChild(tempInput);
@@ -122,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         presentToast("Url Copiada!", 1000, "info");
   }
 
+  //Muestra un mensaje.
   async function presentToast(message, duration, type) {
     const toast = document.createElement('ion-toast');
     toast.message = message;

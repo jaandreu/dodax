@@ -366,9 +366,6 @@ const getUrlsDodax = function (updateAlbum, servers){
     return Promise.all(requests)
   };
 
-  //Variables globales.
-  var rates = null;
-
   //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
   const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum, servers, callback) {
 
