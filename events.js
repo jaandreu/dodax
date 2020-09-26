@@ -160,14 +160,17 @@ const deleteAlbums = function() {
 
       hideElement("fab-delete");
 
-      //Inicializamos las rutas de las siguientes llamadas.
-      sessionStorage.setItem('nextUrls', JSON.stringify([]));
 
       Array.from(document.getElementsByClassName("resultados-items")).forEach(element => {
           element.parentNode.removeChild(element);
       });
   
+      //Inicializamos las rutas de las siguientes llamadas.
+      sessionStorage.setItem('nextUrls', JSON.stringify([]));
       sessionStorage.setItem("lastSearchIndex", "0");
-  
+      sessionStorage.setItem("moreItems","0");
+      sessionStorage.removeItem('lastSearchResult');
+      sessionStorage.removeItem('lastSearch');
+
 
 } 
