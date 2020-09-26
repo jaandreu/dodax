@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //dark mode
     let darkMode = localStorage.getItem("themeToggle");
     if (darkMode != null){
-      document.getElementById("themeToggle").checked = darkMode;
-      darkModeChange(darkMode);
+      document.getElementById("themeToggle").checked = (darkMode == "true");
+      darkModeChange(darkMode == "true");
     }
     
   });
