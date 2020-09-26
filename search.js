@@ -401,6 +401,10 @@ const getUrlsDodax = function (updateAlbum, servers){
 
               Array.from(resultado.listaAlbums).forEach(album => {
 
+                if (!hayResultados){
+                  showElement("fab-delete");
+                }
+                
                 hayResultados = true;
 
                 //Identificador del album

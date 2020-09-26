@@ -3,7 +3,7 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
 
     console.log('DOMContentLoaded');
-
+    hideElement("fab-delete");
     getCurrencyRates()
        .then((salida) => {
          rates = salida;
@@ -62,19 +62,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     sessionStorage.setItem('lastSearch', cadenaBusqueda);
 
-    //Inicializamos las rutas de las siguientes llamadas.
-    sessionStorage.setItem('nextUrls', JSON.stringify([]));
-
     showSpinner(true);
     hideElement("div-resultados");
-
-    Array.from(document.getElementsByClassName("resultados-items")).forEach(element => {
-        element.parentNode.removeChild(element);
-    });
-
-    sessionStorage.setItem("lastSearchIndex", "0");
+    deleteAlbums();
     getAlbums(cadenaBusqueda, true, false, []);
-    
     showElement("div-resultados");
 
   });
@@ -102,6 +93,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     showElement("content-settings");
     hideElement("content-search");
   });
+
+   //Página de configuración.
+   document.getElementById('button-delete').addEventListener('click', function(){
+    deleteAlbums();
+  });
+
 
   //Click para guardar la configuración.
   document.getElementById('button-check').addEventListener('click', function(){
@@ -159,3 +156,18 @@ const darkModeChange = function(checked){
   localStorage.setItem("themeToggle", checked);
 }
 
+const deleteAlbums = function() {
+
+      hideElement("fab-delete");
+
+      //Inicializamos las rutas de las siguientes llamadas.
+      sessionStorage.setItem('nextUrls', JSON.stringify([]));
+
+      Array.from(document.getElementsByClassName("resultados-items")).forEach(element => {
+          element.parentNode.removeChild(element);
+      });
+  
+      sessionStorage.setItem("lastSearchIndex", "0");
+  
+
+} 
