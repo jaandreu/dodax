@@ -401,10 +401,6 @@ const getUrlsDodax = function (updateAlbum, servers){
 
               Array.from(resultado.listaAlbums).forEach(album => {
 
-                if (!hayResultados){
-                  showElement("fab-delete");
-                }
-                
                 hayResultados = true;
 
                 //Identificador del album
@@ -503,6 +499,9 @@ const getUrlsDodax = function (updateAlbum, servers){
 
         if (firstAlbum){
           sessionStorage.setItem('updating', "0");
+          if (hayResultados){
+            showElement("fab-delete");
+          }
         }
 
         if (typeof callback === "function"){
