@@ -9,7 +9,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
          rates = salida;
      });
 
-    //última búsqueda
+     createHistoryFromStorage();
+
+     //última búsqueda
     let lastSearchResult = sessionStorage.getItem('lastSearchResult');
     let lastSearch = sessionStorage.getItem('lastSearch');
 
@@ -65,11 +67,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
       return false;
 
     sessionStorage.setItem('lastSearch', cadenaBusqueda);
-    addHistory(cadenaBusqueda);
-    showSpinner(true);
+    addHistory(cadenaBusqueda, false);
+    //showSpinner(true);
     hideElement("div-resultados");
     deleteAlbums();
-    getAlbums(cadenaBusqueda, true, false, []);
+    //getAlbums(cadenaBusqueda, true, false, []);
     showElement("div-resultados");
 
   });
@@ -178,11 +180,13 @@ const deleteAlbums = function() {
 
 }
 
-const addHistory = function(searchMessage){
+const addHistory = function(searchMessage, isFavorite){
 
-  let baseChip = parser.parseFromString(document.getElementById("chip-search").outerHTML, "text/html");
+  let baseChip = parser.parseFromString(document.getElementById("chip-search-base").outerHTML, "text/html");
   let numItems = parseInt(document.getElementById("div-history").getAttribute("num-items"));
-  
+  let newId = "chip-search-base" + (numItems + 1) + "";
+  baseChip.getElementById("chip-search-base").id = newId;
+
   //Vemos si ya exite.
   let encontrado = false;
   Array.from(document.getElementsByClassName("chip-history-item-label")).forEach(item => {
@@ -193,19 +197,28 @@ const addHistory = function(searchMessage){
 
   if (!encontrado){
 
-    baseChip.getElementById("label-search").innerText = searchMessage;
-    baseChip.getElementById("label-search").classList.add("chip-history-item-label");
-    baseChip.getElementById("chip-search").classList.remove("base");
-    baseChip.getElementById("chip-search").classList.add("chip-temporal");
+    (baseChip.getElementsByClassName("label-search")[0]).innerText = searchMessage;
+    (baseChip.getElementsByClassName("label-search")[0]).classList.add("chip-history-item-label");
+    baseChip.getElementById(newId).classList.remove("base");
+    
+    if (!isFavorite){
+      baseChip.getElementById(newId).classList.add("chip-temporal");
+    }
+    else{
+      (baseChip.getElementsByClassName("icon-heart")[0]).setAttribute("name", "heart");
+    }
 
-    baseChip.getElementById("icon-close").addEventListener("click", function(evt){
+    (baseChip.getElementsByClassName("chip-icon-close")[0]).addEventListener("click", function(evt){
       evt.target.parentNode.remove();
       let divHistory = document.getElementById("div-history");
       let num = parseInt(divHistory.getAttribute("num-items"));
       divHistory.setAttribute("num-items", num - 1);
+      updateHistoryStorage();
+      evt.stopPropagation();
+      console.log('chip close');
     });
 
-    baseChip.getElementById("icon-heart").addEventListener("click", function(evt){
+    (baseChip.getElementsByClassName("icon-heart")[0]).addEventListener("click", function(evt){
       evt.target.parentNode.classList.toggle("chip-temporal");
       if (evt.target.name == "heart-outline"){
         evt.target.name = "heart";
@@ -213,17 +226,26 @@ const addHistory = function(searchMessage){
       else {
         evt.target.name = "heart-outline";
       }
+      updateHistoryStorage();
+      console.log('chip favorito');
       evt.stopPropagation();
     });
   
-    baseChip.getElementById("chip-search").addEventListener("click", function(evt){
+    baseChip.getElementById(newId).addEventListener("click", function(evt){
+      console.log('chip search');
       document.getElementById("search").value = evt.target.innerText;
+      sessionStorage.setItem('lastSearch', evt.target.innerText);
+      showSpinner(true);
+      hideElement("div-resultados");
+      deleteAlbums();
+      getAlbums( evt.target.innerText, true, false, []);
+      showElement("div-resultados");
     });
 
 
     if (numItems < 10){
 
-      document.getElementById("div-history").prepend(baseChip.getElementById("chip-search"));
+      document.getElementById("div-history").prepend(baseChip.getElementById(newId));
       document.getElementById("div-history").setAttribute("num-items", numItems + 1);
 
     }
@@ -233,11 +255,30 @@ const addHistory = function(searchMessage){
 
        if (chipsTemporales.length > 0){
          chipsTemporales[chipsTemporales.length - 1].remove();
-         document.getElementById("div-history").prepend(baseChip.getElementById("chip-search"));
+         document.getElementById("div-history").prepend(baseChip.getElementById(newId));
        }
     }
+    updateHistoryStorage();
+  }
+}
 
- }
+const updateHistoryStorage = function() {
 
+  //Lo guardamos todo en el localstorage.
+    let chips = [];
+    Array.from(document.getElementById("div-history").getElementsByClassName("chip-history-item-label")).forEach(item => {
+      chips.push({text: item.innerText, isFavorite: !item.parentElement.classList.contains("chip-temporal")});
+    });
 
+    localStorage.setItem("chips", JSON.stringify(chips));
+
+};
+
+const createHistoryFromStorage = function() {
+   let chips = JSON.parse(localStorage.getItem("chips"));
+   if (chips != null && chips.length > 0){
+      chips.forEach(chip => {
+        addHistory(chip.text, chip.isFavorite);
+      });
+   }
 }
