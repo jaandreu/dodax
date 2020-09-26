@@ -68,10 +68,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     sessionStorage.setItem('lastSearch', cadenaBusqueda);
     addHistory(cadenaBusqueda, false);
-    //showSpinner(true);
+    showSpinner(true);
     hideElement("div-resultados");
     deleteAlbums();
-    //getAlbums(cadenaBusqueda, true, false, []);
+    getAlbums(cadenaBusqueda, true, false, []);
     showElement("div-resultados");
 
   });
