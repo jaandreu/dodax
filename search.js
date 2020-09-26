@@ -273,7 +273,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     base.getElementById("p-album").innerHTML = "<ion-text>" 
                                               + disco.title.toLowerCase()
                                               + "</ion-text>"
-                                              + "<ion-badge color='warning'>"
+                                              + "<ion-badge color='secondary'>"
                                               + disco.type
                                               + "</ion-badge>";
     

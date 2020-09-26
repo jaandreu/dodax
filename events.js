@@ -31,6 +31,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
       });
 
     }
+
+    //dark mode
+    let darkMode = localStorage.getItem("themeToggle");
+    if (darkMode != null){
+      document.getElementById("themeToggle").checked = darkMode;
+      darkModeChange(darkMode);
+    }
     
   });
 
@@ -137,4 +144,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.body.appendChild(toast);
     return toast.present();
   };
+
+//Definición del modo heavy
+// Query for the toggle that is used to change between themes
+const toggle = document.querySelector('#themeToggle');
+
+// Listen for the toggle check/uncheck to toggle the dark class on the <body>
+toggle.addEventListener('ionChange', (ev) => {
+  darkModeChange(ev.detail.checked);
+});
+
+const darkModeChange = function(checked){
+  document.body.classList.toggle('dark', checked);
+  localStorage.setItem("themeToggle", checked);
+}
 
