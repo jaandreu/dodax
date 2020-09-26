@@ -61,11 +61,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
       return false;
 
     sessionStorage.setItem('lastSearch', cadenaBusqueda);
-
-    showSpinner(true);
+    addHistory(cadenaBusqueda);
+    //showSpinner(true);
     hideElement("div-resultados");
     deleteAlbums();
-    getAlbums(cadenaBusqueda, true, false, []);
+    //getAlbums(cadenaBusqueda, true, false, []);
     showElement("div-resultados");
 
   });
@@ -172,5 +172,68 @@ const deleteAlbums = function() {
       sessionStorage.removeItem('lastSearchResult');
       sessionStorage.removeItem('lastSearch');
 
+}
 
-} 
+const addHistory = function(searchMessage){
+
+  let baseChip = parser.parseFromString(document.getElementById("chip-search").outerHTML, "text/html");
+  let numItems = parseInt(document.getElementById("div-history").getAttribute("num-items"));
+  
+  //Vemos si ya exite.
+  let encontrado = false;
+  Array.from(document.getElementsByClassName("chip-history-item-label")).forEach(item => {
+      if (item.innerText == searchMessage){
+        encontrado = true;
+      }
+  });
+
+  if (!encontrado){
+
+    baseChip.getElementById("label-search").innerText = searchMessage;
+    baseChip.getElementById("label-search").classList.add("chip-history-item-label");
+    baseChip.getElementById("chip-search").classList.remove("base");
+    baseChip.getElementById("chip-search").classList.add("chip-temporal");
+
+    baseChip.getElementById("icon-close").addEventListener("click", function(evt){
+      evt.target.parentNode.remove();
+      let divHistory = document.getElementById("div-history");
+      let num = parseInt(divHistory.getAttribute("num-items"));
+      divHistory.setAttribute("num-items", num - 1);
+    });
+
+    baseChip.getElementById("icon-heart").addEventListener("click", function(evt){
+      evt.target.parentNode.classList.toggle("chip-temporal");
+      if (evt.target.name == "heart-outline"){
+        evt.target.name = "heart";
+      }
+      else {
+        evt.target.name = "heart-outline";
+      }
+      evt.stopPropagation();
+    });
+  
+    baseChip.getElementById("chip-search").addEventListener("click", function(evt){
+      document.getElementById("search").value = evt.target.innerText;
+    });
+
+
+    if (numItems < 10){
+
+      document.getElementById("div-history").prepend(baseChip.getElementById("chip-search"));
+      document.getElementById("div-history").setAttribute("num-items", numItems + 1);
+
+    }
+    else{
+       //nos cargamos el último no favorito.
+       let chipsTemporales = document.getElementById("div-history").getElementsByClassName("chip-temporal");
+
+       if (chipsTemporales.length > 0){
+         chipsTemporales[chipsTemporales.length - 1].remove();
+         document.getElementById("div-history").prepend(baseChip.getElementById("chip-search"));
+       }
+    }
+
+ }
+
+
+}

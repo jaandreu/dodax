@@ -329,6 +329,15 @@ body.dark {
     <!-- content -->
     <ion-content id="content-search" fullscreen>
 
+      <!--historial de llamadas.-->
+      <div id="div-history" num-items="0">
+        <ion-chip id="chip-search" class="base" outline color="secondary">
+          <ion-icon id="icon-heart" name="heart-outline"></ion-icon>
+          <ion-label id="label-search">#search#</ion-label>
+          <ion-icon id="icon-close" name="close-circle"></ion-icon>
+        </ion-chip>
+      </div>
+      
       <ion-fab  vertical="bottom" horizontal="start" slot="fixed">
             <ion-fab-button id="button-settings" color="secondary">
               <ion-icon name="settings-outline"></ion-icon>
