@@ -401,7 +401,12 @@ const getUrlsDodax = function (updateAlbum, servers){
 
               Array.from(resultado.listaAlbums).forEach(album => {
 
+                if (!hayResultados){
+                  hideElement("div-history");
+                }
+
                 hayResultados = true;
+
 
                 //Identificador del album
                 var idAlbum = (album.getElementsByClassName('js-product')[0]).getAttribute('id');

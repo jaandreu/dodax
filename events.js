@@ -14,11 +14,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
     let lastSearch = sessionStorage.getItem('lastSearch');
 
     if (lastSearchResult != null){
+      hideElement("div-history");
       document.getElementById("div-resultados").innerHTML = lastSearchResult;
       document.getElementById("search").value = lastSearch;
       if (sessionStorage.getItem("moreItems") === "1"){
           infiniteScroll.disabled = false;
       }
+    }else
+    {
+      showElement("div-history");
     }
 
     //última configuración.
@@ -159,7 +163,7 @@ const darkModeChange = function(checked){
 const deleteAlbums = function() {
 
       hideElement("fab-delete");
-
+      showElement("div-history");
 
       Array.from(document.getElementsByClassName("resultados-items")).forEach(element => {
           element.parentNode.removeChild(element);
