@@ -260,70 +260,77 @@ body.dark {
     </ion-header>
 
 
-    <ion-content fullscreen id="content-settings" scroll-y="false" style="display: none">
-
+    <ion-content fullscreen id="content-settings" style="display: none">
       <ion-fab vertical="bottom" horizontal="start" slot="fixed">
         <ion-fab-button id="button-check" color="secondary">
           <ion-icon name="checkmark-outline"></ion-icon>
         </ion-fab-button>
       </ion-fab>
-      <ion-slides pager="true">
-        <ion-slide>
-          <div class="slide">
-            <h2>Formato</h2>
-            <ion-list lines="none">
-              <ion-item >
-                <ion-label>LP (Vinyl)</ion-label>
-                <ion-toggle slot="start" name="lp-vinyl" color="secondary" id="lp-vinyl" class="formato" checked></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label>Single (Vinyl)</ion-label>
-                <ion-toggle slot="start" id="single-vinyl" color="secondary" name="single-vinyl" class="formato" checked></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label>CD</ion-label>
-                <ion-toggle slot="start" id="cd" name="cd" color="secondary" class="formato"></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label>SACD</ion-label>
-                <ion-toggle slot="start" id="sacd" name="sacd" color="secondary" class="formato"></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label>DVD</ion-label>
-                <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
-              </ion-item>
-            </ion-list>        
-          </div>
-        </ion-slide>
-
-        <ion-slide>
-          <h2>Sección</h2>
-          <div class="slide">
-          <ion-list lines="none">
-            <ion-radio-group id="opt-seccion" value="musica">
-              <ion-item>
-                  <ion-label>Música</ion-label>
-                  <ion-radio slot="start" color="secondary" value="musica"></ion-radio>
-                </ion-item>
-                <ion-item>
-                  <ion-label>Electrónica</ion-label>
-                  <ion-radio slot="start" color="secondary" value="electronica"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-          </ion-list>  
-          </div>
-          </ion-slide>
-        <ion-slide>
-          <h2>Otras opciones</h2>
-          <div class="slide">
-          <ion-list lines="none">
+      <ion-list lines="none">
+        <ion-list-header>
+          <ion-label>Formato</ion-label>
+        </ion-list-header>
+        <ion-item >
+          <ion-label>LP (Vinyl)</ion-label>
+          <ion-toggle slot="start" name="lp-vinyl" color="secondary" id="lp-vinyl" class="formato" checked></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>Single (Vinyl)</ion-label>
+          <ion-toggle slot="start" id="single-vinyl" color="secondary" name="single-vinyl" class="formato" checked></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>CD</ion-label>
+          <ion-toggle slot="start" id="cd" name="cd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>SACD</ion-label>
+          <ion-toggle slot="start" id="sacd" name="sacd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>DVD</ion-label>
+          <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+      </ion-list>
+      <ion-list lines="none">
+        <ion-list-header>
+          <ion-label>Sección</ion-label>
+        </ion-list-header>
+        <ion-radio-group id="opt-seccion" value="musica">
+          <ion-row>
+            <ion-col>
+          <ion-item>
+              <ion-label>Música</ion-label>
+              <ion-radio slot="start" color="secondary" value="musica"></ion-radio>
+            </ion-item>
+          </ion-col>
+        <ion-col>
             <ion-item>
-              <ion-label>Modo Metal!</ion-label>
-              <ion-toggle slot="start" id="themeToggle" name="themeToggle" color="secondary" class="themeToggle"></ion-toggle>
-          </ion-list> 
-          </div>
-        </ion-slide>
-      </ion-slides>
+              <ion-label>Electrónica</ion-label>
+              <ion-radio slot="start" color="secondary" value="electronica"></ion-radio>
+            </ion-item>
+          </ion-col>
+
+          </ion-row>
+          </ion-radio-group>
+      </ion-list>  
+      <ion-list lines="none">
+        <ion-list-header>
+          <ion-label>Otras opciones</ion-label>
+        </ion-list-header>
+        <ion-row>
+          <ion-col>
+        <ion-item>
+          </ion-item>
+        </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Modo Metal!</ion-label>
+          <ion-toggle slot="start" id="themeToggle" name="themeToggle" color="secondary" class="themeToggle"></ion-toggle>
+        </ion-item>
+        </ion-col>
+
+        </ion-row>
+      </ion-list> 
     </ion-content>
 
     <!-- content -->
