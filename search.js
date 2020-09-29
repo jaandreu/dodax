@@ -4,9 +4,9 @@
 const getUrlsDodax = function (updateAlbum, servers){
 
     //Obtenemos las opciones de búsqueda.
-    var filtro = "";
+    let filtro = "";
 
-    var seccion = document.getElementById("opt-seccion").value;
+    let seccion = document.getElementById("opt-seccion").value;
 
       filtro = tiposBusqueda.filter((t) => {
           return document.getElementById(t.name).checked;
@@ -84,7 +84,7 @@ const getUrlsDodax = function (updateAlbum, servers){
 
   //Obtiene el caracter de moneda en función del código de pais.
   const getCurrency = function (price, codigo) {
-    var salida = "";
+    let salida = "";
     switch (codigo) {
       case "UK":
         salida = price + " £";
@@ -133,9 +133,9 @@ const getUrlsDodax = function (updateAlbum, servers){
 
   const updateAlbumPrices = function(idAlbum, updateAllServers) {
 
-    var servers = [];
+    let servers = [];
 
-    var ficha = document.getElementById(idAlbum);
+    let ficha = document.getElementById(idAlbum);
 
     //Si no hay que actualizar toda la ficha, metemos en un array los servidores pendientes de precio.
     if (!updateAllServers){
@@ -162,7 +162,7 @@ const getUrlsDodax = function (updateAlbum, servers){
 
   const updateBestsPrices = function(idAlbum, minPrice){
 
-     var fichaAlbum = document.getElementById(idAlbum);
+     let fichaAlbum = document.getElementById(idAlbum);
 
      Array.from(fichaAlbum.getElementsByClassName('tr-albumprice')).forEach(tr => {
 
@@ -179,7 +179,7 @@ const getUrlsDodax = function (updateAlbum, servers){
 
   const removePrices = function(idAlbum){
 
-    var fichaAlbum = document.getElementById(idAlbum);
+    let fichaAlbum = document.getElementById(idAlbum);
 
     Array.from(fichaAlbum.getElementsByClassName('tr-albumprice')).forEach(tr => {
       tr.removeAttribute('href');
@@ -197,7 +197,7 @@ const getUrlsDodax = function (updateAlbum, servers){
 
   const removePendingPrices = function(idAlbum){
 
-    var fichaAlbum = document.getElementById(idAlbum);
+    let fichaAlbum = document.getElementById(idAlbum);
     fichaAlbum.setAttribute("pending-servers", 0);
 
     Array.from(fichaAlbum.getElementsByClassName('waiting-price')).forEach(tr => {
@@ -213,9 +213,9 @@ const getUrlsDodax = function (updateAlbum, servers){
 
   const setHTMLPrice = function(idAlbum, price, gtin){
       
-       var ficha = document.getElementById(idAlbum);
-       var minPrice = parseFloat(ficha.getAttribute('min-price'));
-       var gtinFicha = ficha.getAttribute("gtin-ficha");
+       let ficha = document.getElementById(idAlbum);
+       let minPrice = parseFloat(ficha.getAttribute('min-price'));
+       let gtinFicha = ficha.getAttribute("gtin-ficha");
        ficha.setAttribute("pending-servers", parseInt(ficha.getAttribute("pending-servers")) - 1);
 
       if (gtinFicha === "" && gtin != ""){
@@ -229,14 +229,14 @@ const getUrlsDodax = function (updateAlbum, servers){
 
        }
 
-       var idPrecio = price.text + "-" + idAlbum;
-       var trElement = document.getElementById(idPrecio);
+       let idPrecio = price.text + "-" + idAlbum;
+       let trElement = document.getElementById(idPrecio);
        trElement.classList.remove('waiting-price');
        trElement.setAttribute('price-int', price.priceInt);
        trElement.classList.add('tr-albumprice');
        trElement.setAttribute('href', price.url);
 
-       var copyButton = document.getElementById(idPrecio + "-Url");
+       let copyButton = document.getElementById(idPrecio + "-Url");
 
        document.getElementById(idPrecio + "-Url").addEventListener('ionSwipe', function(event){
           copyButtonEvent(price.url);
@@ -257,7 +257,7 @@ const getUrlsDodax = function (updateAlbum, servers){
   //Establece el HTML de un disco completo.
   const setHTMLAlbum = function(disco){
 
-    var base = parser.parseFromString(document.getElementById("div-base").outerHTML, "text/html");
+    let base = parser.parseFromString(document.getElementById("div-base").outerHTML, "text/html");
 
     base.getElementById("div-base").setAttribute("id", disco.id);
     base.getElementById(disco.id).classList.remove('base');
@@ -274,7 +274,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     
     base.getElementById("update-album").setAttribute("onclick", "updateAlbumPrices('"+ disco.id + "', true)");
 
-    var spotifyString = encodeURIComponent(disco.from.toLowerCase() + " " + disco.title.toLowerCase().replace(/ \([\s\S]*?\)/g, ''));
+    let spotifyString = encodeURIComponent(disco.from.toLowerCase() + " " + disco.title.toLowerCase().replace(/ \([\s\S]*?\)/g, ''));
     base.getElementById("a-spotify").setAttribute("href", "https://open.spotify.com/search/" + spotifyString);
 
     if (disco.gtin != ""){
@@ -290,15 +290,15 @@ const getUrlsDodax = function (updateAlbum, servers){
 
     urlsDodax.forEach(url => {
 
-      var idPrecio = url.text + "-" + disco.id;
-      var trElement = document.createElement("ion-item-sliding");
+      let idPrecio = url.text + "-" + disco.id;
+      let trElement = document.createElement("ion-item-sliding");
 
-      var ionItem = "<ion-item "
+      let ionItem = "<ion-item "
                   +    " id = '" + idPrecio + "' "
                   +    " server = '" + url.text + "' "
                   +    " class= 'ion-no-padding waiting-price'>";
 
-      var copyButton = "<ion-item-options id='" + idPrecio +"-Url' side='start'><ion-item-option expandable color='primary'><ion-icon name='copy-outline'></ion-icon></ion-item-option></ion-item-options>";
+      let copyButton = "<ion-item-options id='" + idPrecio +"-Url' side='start'><ion-item-option expandable color='primary'><ion-icon name='copy-outline'></ion-icon></ion-item-option></ion-item-options>";
 
       trElement.innerHTML = ionItem 
                          + "<ion-grid class='no-padding'>"
@@ -322,7 +322,7 @@ const getUrlsDodax = function (updateAlbum, servers){
   //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
   const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum, servers) => {
 
-    var urls = firstCall || updateAlbum ? getUrlsDodax(updateAlbum, servers) : (JSON.parse(sessionStorage.getItem("nextUrls")));
+    let urls = firstCall || updateAlbum ? getUrlsDodax(updateAlbum, servers) : (JSON.parse(sessionStorage.getItem("nextUrls")));
 
     const requests = urls.map((urlDodax) => {
 
@@ -367,9 +367,9 @@ const getUrlsDodax = function (updateAlbum, servers){
     getDodaxSitesAlbums(cadenaBusqueda, firstCall, updateAlbum, servers, callback)
       .then(content => {
 
-        var hayResultados = false;
-        var mostrarMasResultados = false;
-        var nextUrls = [];
+        let hayResultados = false;
+        let mostrarMasResultados = false;
+        let nextUrls = [];
 
         content.forEach(resultado => {
 
@@ -407,9 +407,9 @@ const getUrlsDodax = function (updateAlbum, servers){
 
 
                 //Identificador del album
-                var idAlbum = (album.getElementsByClassName('js-product')[0]).getAttribute('id');
+                let idAlbum = (album.getElementsByClassName('js-product')[0]).getAttribute('id');
                 //Precio del disco.
-                var precio = ((album.getElementsByClassName('buy-button')[0]).getElementsByTagName('span')[0]).innerText
+                let precio = ((album.getElementsByClassName('buy-button')[0]).getElementsByTagName('span')[0]).innerText
                   .replace("€", "")
                   .replace("£", "")
                   .replace("zł", "")
@@ -419,15 +419,15 @@ const getUrlsDodax = function (updateAlbum, servers){
                   .replace("&nbsp;", "");
 
                 //Código de barras.
-                var gtin =  (album.getElementsByClassName('buy-button')[0]).getAttribute('onmousedown');
+                let gtin =  (album.getElementsByClassName('buy-button')[0]).getAttribute('onmousedown');
                 gtin = (gtin !== null) ? gtin.replace("RetailRocket.addToCartRetailRocket('", "").replace("');", "") : "";
 
                 //Url del detalle del disco.
-                var urlRelativa = (album.getElementsByClassName('js-product')[0]).getAttribute('href');
+                let urlRelativa = (album.getElementsByClassName('js-product')[0]).getAttribute('href');
                 //Existe ya la ficha?
-                var encontrado = document.getElementById(idAlbum) != null;
+                let encontrado = document.getElementById(idAlbum) != null;
                 //Datos del precio.
-                var precioObj = {
+                let precioObj = {
                   url: resultado.url + urlRelativa,
                   price: getPrice(precio, resultado.text).replace(".", ","),
                   priceInt: getPrice(precio, resultado.text),
@@ -441,7 +441,7 @@ const getUrlsDodax = function (updateAlbum, servers){
                 } else {
 
                   //El disco no está cargado en la página.  
-                  var obj = {};
+                  let obj = {};
                   obj.id = idAlbum;
                   obj.image =  (album.getElementsByTagName('img')[0]).getAttribute('src');
                   obj.title = (album.getElementsByClassName('product_title')[0]).innerText;
@@ -479,7 +479,7 @@ const getUrlsDodax = function (updateAlbum, servers){
             }
         }
   
-        var htmlToSave = document.getElementById("div-resultados").innerHTML;
+        let htmlToSave = document.getElementById("div-resultados").innerHTML;
         sessionStorage.setItem('lastSearchResult', htmlToSave);
 
         //completamos los albums pendientes.
@@ -490,7 +490,7 @@ const getUrlsDodax = function (updateAlbum, servers){
             removePendingPrices(cadenaBusqueda);
         }
 
-        var firstAlbum = true;
+        let firstAlbum = true;
 
         Array.from(document.getElementsByTagName('ion-col')).forEach( col => {
           if (parseInt(col.getAttribute("pending-servers")) > 0 && firstAlbum){

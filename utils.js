@@ -1,7 +1,7 @@
 //Método que muestra u oculta el spinner de buscando.
 const showSpinner = function(show, customMessage) {
     
-    var loadingMessage = typeof customMessage !== "undefined" ? customMessage : "Hey Ho! Let's Go!";
+    let loadingMessage = typeof customMessage !== "undefined" ? customMessage : "Hey Ho! Let's Go!";
 
     if (show){
 
