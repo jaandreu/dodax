@@ -15,56 +15,56 @@ const urlsDodax = [
     url: "https://www.dodax.de",
     musica: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H",
     electronica: "/de-de/elektronik-cPPEA17VBM7",
-    all: "/de-de/search"
+    all: "/de-de/search/"
     },
     {
     text: "AT",
     url: "https://www.dodax.at",
     musica: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H",
     electronica: "/de-at/elektronik-cPPEA17VBM7",
-    all: "/de-at/search"
+    all: "/de-at/search/"
   },
   {
     text: "FR",
     url: "https://www.dodax.fr",
     musica: "/fr-fr/musique-cd-dvd-vinyles-cLOFV6FFU7H",
     electronica: "/fr-fr/elektronik-cPPEA17VBM7",
-    all: "/fr-fr/search"
+    all: "/fr-fr/search/"
   },
   {
     text: "UK",
     url: "https://www.dodax.co.uk",
     musica: "/en-gb/music-cds-dvds-vinyl-cLOFV6FFU7H",
     electronica: "/en-gb/elektronik-cPPEA17VBM7",
-    all: "/en-gb/search"
+    all: "/en-gb/search/"
   }, 
   {
     text: "ES",
     url: "https://www.dodax.es",
     musica: "/es-es/musica-cds-dvds-vinilos-cLOFV6FFU7H",
     electronica: "/es-es/elektronik-cPPEA17VBM7",
-    all: "/es-es/search"
+    all: "/es-es/search/"
   }, 
   {
     text: "IT",
     url: "https://www.dodax.it",
     musica: "/it-it/musica-cd-dvd-vinili-cLOFV6FFU7H",
     electronica: "/it-it/elektronik-cPPEA17VBM7",
-    all: "/it-it/search"
+    all: "/it-it/search/"
   },
   {
     text: "PL",
     url: "https://www.dodax.pl",
     musica: "/pl-pl/muzyka-cd-dvd-winyle-cLOFV6FFU7H",
     electronica: "/pl-pl/elektronik-cPPEA17VBM7",
-    all: "/pl-pl/search"
+    all: "/pl-pl/search/"
   }, 
   {
     text: "NL",
     url: "https://www.dodax.nl",
     musica: "/nl-nl/muziek-cds-dvds-vinylplaten-cLOFV6FFU7H",
     electronica: "/nl-nl/elektronik-cPPEA17VBM7",
-    all: "/nl-nl/search"
+    all: "/nl-nl/search/"
   }
   ];
   
