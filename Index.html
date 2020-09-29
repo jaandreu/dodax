@@ -314,7 +314,11 @@ body.dark {
     </ion-content>
     <ion-content id="content-seccion" style="display: none;">
       <ion-list lines="none">
-        <ion-radio-group id="opt-seccion" value="musica">
+        <ion-radio-group id="opt-seccion" value="all">
+          <ion-item>
+            <ion-label>Todos</ion-label>
+            <ion-radio slot="start" color="secondary" value="all"></ion-radio>
+          </ion-item>
           <ion-item>
               <ion-label>Música</ion-label>
               <ion-radio slot="start" color="secondary" value="musica"></ion-radio>

@@ -7,7 +7,6 @@ const getUrlsDodax = function (updateAlbum, servers){
     var filtro = "";
 
     var seccion = document.getElementById("opt-seccion").value;
-    seccion = "all";
 
     if (!updateAlbum){
 
@@ -17,12 +16,10 @@ const getUrlsDodax = function (updateAlbum, servers){
         return tb.filter;
       }).join("-");
 
-      if (filtro !== ""){
-        filtro = "-f-" +  filtro;
-      }
-      else{
+      if (filtro == ""){
         return [];
       }
+
     }
 
     return urlsDodax
@@ -35,11 +32,13 @@ const getUrlsDodax = function (updateAlbum, servers){
            }
         })
         .map(urlDodax => {
-       
+
+            let p = urlDodax[seccion];
+
             return {
                 url: urlDodax.url,
                 text: urlDodax.text,
-                params: urlDodax[seccion] + filtro + "/?s="
+                params: p + ( p.slice(-1) == "/" ? "" : "-" ) + "f-"  + filtro + "/?s="
             };
 
           });
