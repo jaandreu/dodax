@@ -8,8 +8,6 @@ const getUrlsDodax = function (updateAlbum, servers){
 
     var seccion = document.getElementById("opt-seccion").value;
 
-    if (!updateAlbum){
-
       filtro = tiposBusqueda.filter((t) => {
           return document.getElementById(t.name).checked;
       }).map( tb => {
@@ -19,8 +17,6 @@ const getUrlsDodax = function (updateAlbum, servers){
       if (filtro == ""){
         return [];
       }
-
-    }
 
     return urlsDodax
         .filter(fil => {
