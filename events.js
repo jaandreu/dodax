@@ -97,6 +97,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   //Página de configuración.
   document.getElementById('button-settings').addEventListener('click', function(){
     showElement("content-settings");
+    showElement("header-conf");
+    hideElement("header-search");
     hideElement("content-search");
   });
 
@@ -109,6 +111,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   //Click para guardar la configuración.
   document.getElementById('button-check').addEventListener('click', function(){
     showElement("content-search");
+
+    hideElement("header-conf");
+    showElement("header-search");
 
     let conf = [];
 
@@ -281,4 +286,30 @@ const createHistoryFromStorage = function() {
         addHistory(chip.text, chip.isFavorite);
       });
    }
+}
+
+
+// Listen for ionChange on all segments
+const segments = document.querySelectorAll('ion-segment')
+for (let i = 0; i < segments.length; i++) {
+  segments[i].addEventListener('ionChange', (ev) => {
+    
+    if (ev.target.value == "formato"){
+      hideElement("content-seccion");
+      hideElement("content-otros");
+      showElement("content-formato");
+    }
+
+    if (ev.target.value == "seccion"){
+      showElement("content-seccion");
+      hideElement("content-otros");
+      hideElement("content-formato");
+    }
+    if (ev.target.value == "otros"){
+      hideElement("content-seccion");
+      showElement("content-otros");
+      hideElement("content-formato");
+    }
+
+  })
 }
