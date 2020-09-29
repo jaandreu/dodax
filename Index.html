@@ -250,12 +250,32 @@ body.dark {
 
 <body>
   <ion-app>
+
     <!-- header -->
-    <ion-header translucent>
+    <ion-header id="header-search" translucent>
       <ion-toolbar class="toolbar-search" color="primary">
         <form id="formulario" method='GET' action='javascript:void(0);'>
           <ion-searchbar id="search" style="text-transform:uppercase" type="search" inputmode="search" animated placeholder="LAST SHADOW PUPPETS"></ion-searchbar>
         </form>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-header style="display: none;" id="header-conf" translucent>
+      <ion-toolbar>
+        <ion-title>Configuración</ion-title>
+      </ion-toolbar>
+      <ion-toolbar>
+        <ion-segment color="secondary" value="formato">
+          <ion-segment-button value="formato">
+            <ion-label>Formato</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="seccion">
+            <ion-label>Sección</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="otros">
+            <ion-label>Otros</ion-label>
+          </ion-segment-button>
+        </ion-segment>
       </ion-toolbar>
     </ion-header>
 

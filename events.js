@@ -97,6 +97,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   //Página de configuración.
   document.getElementById('button-settings').addEventListener('click', function(){
     showElement("content-settings");
+    showElement("header-conf");
+    hideElement("header-search");
     hideElement("content-search");
   });
 
@@ -109,6 +111,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
   //Click para guardar la configuración.
   document.getElementById('button-check').addEventListener('click', function(){
     showElement("content-search");
+
+    hideElement("header-conf");
+    showElement("header-search");
 
     let conf = [];
 
