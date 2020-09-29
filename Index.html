@@ -289,50 +289,54 @@ body.dark {
       </ion-fab>
 
       <ion-content id="content-formato">
-            <ion-list lines="none">
-              <ion-item >
-                <ion-label>LP (Vinyl)</ion-label>
-                <ion-toggle slot="start" name="lp-vinyl" color="secondary" id="lp-vinyl" class="formato" checked></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label>Single (Vinyl)</ion-label>
-                <ion-toggle slot="start" id="single-vinyl" color="secondary" name="single-vinyl" class="formato" checked></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label>CD</ion-label>
-                <ion-toggle slot="start" id="cd" name="cd" color="secondary" class="formato"></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label>SACD</ion-label>
-                <ion-toggle slot="start" id="sacd" name="sacd" color="secondary" class="formato"></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label>DVD</ion-label>
-                <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
-              </ion-item>
-            </ion-list>        
+      <ion-list lines="none">
+        <ion-item >
+          <ion-label>LP (Vinyl)</ion-label>
+          <ion-toggle slot="start" name="lp-vinyl" color="secondary" id="lp-vinyl" class="formato" checked></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>Single (Vinyl)</ion-label>
+          <ion-toggle slot="start" id="single-vinyl" color="secondary" name="single-vinyl" class="formato" checked></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>CD</ion-label>
+          <ion-toggle slot="start" id="cd" name="cd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>SACD</ion-label>
+          <ion-toggle slot="start" id="sacd" name="sacd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>DVD</ion-label>
+          <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
+        </ion-item>
+      </ion-list>
     </ion-content>
     <ion-content id="content-seccion" style="display: none;">
-          <ion-list lines="none">
-            <ion-radio-group id="opt-seccion" value="musica">
-              <ion-item>
-                  <ion-label>Música</ion-label>
-                  <ion-radio slot="start" color="secondary" value="musica"></ion-radio>
-                </ion-item>
-                <ion-item>
-                  <ion-label>Electrónica</ion-label>
-                  <ion-radio slot="start" color="secondary" value="electronica"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-          </ion-list>  
+      <ion-list lines="none">
+        <ion-radio-group id="opt-seccion" value="all">
+          <ion-item>
+            <ion-label>Todos</ion-label>
+            <ion-radio slot="start" color="secondary" value="all"></ion-radio>
+          </ion-item>
+          <ion-item>
+              <ion-label>Música</ion-label>
+              <ion-radio slot="start" color="secondary" value="musica"></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Electrónica</ion-label>
+              <ion-radio slot="start" color="secondary" value="electronica"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+      </ion-list>  
     </ion-content>
     <ion-content id="content-otros" style="display: none;">
-          <ion-list lines="none">
-            <ion-item>
-              <ion-label>Modo Metal!</ion-label>
-              <ion-toggle slot="start" id="themeToggle" name="themeToggle" color="secondary" class="themeToggle"></ion-toggle>
+      <ion-list lines="none">
+        <ion-item>
+          <ion-label>Modo Metal!</ion-label>
+          <ion-toggle slot="start" id="themeToggle" name="themeToggle" color="secondary" class="themeToggle"></ion-toggle>
         </ion-item>
-          </ion-list> 
+      </ion-list> 
     </ion-content>
     </ion-content>
 

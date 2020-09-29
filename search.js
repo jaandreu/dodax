@@ -8,22 +8,15 @@ const getUrlsDodax = function (updateAlbum, servers){
 
     var seccion = document.getElementById("opt-seccion").value;
 
-
-    if (!updateAlbum){
-
       filtro = tiposBusqueda.filter((t) => {
           return document.getElementById(t.name).checked;
       }).map( tb => {
         return tb.filter;
       }).join("-");
 
-      if (filtro !== ""){
-        filtro = "-f-" +  filtro;
-      }
-      else{
+      if (filtro == ""){
         return [];
       }
-    }
 
     return urlsDodax
         .filter(fil => {
@@ -35,11 +28,13 @@ const getUrlsDodax = function (updateAlbum, servers){
            }
         })
         .map(urlDodax => {
-       
+
+            let p = urlDodax[seccion];
+
             return {
                 url: urlDodax.url,
                 text: urlDodax.text,
-                params: urlDodax[seccion] + filtro + "/?s="
+                params: p + ( p.slice(-1) == "/" ? "" : "-" ) + "f-"  + filtro + "/?s="
             };
 
           });
@@ -403,6 +398,9 @@ const getUrlsDodax = function (updateAlbum, servers){
 
                 if (!hayResultados){
                   hideElement("div-history");
+                  if (!updateAlbum){
+                    hideElement("fab-delete");
+                  }
                 }
 
                 hayResultados = true;
