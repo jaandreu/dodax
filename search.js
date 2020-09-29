@@ -7,7 +7,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     var filtro = "";
 
     var seccion = document.getElementById("opt-seccion").value;
-
+    seccion = "all";
 
     if (!updateAlbum){
 
