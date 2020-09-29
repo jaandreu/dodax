@@ -287,3 +287,29 @@ const createHistoryFromStorage = function() {
       });
    }
 }
+
+
+// Listen for ionChange on all segments
+const segments = document.querySelectorAll('ion-segment')
+for (let i = 0; i < segments.length; i++) {
+  segments[i].addEventListener('ionChange', (ev) => {
+    
+    if (ev.target.value == "formato"){
+      hideElement("content-seccion");
+      hideElement("content-otros");
+      showElement("content-formato");
+    }
+
+    if (ev.target.value == "seccion"){
+      showElement("content-seccion");
+      hideElement("content-otros");
+      hideElement("content-formato");
+    }
+    if (ev.target.value == "otros"){
+      hideElement("content-seccion");
+      showElement("content-otros");
+      hideElement("content-formato");
+    }
+
+  })
+}
