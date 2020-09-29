@@ -403,6 +403,9 @@ const getUrlsDodax = function (updateAlbum, servers){
 
                 if (!hayResultados){
                   hideElement("div-history");
+                  if (!updateAlbum){
+                    hideElement("fab-delete");
+                  }
                 }
 
                 hayResultados = true;
