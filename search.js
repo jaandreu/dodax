@@ -285,8 +285,13 @@ const getUrlsDodax = function (updateAlbum, servers){
     }
 
     base.getElementById("p-artist").innerText = disco.from.toLowerCase();
-    base.getElementById("img-cover").setAttribute("src", disco.image);
+    let imagen = base.getElementById("img-cover");
+    imagen.id = "img-cover-" +  disco.id;
+    imagen.setAttribute("src", disco.image);
 
+    imagen.addEventListener('click', function(evt){
+      evt.target.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('hover');
+    });
 
     urlsDodax.forEach(url => {
 

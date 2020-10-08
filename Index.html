@@ -245,6 +245,51 @@ body.dark {
     padding: 0px 0px 0px 0px !important;
   }
 
+/*Flip*/
+
+/* entire container, keeps perspective */
+.flip-container {
+	perspective: 1000px;
+}
+	/* flip the pane when hovered */
+	.flip-container.hover .flipper {
+		transform: rotateY(180deg);
+	}
+
+/*.flip-container, .front, .back {
+	width: 320px;
+	height: 480px;
+}*/
+
+/* flip speed goes here */
+.flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+
+	position: relative;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+	backface-visibility: hidden;
+
+	/*position: absolute;*/
+	top: 0;
+	left: 0;
+}
+
+/* front pane, placed above back */
+.front {
+	z-index: 2;
+	/* for firefox 31 */
+	transform: rotateY(0deg);
+}
+
+/* back, initially hidden pane */
+.back {
+	transform: rotateY(180deg);
+}
+
 </style>
 </head>
 
@@ -370,24 +415,35 @@ body.dark {
               <ion-col id="div-base" class="base" size-xs="12" size-sm="6" size-lg="4" size-xl="3">
                 <ion-card>
                   <img id="img-cover" alt="Album cover" class="img-album-cover" src="#" />
-                  <ion-card-content>
-                    <ion-card-title class="album is-title" id="p-album">#album#</ion-card-title>
-                    <ion-card-subtitle class="artist is-subtitle" id="p-artist">#artist#</ion-card-subtitle>
-                    <ion-fab vertical="top" horizontal="end" edge slot="fixed">
-                        <ion-fab-button color="primary">
-                          <ion-icon name="chevron-back-outline"></ion-icon>
-                        </ion-fab-button>
-                        <ion-fab-list side="start">
-                          <ion-fab-button id="update-album" color="secondary"><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
-                          <ion-fab-button id="a-discogs" class="discogs"  color="secondary"><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
-                          <ion-fab-button id="a-amazon" class="amazon" color="secondary"><ion-icon name="logo-amazon"></ion-icon></ion-fab-button>
-                          <ion-fab-button id="a-spotify" class="spotify" color="secondary"><ion-icon name="musical-notes-outline"></ion-icon></ion-fab-button>
-                        </ion-fab-list>
-                      </ion-fab>
-                    <ion-list id="table-precios-body">
-                        <!--lista de precios-->
-                      </ion-list>
-                  </ion-card-content>
+                        <ion-card-content>
+                          <ion-card-title class="album is-title" id="p-album">#album#</ion-card-title>
+                          <ion-card-subtitle class="artist is-subtitle" id="p-artist">#artist#</ion-card-subtitle>
+                          <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+                              <ion-fab-button color="primary">
+                                <ion-icon name="chevron-back-outline"></ion-icon>
+                              </ion-fab-button>
+                              <ion-fab-list side="start">
+                                <ion-fab-button id="update-album" color="secondary"><ion-icon name="refresh-outline"></ion-icon></ion-fab-button>
+                                <ion-fab-button id="a-discogs" class="discogs"  color="secondary"><ion-icon name="disc-outline"></ion-icon></ion-fab-button>
+                                <ion-fab-button id="a-amazon" class="amazon" color="secondary"><ion-icon name="logo-amazon"></ion-icon></ion-fab-button>
+                                <ion-fab-button id="a-spotify" class="spotify" color="secondary"><ion-icon name="musical-notes-outline"></ion-icon></ion-fab-button>
+                              </ion-fab-list>
+                            </ion-fab>
+                         <div class="flip-container">
+                            <div class="flipper">
+                               <div class="front">
+                                  <ion-list id="table-precios-body">
+                                    <!--lista de precios-->
+                                  </ion-list>
+                              </div>
+                              <div class="back">
+                                <ion-list>
+                                  <!--Tracklist-->
+                                </ion-list>
+                            </div>
+                            </div>
+                         </div>   
+                        </ion-card-content>
                 </ion-card>
               </ion-col>
             </ion-row>
