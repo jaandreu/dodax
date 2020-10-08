@@ -290,7 +290,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     imagen.setAttribute("src", disco.image);
 
     imagen.addEventListener('click', function(evt){
-      evt.target.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('hover');
+      evt.target.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
     });
 
     urlsDodax.forEach(url => {
