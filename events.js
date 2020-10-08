@@ -313,3 +313,7 @@ for (let i = 0; i < segments.length; i++) {
 
   })
 }
+
+const flip = function(obj) {
+  obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
+}

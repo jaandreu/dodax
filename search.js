@@ -288,10 +288,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     let imagen = base.getElementById("img-cover");
     imagen.id = "img-cover-" +  disco.id;
     imagen.setAttribute("src", disco.image);
-
-    imagen.addEventListener('click', function(evt){
-      evt.target.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
-    });
+    imagen.setAttribute("onclick", "flip(this);")
 
     urlsDodax.forEach(url => {
 
