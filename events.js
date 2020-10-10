@@ -314,6 +314,44 @@ for (let i = 0; i < segments.length; i++) {
   })
 }
 
-const flip = function(obj) {
+const flip = function(obj, gtin) {
+
+  
+  let flipContainer = obj.parentNode.getElementsByClassName("flip-container")[0];
+  let imFlip = flipContainer.classList.contains("flip");
+  let frontDiv = flipContainer.getElementsByClassName("front")[0];
+  let backDiv = flipContainer.getElementsByClassName("back")[0];
+  let trackList = flipContainer.getElementsByClassName("table-tracklist")[0];
+
+  if (!imFlip){
+
+    if (!trackList.classList.contains("invocado")){
+
+      getDiscogsInfo(gtin).then((salida) => {
+
+        trackList.classList.add("invocado");
+
+        if (salida.tracklist && salida.tracklist.length > 0){
+      
+            salida.tracklist.forEach((item) => {
+              let ionItem = document.createElement("ion-item");
+              ionItem.innerHTML = "<ion-label>" + item.position + " " + item.title + " " + item.duration + "</ion-label>";
+              trackList.appendChild(ionItem);
+            });
+        }
+      });
+    }
+
+    backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
+    backDiv.style.height = frontDiv.offsetHeight + "px;";
+    backDiv.style.display = "";
+    frontDiv.style.display = "none";
+  }
+  else{
+     backDiv.style.display = "none"; 
+     frontDiv.style.display = "";
+  }
+
   obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
+
 }

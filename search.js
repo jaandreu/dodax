@@ -1,5 +1,3 @@
-//https://dmitripavlutin.com/javascript-fetch-async-await/
-
 //Obtiene la lista de servidores a los que nos conectaremos.
 const getUrlsDodax = function (updateAlbum, servers){
 
@@ -52,9 +50,8 @@ const getUrlsDodax = function (updateAlbum, servers){
 
   const getDiscogsInfo = async(barcode) => {
     
-    let url = "http://api.discogs.com/database/search?q=602527826486&type=barcode";
-    let respuesta = await fetch(url, 
-          {"User-Agent": "DodaxSearch/0.1 +https://dodax.netlify.app"});
+    let url = "https://vinilo.herokuapp.com/discogs/" + barcode + "/tracklist";
+    let respuesta = await fetch(url);
 
     let data = await respuesta.json();
 
@@ -288,7 +285,10 @@ const getUrlsDodax = function (updateAlbum, servers){
     let imagen = base.getElementById("img-cover");
     imagen.id = "img-cover-" +  disco.id;
     imagen.setAttribute("src", disco.image);
-    imagen.setAttribute("onclick", "flip(this);")
+  
+    if (disco.gtin != ""){
+      imagen.setAttribute("onclick", "flip(this, '" + disco.gtin + "');");
+    }
 
     urlsDodax.forEach(url => {
 
@@ -340,6 +340,7 @@ const getUrlsDodax = function (updateAlbum, servers){
 
             let doc = parser.parseFromString(salida.data, "text/html");
             let nextUrlElement = doc.getElementsByClassName('related_list')[0];
+
             if (nextUrlElement != null){
               vnextUrl = nextUrlElement.getAttribute('data-scroller-next-url')
             }

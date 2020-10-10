@@ -15,7 +15,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
 
 <style>
-      
+
+.scrollable-content {
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 0;
+ }
+
   * {
     font-family: 'Open Sans', sans-serif;
   }
@@ -298,7 +304,7 @@ body.dark {
   -moz-backface-visibility: hidden;
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
-/*  position: absolute;
+ /* position: absolute;
   top: 0;
   left: 0;*/
 }
@@ -464,14 +470,13 @@ body.dark {
                             </ion-fab>
                          <div class="flip-container">
                             <div class="flipper">
-                               <div class="front">
+                               <div style="display;" class="front">
                                   <ion-list id="table-precios-body">
                                     <!--lista de precios-->
                                   </ion-list>
                               </div>
-                              <div class="back">
-                                <ion-list>
-                                  <!--Tracklist-->
+                              <div style="display:none" class="back scrollable-content">
+                                <ion-list class="table-tracklist">
                                 </ion-list>
                             </div>
                             </div>
