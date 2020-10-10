@@ -30,13 +30,31 @@
     font-family: 'Open Sans Condensed', sans-serif !important;
   }
 
+  ion-item.discogs {
+    font-family: 'Open Sans Condensed', sans-serif !important;
+    font-size: 1rem;
+    --min-height: 5px;
+  }
+
+  ion-item.discogs ion-text {
+    --min-height: 5px;
+  }  
+
   ion-text {
     padding-right: 5px;
   }
+
   .is-title{
     font-size: 1.5rem;
     font-weight: bold;
   }
+  
+  .is-title-list{
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'Open Sans Condensed', sans-serif !important;
+  }
+
   .is-subtitle{
     font-size: 1.25rem;
   }
@@ -476,7 +494,15 @@ body.dark {
                                   </ion-list>
                               </div>
                               <div style="display:none" class="back scrollable-content">
-                                <ion-list class="table-tracklist">
+                                <ion-list lines="none" class="table-info">
+                                  <ion-list-header>
+                                    <ion-label class="is-title-list">Info</ion-label>
+                                  </ion-list-header>
+                                </ion-list>
+                                <ion-list lines="none" class="table-tracklist">
+                                  <ion-list-header>
+                                    <ion-label class="is-title-list">Tracklist</ion-label>
+                                  </ion-list-header>
                                 </ion-list>
                             </div>
                             </div>

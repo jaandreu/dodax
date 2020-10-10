@@ -322,6 +322,7 @@ const flip = function(obj, gtin) {
   let frontDiv = flipContainer.getElementsByClassName("front")[0];
   let backDiv = flipContainer.getElementsByClassName("back")[0];
   let trackList = flipContainer.getElementsByClassName("table-tracklist")[0];
+  let infoList = flipContainer.getElementsByClassName("table-info")[0];
 
   if (!imFlip){
 
@@ -329,13 +330,26 @@ const flip = function(obj, gtin) {
 
       getDiscogsInfo(gtin).then((salida) => {
 
+        //Lo marcamos para no volver a invocar.
         trackList.classList.add("invocado");
 
+        //info
+        
+        //let formato = salida.formats && salida.formats.length > 0 ? salida.formats.map(it => it.name).join("/") : "";
+
+        //tracklist
         if (salida.tracklist && salida.tracklist.length > 0){
       
             salida.tracklist.forEach((item) => {
               let ionItem = document.createElement("ion-item");
-              ionItem.innerHTML = "<ion-label>" + item.position + " " + item.title + " " + item.duration + "</ion-label>";
+              let artists = item.artists && item.artists.length > 0 ? item.artists.map(it => it.name).join("/") : "";
+              ionItem.classList.add("ion-no-padding");
+              ionItem.classList.add("discogs");
+              ionItem.innerHTML =  "<ion-text><b>" + item.position + ".</b></ion-text>" 
+                                 + "<ion-text>" + item.title + "</ion-text>" 
+                                 + (item.duration !== "" ? "<ion-text>(" + item.duration + ")</ion-text>" : "")
+                                 + "<ion-text color='secondary'>" + artists + "</ion-text>";
+
               trackList.appendChild(ionItem);
             });
         }
