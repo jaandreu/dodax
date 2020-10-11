@@ -333,26 +333,80 @@ const flip = function(obj, gtin) {
         //Lo marcamos para no volver a invocar.
         trackList.classList.add("invocado");
 
+        if (salida.artists && salida.artists.length > 0){
         //info
-        
-        //let formato = salida.formats && salida.formats.length > 0 ? salida.formats.map(it => it.name).join("/") : "";
+        //sello
+        let sello = salida.labels && salida.labels.length > 0
+                    ? salida.labels.map(it => it.name).join("/")
+                    : "";
+        let ionSello = document.createElement("ion-item");
+        ionSello.classList.add("ion-no-padding");
+        ionSello.classList.add("discogs");
+        ionSello.innerHTML = "<ion-text color='secondary'>Sello:</ion-text>" 
+                                  + "<ion-text>" + sello + "</ion-text>" 
+        infoList.appendChild(ionSello);
+            
+        //formato
+        let formato = salida.formats && salida.formats.length > 0 
+                    ? salida.formats.map(it => it.qty + " x " + it.name + "(" + it.descriptions.join("/") +")").join("/") 
+                    : "";
+        let ionItemFormato = document.createElement("ion-item");
+        ionItemFormato.classList.add("ion-no-padding");
+        ionItemFormato.classList.add("discogs");
+        ionItemFormato.innerHTML = "<ion-text color='secondary'>Formato:</ion-text>" 
+                                 + "<ion-text>" + formato + "</ion-text>" 
+        infoList.appendChild(ionItemFormato);
+
+        //genero
+        let genero = salida.genres && salida.genres.length > 0 
+              ? salida.genres.join("/")
+              : "";
+        let ionItemGenre = document.createElement("ion-item");
+        ionItemGenre.classList.add("ion-no-padding");
+        ionItemGenre.classList.add("discogs");
+        ionItemGenre.innerHTML = "<ion-text color='secondary'>Género:</ion-text>" 
+                            + "<ion-text>" + genero + "</ion-text>" 
+        infoList.appendChild(ionItemGenre);
+
+   //estilo
+   let estilo = salida.styles && salida.styles.length > 0 
+      ? salida.styles.join("/")
+      : "";
+    let ionItemStyle = document.createElement("ion-item");
+    ionItemStyle.classList.add("ion-no-padding");
+    ionItemStyle.classList.add("discogs");
+    ionItemStyle.innerHTML = "<ion-text color='secondary'>Estilo:</ion-text>" 
+                    + "<ion-text>" + estilo + "</ion-text>" 
+    infoList.appendChild(ionItemStyle);
+
+        //notas
+        let ionItemNotas = document.createElement("ion-item");
+        ionItemNotas.classList.add("ion-no-padding");
+        ionItemNotas.classList.add("discogs");
+        ionItemNotas.innerHTML = "<ion-text color='secondary'>Notas:</ion-text>" 
+                                 + "<ion-text>" + salida.notes || "" + "</ion-text>" 
+        infoList.appendChild(ionItemNotas);
 
         //tracklist
         if (salida.tracklist && salida.tracklist.length > 0){
       
             salida.tracklist.forEach((item) => {
               let ionItem = document.createElement("ion-item");
-              let artists = item.artists && item.artists.length > 0 ? item.artists.map(it => it.name).join("/") : "";
+              let artists = item.artists && item.artists.length > 0 ? item.artists.map(it => it.name) : [];
+              let extraartist = item.extraartists && item.extraartists.length > 0 ? item.extraartists.map(it => it.role + " " + it.name) : [];
+              let artistas = artists.concat(extraartist).join("/");
+
               ionItem.classList.add("ion-no-padding");
               ionItem.classList.add("discogs");
               ionItem.innerHTML =  "<ion-text><b>" + item.position + ".</b></ion-text>" 
                                  + "<ion-text>" + item.title + "</ion-text>" 
                                  + (item.duration !== "" ? "<ion-text>(" + item.duration + ")</ion-text>" : "")
-                                 + "<ion-text color='secondary'>" + artists + "</ion-text>";
+                                 + "<ion-text color='secondary'>" + artistas + "</ion-text>";
 
               trackList.appendChild(ionItem);
             });
         }
+      }
       });
     }
 
