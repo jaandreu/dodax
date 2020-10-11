@@ -313,7 +313,15 @@ for (let i = 0; i < segments.length; i++) {
 
   })
 }
+const newInfoIonItem = function (title, text){
 
+  let ionItem = document.createElement("ion-item");
+  ionItem.classList.add("ion-no-padding", "discogs");
+  ionItem.innerHTML = "<ion-text color='secondary'>" + title + "</ion-text>" 
+                    + "<ion-text>" + text + "</ion-text>" 
+
+  return ionItem;
+}
 const flip = function(obj, gtin) {
 
   
@@ -339,61 +347,31 @@ const flip = function(obj, gtin) {
         let sello = salida.labels && salida.labels.length > 0
                     ? salida.labels.map(it => it.name).join("/")
                     : "";
-        let ionSello = document.createElement("ion-item");
-        ionSello.classList.add("ion-no-padding");
-        ionSello.classList.add("discogs");
-        ionSello.innerHTML = "<ion-text color='secondary'>Sello:</ion-text>" 
-                                  + "<ion-text>" + sello + "</ion-text>" 
-        infoList.appendChild(ionSello);
+        infoList.appendChild(newInfoIonItem("Sello", sello ));
 
-                //Año
-                let ionItemYear = document.createElement("ion-item");
-                ionItemYear.classList.add("ion-no-padding");
-                ionItemYear.classList.add("discogs");
-                ionItemYear.innerHTML = "<ion-text color='secondary'>Año:</ion-text>" 
-                                         + "<ion-text>" + salida.year + "</ion-text>" 
-                infoList.appendChild(ionItemYear);
+        //Año
+        infoList.appendChild(newInfoIonItem("Año", salida.year));
 
         //formato
         let formato = salida.formats && salida.formats.length > 0 
                     ? salida.formats.map(it => it.qty + " x " + it.name + "(" + it.descriptions.join("/") +")").join("/") 
                     : "";
-        let ionItemFormato = document.createElement("ion-item");
-        ionItemFormato.classList.add("ion-no-padding");
-        ionItemFormato.classList.add("discogs");
-        ionItemFormato.innerHTML = "<ion-text color='secondary'>Formato:</ion-text>" 
-                                 + "<ion-text>" + formato + "</ion-text>" 
-        infoList.appendChild(ionItemFormato);
+        infoList.appendChild(newInfoIonItem("Formato", formato ));
 
         //genero
         let genero = salida.genres && salida.genres.length > 0 
               ? salida.genres.join("/")
               : "";
-        let ionItemGenre = document.createElement("ion-item");
-        ionItemGenre.classList.add("ion-no-padding");
-        ionItemGenre.classList.add("discogs");
-        ionItemGenre.innerHTML = "<ion-text color='secondary'>Género:</ion-text>" 
-                            + "<ion-text>" + genero + "</ion-text>" 
-        infoList.appendChild(ionItemGenre);
+        infoList.appendChild(newInfoIonItem("Género", genero));
 
-   //estilo
-   let estilo = salida.styles && salida.styles.length > 0 
-      ? salida.styles.join("/")
-      : "";
-    let ionItemStyle = document.createElement("ion-item");
-    ionItemStyle.classList.add("ion-no-padding");
-    ionItemStyle.classList.add("discogs");
-    ionItemStyle.innerHTML = "<ion-text color='secondary'>Estilo:</ion-text>" 
-                    + "<ion-text>" + estilo + "</ion-text>" 
-    infoList.appendChild(ionItemStyle);
+        //estilo
+        let estilo = salida.styles && salida.styles.length > 0 
+            ? salida.styles.join("/")
+            : "";
+        infoList.appendChild(newInfoIonItem("Estilo", estilo));
 
         //notas
-        let ionItemNotas = document.createElement("ion-item");
-        ionItemNotas.classList.add("ion-no-padding");
-        ionItemNotas.classList.add("discogs");
-        ionItemNotas.innerHTML = "<ion-text color='secondary'>Notas:</ion-text>" 
-                                 + "<ion-text>" + salida.notes || "" + "</ion-text>" 
-        infoList.appendChild(ionItemNotas);
+        infoList.appendChild(newInfoIonItem("Notas", salida.notes ? salida.notes : ""));
 
         //tracklist
         if (salida.tracklist && salida.tracklist.length > 0){
