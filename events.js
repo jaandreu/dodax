@@ -345,7 +345,15 @@ const flip = function(obj, gtin) {
         ionSello.innerHTML = "<ion-text color='secondary'>Sello:</ion-text>" 
                                   + "<ion-text>" + sello + "</ion-text>" 
         infoList.appendChild(ionSello);
-            
+
+                //Año
+                let ionItemYear = document.createElement("ion-item");
+                ionItemYear.classList.add("ion-no-padding");
+                ionItemYear.classList.add("discogs");
+                ionItemYear.innerHTML = "<ion-text color='secondary'>Año:</ion-text>" 
+                                         + "<ion-text>" + salida.year + "</ion-text>" 
+                infoList.appendChild(ionItemYear);
+
         //formato
         let formato = salida.formats && salida.formats.length > 0 
                     ? salida.formats.map(it => it.qty + " x " + it.name + "(" + it.descriptions.join("/") +")").join("/") 
