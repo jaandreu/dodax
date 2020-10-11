@@ -399,9 +399,9 @@ const flip = function(obj, gtin) {
               ionItem.classList.add("ion-no-padding");
               ionItem.classList.add("discogs");
               ionItem.innerHTML =  "<ion-text><b>" + item.position + ".</b></ion-text>" 
-                                 + "<ion-text>" + item.title + "</ion-text>" 
+                                 + "<p><ion-text>" + item.title + "</ion-text>" 
                                  + (item.duration !== "" ? "<ion-text>(" + item.duration + ")</ion-text>" : "")
-                                 + "<ion-text color='secondary'>" + artistas + "</ion-text>";
+                                 + "<ion-text color='secondary'>" + artistas + "</ion-text></p>";
 
               trackList.appendChild(ionItem);
             });
