@@ -336,28 +336,20 @@ const flip = function(obj, gtin) {
             it.style.display = "none";
         });
         
-          if (salida.artists && salida.artists.length > 0){
+        if (salida.artists && salida.artists.length > 0){
 
-          let sello = salida.labels && salida.labels.length > 0
-                      ? salida.labels.map(it => it.name).join("/")
-                      : "";
+          let sello = salida.labels && salida.labels.length > 0 ? salida.labels.map(it => it.name).join("/") : "";
           infoList.appendChild(newInfoIonItem("Sello", sello ));
 
           infoList.appendChild(newInfoIonItem("Año", salida.year));
 
-          let formato = salida.formats && salida.formats.length > 0 
-                    ? salida.formats.map(it => it.qty + " x " + it.name + "(" + it.descriptions.join("/") +")").join("/") 
-                    : "";
+          let formato = salida.formats && salida.formats.length > 0 ? salida.formats.map(it => it.qty + " x " + it.name + "(" + it.descriptions.join("/") +")").join("/") : "";
           infoList.appendChild(newInfoIonItem("Formato", formato ));
 
-          let genero = salida.genres && salida.genres.length > 0 
-              ? salida.genres.join("/")
-              : "";
+          let genero = salida.genres && salida.genres.length > 0  ? salida.genres.join("/") : "";
           infoList.appendChild(newInfoIonItem("Género", genero));
 
-          let estilo = salida.styles && salida.styles.length > 0 
-            ? salida.styles.join("/")
-            : "";
+          let estilo = salida.styles && salida.styles.length > 0 ? salida.styles.join("/") : "";
           infoList.appendChild(newInfoIonItem("Estilo", estilo));
 
           infoList.appendChild(newInfoIonItem("Notas", salida.notes ? salida.notes : ""));
@@ -373,10 +365,10 @@ const flip = function(obj, gtin) {
 
               ionItem.classList.add("ion-no-padding");
               ionItem.classList.add("discogs");
-              ionItem.innerHTML =  "<ion-text><b>" + item.position + ".</b></ion-text>" 
+              ionItem.innerHTML =  "<ion-text class='w700' color='tertiary'>" + item.position + ".</ion-text>" 
                                  + "<p><ion-text>" + item.title + "</ion-text>" 
                                  + (item.duration !== "" ? "<ion-text>(" + item.duration + ")</ion-text>" : "")
-                                 + "<ion-text color='secondary'>" + artistas + "</ion-text></p>";
+                                 + "<ion-text color='tertiary'>" + artistas + "</ion-text></p>";
 
               trackList.appendChild(ionItem);
             });
