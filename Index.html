@@ -178,12 +178,31 @@
                           <ion-list-header>
                             <ion-label class="is-title-list">Info</ion-label>
                           </ion-list-header>
-                          <!-- Se rellena dinámicamente.-->
+                          <ion-item class="item-skeleton">
+                            <ion-label>
+                              <p>
+                                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                              </p>
+                              <p>
+                                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                              </p>
+                            </ion-label>
+                          </ion-item>
                         </ion-list>
                         <ion-list class="table-tracklist">
                           <ion-list-header>
                             <ion-label class="is-title-list">Tracklist</ion-label>
                           </ion-list-header>
+                          <ion-item class="item-skeleton">
+                            <ion-label>
+                              <p>
+                                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                              </p>
+                              <p>
+                                <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                              </p>
+                            </ion-label>
+                          </ion-item>
                         </ion-list>
                     </div>
                     </div>
@@ -212,6 +231,8 @@
   <script src="utils.js"></script>
   <script src="search.js"></script>
   <script src="events.js"></script>
+  <script src="htmlelements.js"></script>
+
 
   <!-- Componente de loading-->
   <script type="module">

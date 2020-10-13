@@ -61,4 +61,4 @@ const removeClass = function(idElement, className){
     elem.classList.remove(className);
   }
 };
- 
+

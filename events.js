@@ -313,15 +313,6 @@ for (let i = 0; i < segments.length; i++) {
 
   })
 }
-const newInfoIonItem = function (title, text){
-
-  let ionItem = document.createElement("ion-item");
-  ionItem.classList.add("ion-no-padding", "discogs");
-  ionItem.innerHTML = "<ion-text color='secondary'>" + title + "</ion-text>" 
-                    + "<ion-text>" + text + "</ion-text>" 
-
-  return ionItem;
-}
 const flip = function(obj, gtin) {
 
   
@@ -332,7 +323,7 @@ const flip = function(obj, gtin) {
   let trackList = flipContainer.getElementsByClassName("table-tracklist")[0];
   let infoList = flipContainer.getElementsByClassName("table-info")[0];
 
-  if (!imFlip){
+   if (!imFlip){
 
     if (!trackList.classList.contains("invocado")){
 
@@ -341,37 +332,35 @@ const flip = function(obj, gtin) {
         //Lo marcamos para no volver a invocar.
         trackList.classList.add("invocado");
 
-        if (salida.artists && salida.artists.length > 0){
-        //info
-        //sello
-        let sello = salida.labels && salida.labels.length > 0
-                    ? salida.labels.map(it => it.name).join("/")
-                    : "";
-        infoList.appendChild(newInfoIonItem("Sello", sello ));
+        Array.from(flipContainer.getElementsByClassName("item-skeleton")).forEach(it => {
+            it.style.display = "none";
+        });
+        
+          if (salida.artists && salida.artists.length > 0){
 
-        //Año
-        infoList.appendChild(newInfoIonItem("Año", salida.year));
+          let sello = salida.labels && salida.labels.length > 0
+                      ? salida.labels.map(it => it.name).join("/")
+                      : "";
+          infoList.appendChild(newInfoIonItem("Sello", sello ));
 
-        //formato
-        let formato = salida.formats && salida.formats.length > 0 
+          infoList.appendChild(newInfoIonItem("Año", salida.year));
+
+          let formato = salida.formats && salida.formats.length > 0 
                     ? salida.formats.map(it => it.qty + " x " + it.name + "(" + it.descriptions.join("/") +")").join("/") 
                     : "";
-        infoList.appendChild(newInfoIonItem("Formato", formato ));
+          infoList.appendChild(newInfoIonItem("Formato", formato ));
 
-        //genero
-        let genero = salida.genres && salida.genres.length > 0 
+          let genero = salida.genres && salida.genres.length > 0 
               ? salida.genres.join("/")
               : "";
-        infoList.appendChild(newInfoIonItem("Género", genero));
+          infoList.appendChild(newInfoIonItem("Género", genero));
 
-        //estilo
-        let estilo = salida.styles && salida.styles.length > 0 
+          let estilo = salida.styles && salida.styles.length > 0 
             ? salida.styles.join("/")
             : "";
-        infoList.appendChild(newInfoIonItem("Estilo", estilo));
+          infoList.appendChild(newInfoIonItem("Estilo", estilo));
 
-        //notas
-        infoList.appendChild(newInfoIonItem("Notas", salida.notes ? salida.notes : ""));
+          infoList.appendChild(newInfoIonItem("Notas", salida.notes ? salida.notes : ""));
 
         //tracklist
         if (salida.tracklist && salida.tracklist.length > 0){
@@ -396,15 +385,15 @@ const flip = function(obj, gtin) {
       });
     }
 
-    backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
-    backDiv.style.height = frontDiv.offsetHeight + "px;";
-    backDiv.style.display = "";
-    frontDiv.style.display = "none";
-  }
-  else{
-     backDiv.style.display = "none"; 
-     frontDiv.style.display = "";
-  }
+     backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
+     backDiv.style.height = frontDiv.offsetHeight + "px;";
+     backDiv.style.display = "";
+     frontDiv.style.display = "none";
+   }
+   else{
+      backDiv.style.display = "none"; 
+      frontDiv.style.display = "";
+   }
 
   obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
 
