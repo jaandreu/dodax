@@ -223,6 +223,9 @@ const getUrlsDodax = function (updateAlbum, servers){
          (ficha.getElementsByClassName("discogs")[0]).setAttribute("disabled", "false");
          (ficha.getElementsByClassName("amazon")[0]).setAttribute("disabled", "false");
 
+         let imagen = document.getElementById("img-cover-" +  idAlbum);
+         imagen.setAttribute("onclick", "flip(this, '" + gtin + "');");
+
        }
 
        let idPrecio = price.text + "-" + idAlbum;
