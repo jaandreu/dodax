@@ -146,7 +146,6 @@ const getUrlsDodax = function (updateAlbum, servers){
   
         });
 
-
     }
     else{
         //Si hay que actualizar toda la ficha vaciamos la ficha.
