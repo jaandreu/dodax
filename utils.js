@@ -62,3 +62,7 @@ const removeClass = function(idElement, className){
   }
 };
 
+const myJoin = function(array, caracter, atributo){
+  return array && array.length > 0 ? array.map(it => atributo ? it[atributo] : it).join(caracter) : ""; 
+} 
+
