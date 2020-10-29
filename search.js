@@ -245,6 +245,7 @@ const getUrlsDodax = function (updateAlbum, servers){
 
        document.getElementById(idPrecio + "-PRICE").innerText = price.price + " " + price.currency;
        document.getElementById(idPrecio + "-ORIGINALPRICE").innerText = price.priceOriginal;
+       document.getElementById(idPrecio + "-QTY").innerText = price.stock;
 
        if (parseFloat(minPrice) >= parseFloat(price.priceInt)) {
            ficha.setAttribute("min-price", price.priceInt);
@@ -308,8 +309,9 @@ const getUrlsDodax = function (updateAlbum, servers){
                          + "<ion-grid class='no-padding'>"
                          +   "<ion-row>" 
                          +      "<ion-col class='col-server' size='2'>" + url.text + "</ion-col>"
-                         +      "<ion-col class='col-price' size='5' id='" + idPrecio + "-PRICE'><ion-spinner class='spinner-price' paused='true' color='primary' name='dots'></ion-spinner></ion-col>"
-                         +      "<ion-col class='col-originalprice' size='5' id='" + idPrecio + "-ORIGINALPRICE'></ion-col>"
+                         +      "<ion-col class='col-price' size='4' id='" + idPrecio + "-PRICE'><ion-spinner class='spinner-price' paused='true' color='primary' name='dots'></ion-spinner></ion-col>"
+                         +      "<ion-col class='col-originalprice' size='4' id='" + idPrecio + "-ORIGINALPRICE'></ion-col>"
+                         +      "<ion-col class='col-qty' size='2' id='" + idPrecio + "-QTY'></ion-col>"
                          +   "</ion-row>"
                          + "</ion-grid>"
                          + "</ion-item>"
@@ -341,13 +343,13 @@ const getUrlsDodax = function (updateAlbum, servers){
            if (salida.status === 200){
 
             let doc = parser.parseFromString(salida.data, "text/html");
-            let nextUrlElement = doc.getElementsByClassName('related_list')[0];
+            let nextUrlElement = doc.querySelector("[data-qa='paginationLinkNext']")
 
             if (nextUrlElement != null){
-              vnextUrl = nextUrlElement.getAttribute('data-scroller-next-url')
+              vnextUrl = nextUrlElement.getAttribute('href');
             }
 
-            vlistaAlbums = doc.getElementsByClassName('product');
+            vlistaAlbums = doc.getElementsByClassName('c-frontOfPack');
            
           }
 
@@ -412,9 +414,9 @@ const getUrlsDodax = function (updateAlbum, servers){
 
 
                 //Identificador del album
-                let idAlbum = (album.getElementsByClassName('js-product')[0]).getAttribute('id');
+                let idAlbum = album.getAttribute("data-product-id");
                 //Precio del disco.
-                let precio = ((album.getElementsByClassName('buy-button')[0]).getElementsByTagName('span')[0]).innerText
+                let precio = album.getAttribute("data-product-price")
                   .replace("€", "")
                   .replace("£", "")
                   .replace("zł", "")
@@ -424,13 +426,16 @@ const getUrlsDodax = function (updateAlbum, servers){
                   .replace("&nbsp;", "");
 
                 //Código de barras.
-                let gtin =  (album.getElementsByClassName('buy-button')[0]).getAttribute('onmousedown');
-                gtin = (gtin !== null) ? gtin.replace("RetailRocket.addToCartRetailRocket('", "").replace("');", "") : "";
+                let gtin =  album.getAttribute("data-product-gtin");
 
                 //Url del detalle del disco.
-                let urlRelativa = (album.getElementsByClassName('js-product')[0]).getAttribute('href');
+                let urlRelativa = album.getAttribute("data-product-url");
+                //Stock
+                let stockQty = album.getAttribute("data-stock-qty");
+
                 //Existe ya la ficha?
                 let encontrado = document.getElementById(idAlbum) != null;
+
                 //Datos del precio.
                 let precioObj = {
                   url: resultado.url + urlRelativa,
@@ -439,6 +444,7 @@ const getUrlsDodax = function (updateAlbum, servers){
                   priceOriginal: getCurrency(precio, resultado.text),
                   currency: "€",
                   text: resultado.text,
+                  stock: stockQty
                 };
 
                 if (encontrado) {
@@ -448,10 +454,11 @@ const getUrlsDodax = function (updateAlbum, servers){
                   //El disco no está cargado en la página.  
                   let obj = {};
                   obj.id = idAlbum;
-                  obj.image =  (album.getElementsByTagName('img')[0]).getAttribute('src');
-                  obj.title = (album.getElementsByClassName('product_title')[0]).innerText;
-                  obj.from = (album.getElementsByClassName('product_from')[0]).innerText;
-                  obj.type = (album.getElementsByClassName('product_type')[0]).innerText;
+                  obj.image = (album.getElementsByTagName('img')[0]).getAttribute('src');
+                  obj.title = album.getAttribute("data-product-name");
+                  obj.from = album.getAttribute("data-product-brand");
+                  //obj.type = (album.getElementsByClassName('product_type')[0]).innerText;
+                  obj.type = "Vinilo"
                   obj.price = precioObj;
                   obj.minPrice = precioObj.priceInt;
                   obj.gtin = gtin;
