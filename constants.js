@@ -17,14 +17,14 @@ const urlsDodax = [
     electronica: "/de-de/elektronik-cPPEA17VBM7",
     all: "/de-de/search/"
     },
-    {
+/*     {
     text: "AT",
     url: "https://www.dodax.at",
     musica: "/de-at/musik-cds-dvds-vinyl-cLOFV6FFU7H",
     electronica: "/de-at/elektronik-cPPEA17VBM7",
     all: "/de-at/search/"
   },
-  {
+ */  {
     text: "FR",
     url: "https://www.dodax.fr",
     musica: "/fr-fr/musique-cd-dvd-vinyles-cLOFV6FFU7H",
