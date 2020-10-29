@@ -38,7 +38,7 @@ const urlsDodax = [
     electronica: "/en-gb/elektronik-cPPEA17VBM7",
     all: "/en-gb/search/"
   }, 
-  {
+/*  {
     text: "ES",
     url: "https://www.dodax.es",
     musica: "/es-es/musica-cds-dvds-vinilos-cLOFV6FFU7H",
@@ -52,6 +52,7 @@ const urlsDodax = [
     electronica: "/it-it/elektronik-cPPEA17VBM7",
     all: "/it-it/search/"
   },
+  */
   {
     text: "PL",
     url: "https://www.dodax.pl",
