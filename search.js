@@ -245,7 +245,12 @@ const getUrlsDodax = function (updateAlbum, servers){
 
        document.getElementById(idPrecio + "-PRICE").innerText = price.price + " " + price.currency;
        document.getElementById(idPrecio + "-ORIGINALPRICE").innerText = price.priceOriginal;
-       document.getElementById(idPrecio + "-QTY").innerText = price.stock;
+       let priceStock = parseInt(price.stock);
+
+       if (priceStock > 0 ){
+        let color = priceStock < 6 ? "danger" : (priceStock < 11 ? "warning" : "success");
+        document.getElementById(idPrecio + "-QTY").innerHTML = "<ion-badge color='tertiary'>" + price.stock + "</ion-badge>";
+       }
 
        if (parseFloat(minPrice) >= parseFloat(price.priceInt)) {
            ficha.setAttribute("min-price", price.priceInt);
