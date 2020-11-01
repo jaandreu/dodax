@@ -207,6 +207,17 @@ const getUrlsDodax = function (updateAlbum, servers){
 
   };
 
+  const setPaginationEvents = function (idAlbum){
+
+    let ficha = document.getElementById(idAlbum);
+    ficha.getElementsByClassName("pagination-forward")[0].addEventListener("click", (ev) => {
+      ev.stopPropagation();
+    });
+    ficha.getElementsByClassName("pagination-back")[0].addEventListener("click", (ev) => {
+      ev.stopPropagation();
+    });
+
+  }
   const setHTMLPrice = function(idAlbum, price, gtin){
       
        let ficha = document.getElementById(idAlbum);
@@ -328,6 +339,7 @@ const getUrlsDodax = function (updateAlbum, servers){
 
     document.getElementById("div-resultados").appendChild(base.getElementById(disco.id));
     setHTMLPrice(disco.id, disco.price, disco.gtin);
+    setPaginationEvents(disco.id);
   };
 
   //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.

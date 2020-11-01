@@ -367,8 +367,9 @@ const flip = function(obj, gtin, numItem) {
       base.getElementsByClassName("album-info")[0].classList.add("album-info-" + numItem);
       base.getElementsByClassName("album-info")[0].classList.remove("album-info");
       backDiv.appendChild(base.getElementsByClassName("album-info-" + numItem)[0]);
-      let currentAlbumInfo = flipContainer.getElementsByClassName("album-info-" + numItem)[0];
 
+      //eventos de la paginación.
+      let currentAlbumInfo = flipContainer.getElementsByClassName("album-info-" + numItem)[0];
       let trackList = currentAlbumInfo.getElementsByClassName("table-tracklist")[0];
       let infoList = currentAlbumInfo.getElementsByClassName("table-info")[0];
 
