@@ -316,6 +316,7 @@ for (let i = 0; i < segments.length; i++) {
 const flip = function(obj, gtin, numItem) {
 
   let flipContainer = obj.parentNode.getElementsByClassName("flip-container")[0];
+
   let imFlip = flipContainer.classList.contains("flip");
   let frontDiv = flipContainer.getElementsByClassName("front")[0];
   let backDiv = flipContainer.getElementsByClassName("back")[0];
@@ -323,13 +324,18 @@ const flip = function(obj, gtin, numItem) {
   if (imFlip){
     backDiv.style.display = "none"; 
     frontDiv.style.display = "";
+    let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
+    paginationContainer.style.display = "none";
+
   }
   else{
 
     //Vemos si existe la info que nos piden.
     let albumInfo = flipContainer.getElementsByClassName("album-info-" + numItem)[0];
+    let numItems =  parseInt(backDiv.getAttribute("total-items"));
+
+    //Si existe la mostramos y ocultamos el resto.
     if (albumInfo){
-      let numItems =  parseInt(backDiv.getAttribute("total-items"));
       
       for (var idx = 1; idx<=numItems; idx++){
         let albumInfoIdx = flipContainer.getElementsByClassName("album-info-" + idx)[0];
@@ -342,6 +348,15 @@ const flip = function(obj, gtin, numItem) {
           }
         }
       }
+
+      let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
+      if (numItems > 1){
+        paginationContainer.style.display = "";
+      }
+      else{
+        paginationContainer.style.display = "none";
+      }
+
 
     }
     else{
@@ -366,6 +381,17 @@ const flip = function(obj, gtin, numItem) {
         
         if (salida.numItems){
           backDiv.setAttribute("total-items", salida.numItems);
+          numItems = salida.numItems;
+
+          //Gestión de la paginación.
+          let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
+          if (numItems > 1){
+            paginationContainer.style.display = "";
+          }
+          else{
+            paginationContainer.style.display = "none";
+          }
+
         }
 
         if (salida.artists && salida.artists.length > 0){
