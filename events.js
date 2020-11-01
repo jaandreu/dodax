@@ -328,7 +328,23 @@ const flip = function(obj, gtin, numItem) {
 
     //Vemos si existe la info que nos piden.
     let albumInfo = flipContainer.getElementsByClassName("album-info-" + numItem)[0];
-    if (!albumInfo){
+    if (albumInfo){
+      let numItems =  parseInt(backDiv.getAttribute("total-items"));
+      
+      for (var idx = 1; idx<=numItems; idx++){
+        let albumInfoIdx = flipContainer.getElementsByClassName("album-info-" + idx)[0];
+        if (albumInfoIdx){
+          if (idx === numItem){
+            albumInfoIdx.style.display = "";
+          }
+          else{
+            albumInfoIdx.style.display = "none";
+          }
+        }
+      }
+
+    }
+    else{
 
       let base = parser.parseFromString(flipContainer.getElementsByClassName("base")[0].outerHTML, "text/html");
 
