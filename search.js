@@ -48,9 +48,9 @@ const getUrlsDodax = function (updateAlbum, servers){
 
   }  
 
-  const getDiscogsInfo = async(barcode) => {
+  const getDiscogsInfo = async(barcode, item) => {
     
-    let url = "https://vinilo.herokuapp.com/discogs/" + barcode + "/tracklist";
+    let url = "https://vinilo.herokuapp.com/discogs/" + barcode + "/" + item + "/tracklist";
     let respuesta = await fetch(url);
 
     let data = await respuesta.json();
@@ -295,7 +295,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     imagen.setAttribute("src", disco.image);
   
     if (disco.gtin != ""){
-      imagen.setAttribute("onclick", "flip(this, '" + disco.gtin + "');");
+      imagen.setAttribute("onclick", "flip(this, '" + disco.gtin + "', 1);");
     }
 
     urlsDodax.forEach(url => {

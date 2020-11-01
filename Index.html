@@ -166,7 +166,7 @@
                         <ion-fab-button id="a-spotify" class="spotify" color="secondary"><ion-icon name="musical-notes-outline"></ion-icon></ion-fab-button>
                       </ion-fab-list>
                   </ion-fab>
-                  <ion-fab style="display: none;" vertical="bottom" activated="true" horizontal="end" slot="fixed">
+                  <ion-fab id="pagination-button" style="display: none;" vertical="bottom" activated="true" horizontal="end" slot="fixed">
                     <ion-fab-button size="small" color="primary">
                       <ion-icon name="code-outline"></ion-icon>
                     </ion-fab-button>
@@ -183,7 +183,8 @@
                             <!--Se rellena dinámicamente.-->
                           </ion-list>
                       </div>
-                      <div style="display:none" class="back scrollable-content">
+                      <div total-items="0" style="display:none" class="back scrollable-content">
+                        <div class="album-info base">
                         <ion-list class="table-info">
                           <ion-list-header>
                             <ion-label class="is-title-list">Info</ion-label>
@@ -214,6 +215,7 @@
                             </ion-label>
                           </ion-item>
                         </ion-list>
+                      </div>
                     </div>
                     </div>
                   </div>   
