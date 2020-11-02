@@ -427,7 +427,7 @@ const flip = function(obj, gtin, numItem) {
                 ionItem.innerHTML =  "<ion-text class='w700' color='tertiary'>" + item.position + ".</ion-text>" 
                                   + "<p><ion-text>" + item.title + "</ion-text>" 
                                   + (item.duration !== "" ? "<ion-text>(" + item.duration + ")</ion-text>" : "")
-                                  + "<ion-text color='tertiary'>" + artistas + "</ion-text></p>";
+                                  + "<br/><ion-text color='tertiary'>" + artistas + "</ion-text></p>";
 
                 trackList.appendChild(ionItem);
               });
