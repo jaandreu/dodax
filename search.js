@@ -453,6 +453,8 @@ const getUrlsDodax = function (updateAlbum, servers){
                 //Existe ya la ficha?
                 let encontrado = document.getElementById(idAlbum) != null;
 
+                let typeAlbum = album.getElementsByClassName("d-none")[0].innerText;
+
                 //Datos del precio.
                 let precioObj = {
                   url: resultado.url + urlRelativa,
@@ -474,7 +476,8 @@ const getUrlsDodax = function (updateAlbum, servers){
                   obj.image = (album.getElementsByTagName('img')[0]).getAttribute('src');
                   obj.title = album.getAttribute("data-product-name");
                   obj.from = album.getAttribute("data-product-brand");
-                  obj.type = album.getAttribute("data-product-category");
+                  //obj.type = album.getAttribute("data-product-category");
+                  obj.type = typeAlbum;
                   obj.price = precioObj;
                   obj.minPrice = precioObj.priceInt;
                   obj.gtin = gtin;
