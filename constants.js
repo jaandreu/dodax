@@ -24,12 +24,12 @@ const urlsDodax = [
     all: "/fr-fr/search/"
   },
   {
-    text: "PL",
-    url: "https://www.dodax.pl",
-    musica: "/pl-pl/muzyka-cd-dvd-winyle-cLOFV6FFU7H",
-    electronica: "/pl-pl/elektronik-cPPEA17VBM7",
-    all: "/pl-pl/search/"
-  } 
+     text: "NL",
+     url: "https://www.dodax.nl",
+     musica: "/nl-nl/muziek-cds-dvds-vinylplaten-cLOFV6FFU7H",
+     electronica: "/nl-nl/elektronik-cPPEA17VBM7",
+     all: "/nl-nl/search/"
+   }  
   ];
   
 //Proxy para evitar el CORS
