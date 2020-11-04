@@ -40,7 +40,12 @@
     .is-subtitle{
       font-size: 1.25rem;
     }
-  
+
+    .is-infoalbum{
+      font-size: 1.2rem;
+    }
+
+    
     .searchbar-input {
         font-size: 1.5rem !important;
     }

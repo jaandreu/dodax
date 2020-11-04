@@ -429,10 +429,10 @@ const flip = function(obj, gtin, numItem) {
 
                 ionItem.classList.add("ion-no-padding");
                 ionItem.classList.add("discogs");
-                ionItem.innerHTML =  "<ion-text class='w700 is-subtitle' color='tertiary'>" + item.position + ".</ion-text>" 
-                                  + "<p><ion-text class='is-subtitle'>" + item.title + "</ion-text>" 
-                                  + (item.duration !== "" ? "<ion-text class='is-subtitle'>(" + item.duration + ")</ion-text>" : "")
-                                  + (artistas !== "" ? "<ion-icon color='tertiary' class='is-subtitle' onclick='toggleArtist(event);' name='help-circle-outline'></ion-icon> <ion-text class='base' color='tertiary'>" + artistas + "</ion-text></p>" : "");
+                ionItem.innerHTML =  "<ion-text class='w700 is-infoalbum' color='tertiary'>" + item.position + ".</ion-text>" 
+                                  + "<p><ion-text class='is-infoalbum'>" + item.title + "</ion-text>" 
+                                  + (item.duration !== "" ? "<ion-text class='is-infoalbum'>(" + item.duration + ")</ion-text>" : "")
+                                  + (artistas !== "" ? "<ion-icon color='tertiary' class='is-infoalbum' onclick='toggleArtist(event);' name='help-circle-outline'></ion-icon> <ion-text class='base' color='tertiary'>" + artistas + "</ion-text></p>" : "");
 
                 trackList.appendChild(ionItem);
               });
