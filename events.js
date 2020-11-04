@@ -407,7 +407,7 @@ const flip = function(obj, gtin, numItem) {
 
           infoList.appendChild(newInfoIonItem("Año", salida.year));
 
-          let formato = salida.formats && salida.formats.length > 0 ? salida.formats.map(it => it.qty + " x " + it.name + "(" + it.descriptions.join("/") +")").join("/") : "";
+          let formato = salida.formats && salida.formats.length > 0 ? salida.formats.map(it => it.qty + " x " + it.name + "(" + it.descriptions.join("/") +")").join(" / ") : "";
           infoList.appendChild(newInfoIonItem("Formato", formato ));
 
           let genero = salida.genres && salida.genres.length > 0  ? salida.genres.join("/") : "";
