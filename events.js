@@ -423,11 +423,14 @@ const flip = function(obj, gtin, numItem) {
         
               salida.tracklist.forEach((item) => {
                 let ionItem = document.createElement("ion-item");
-                let artists = item.artists && item.artists.length > 0 ? item.artists.map(it => it.name) : [];
-                let extraartist = item.extraartists && item.extraartists.length > 0 ? item.extraartists.map(it => it.role + " " + it.name) : [];
-                let artistas = artists.concat(extraartist).join("/");
+                // let artists = item.artists && item.artists.length > 0 ? item.artists.map(it => it.name) : [];
+                // let extraartist = item.extraartists && item.extraartists.length > 0 ? item.extraartists.map(it => it.role + " " + it.name) : [];
+                // let artistas = artists.concat(extraartist).join("/");
+                 let artistas = (item.artists && item.artists.length > 0 ? item.artists.map(it => it.name) : []).join("/");
+                 let extraartist = (item.extraartists && item.extraartists.length > 0 ? item.extraartists.map(it => it.role + " " + it.name) : []).join("/");
 
-                if (artistas !== ""){
+
+                if (extraartist !== ""){
                   ionItem.setAttribute("onclick", "toggleArtist(this);");
                 }
 
@@ -436,8 +439,9 @@ const flip = function(obj, gtin, numItem) {
                 ionItem.innerHTML =  "<ion-text class='w700 is-infoalbum' color='tertiary'>" + item.position + ".</ion-text>" 
                                   + "<p><ion-text class='is-infoalbum'>" + item.title + "</ion-text>" 
                                   + (item.duration !== "" ? "<ion-text class='is-infoalbum'>(" + item.duration + ")</ion-text>" : "")
-                                  + (artistas !== "" ? "<ion-icon class='is-infoalbum' name='caret-forward-outline'></ion-icon> <ion-text class='base' color='tertiary'>" + artistas + "</ion-text></p>" : "");
-
+                                  + (artistas !== "" ? "<ion-text class='is-infoalbum' color='tertiary'>" + artistas + "</ion-text>" : "")
+                                  + (extraartist !== "" ? "<ion-icon class='is-infoalbum' name='caret-forward-outline'></ion-icon> <ion-text class='base' color='tertiary'>" + extraartist + "</ion-text>" : "")
+                                  + "</p>";
                 trackList.appendChild(ionItem);
               });
           }
