@@ -4,7 +4,8 @@ const tiposBusqueda = [
   {"name":"single-vinyl", "filter":"singlevinyl-TVBN098J7D"},
   {"name":"cd", "filter":"cd-QQQ6F29MQA"},
   {"name":"dvd", "filter":"dvd-DBRGQD0GK"},
-  {"name" :"sacd", "filter":"sacd-TKLFV1USKM"}
+  {"name" :"sacd", "filter":"sacd-TKLFV1USKM"},
+  {"name" : "bluray", "filter":"bluray-FG3LG5QH90"}
 ];
 
 
