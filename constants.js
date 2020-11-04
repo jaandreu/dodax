@@ -31,13 +31,13 @@ const urlsDodax = [
   //   electronica: "/fr-fr/elektronik-cPPEA17VBM7",
   //   all: "/fr-fr/search/"
   // },
-  // {
-  //   text: "UK",
-  //   url: "https://www.dodax.co.uk",
-  //   musica: "/en-gb/music-cds-dvds-vinyl-cLOFV6FFU7H",
-  //   electronica: "/en-gb/elektronik-cPPEA17VBM7",
-  //   all: "/en-gb/search/"
-  // }, 
+   {
+     text: "UK",
+     url: "https://www.dodax.co.uk",
+     musica: "/en-gb/music-cds-dvds-vinyl-cLOFV6FFU7H",
+     electronica: "/en-gb/elektronik-cPPEA17VBM7",
+     all: "/en-gb/search/"
+   }, 
    {
      text: "ES",
      url: "https://www.dodax.es",
@@ -52,13 +52,13 @@ const urlsDodax = [
      electronica: "/it-it/elektronik-cPPEA17VBM7",
      all: "/it-it/search/"
    },
-  // {
-  //   text: "PL",
-  //   url: "https://www.dodax.pl",
-  //   musica: "/pl-pl/muzyka-cd-dvd-winyle-cLOFV6FFU7H",
-  //   electronica: "/pl-pl/elektronik-cPPEA17VBM7",
-  //   all: "/pl-pl/search/"
-  // }, 
+   {
+     text: "PL",
+     url: "https://www.dodax.pl",
+     musica: "/pl-pl/muzyka-cd-dvd-winyle-cLOFV6FFU7H",
+     electronica: "/pl-pl/elektronik-cPPEA17VBM7",
+     all: "/pl-pl/search/"
+   }, 
   // {
   //   text: "NL",
   //   url: "https://www.dodax.nl",
