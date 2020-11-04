@@ -314,8 +314,8 @@ for (let i = 0; i < segments.length; i++) {
   })
 }
 
-const toggleArtist = function(event){
-  event.target.nextElementSibling.classList.toggle('base')
+const toggleArtist = function(element){
+  element.lastElementChild.lastElementChild.classList.toggle('base');
 }
 
 const flip = function(obj, gtin, numItem) {
@@ -427,12 +427,16 @@ const flip = function(obj, gtin, numItem) {
                 let extraartist = item.extraartists && item.extraartists.length > 0 ? item.extraartists.map(it => it.role + " " + it.name) : [];
                 let artistas = artists.concat(extraartist).join("/");
 
+                if (artistas !== ""){
+                  ionItem.setAttribute("onclick", "toggleArtist(this);");
+                }
+
                 ionItem.classList.add("ion-no-padding");
                 ionItem.classList.add("discogs");
                 ionItem.innerHTML =  "<ion-text class='w700 is-infoalbum' color='tertiary'>" + item.position + ".</ion-text>" 
                                   + "<p><ion-text class='is-infoalbum'>" + item.title + "</ion-text>" 
                                   + (item.duration !== "" ? "<ion-text class='is-infoalbum'>(" + item.duration + ")</ion-text>" : "")
-                                  + (artistas !== "" ? "<ion-icon color='tertiary' class='is-infoalbum' onclick='toggleArtist(event);' name='help-circle-outline'></ion-icon> <ion-text class='base' color='tertiary'>" + artistas + "</ion-text></p>" : "");
+                                  + (artistas !== "" ? "<ion-icon class='is-infoalbum' name='caret-forward-outline'></ion-icon> <ion-text class='base' color='tertiary'>" + artistas + "</ion-text></p>" : "");
 
                 trackList.appendChild(ionItem);
               });
