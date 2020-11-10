@@ -313,29 +313,107 @@ for (let i = 0; i < segments.length; i++) {
 
   })
 }
-const flip = function(obj, gtin) {
 
-  
+const toggleArtist = function(element){
+  element.lastElementChild.lastElementChild.classList.toggle('base');
+}
+
+const flip = function(obj, gtin, numItem, paginating) {
+
   let flipContainer = obj.parentNode.getElementsByClassName("flip-container")[0];
-  let imFlip = flipContainer.classList.contains("flip");
+
+  let imFlip = flipContainer.classList.contains("flip") && !paginating;
   let frontDiv = flipContainer.getElementsByClassName("front")[0];
   let backDiv = flipContainer.getElementsByClassName("back")[0];
-  let trackList = flipContainer.getElementsByClassName("table-tracklist")[0];
-  let infoList = flipContainer.getElementsByClassName("table-info")[0];
 
-   if (!imFlip){
+  if (imFlip){
+    backDiv.style.display = "none"; 
+    frontDiv.style.display = "";
+    let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
+    paginationContainer.style.display = "none";
 
-    if (!trackList.classList.contains("invocado")){
+  }
+  else{
 
-      getDiscogsInfo(gtin).then((salida) => {
+    //Vemos si existe la info que nos piden.
+    let albumInfo = flipContainer.getElementsByClassName("album-info-" + numItem)[0];
+    let numItems =  parseInt(backDiv.getAttribute("total-items"));
 
-        //Lo marcamos para no volver a invocar.
-        trackList.classList.add("invocado");
+    //Si existe la mostramos y ocultamos el resto.
+    if (albumInfo){
 
-        Array.from(flipContainer.getElementsByClassName("item-skeleton")).forEach(it => {
+      backDiv.setAttribute("current-item", numItem);
+
+      for (var idx = 1; idx<=numItems; idx++){
+        let albumInfoIdx = flipContainer.getElementsByClassName("album-info-" + idx)[0];
+        if (albumInfoIdx){
+          if (idx === numItem){
+            albumInfoIdx.style.display = "";
+          }
+          else{
+            albumInfoIdx.style.display = "none";
+          }
+        }
+      }
+
+      let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
+      if (numItems > 1){
+        paginationContainer.style.display = "";
+      }
+      else{
+        paginationContainer.style.display = "none";
+      }
+
+    }
+    else{
+
+      let base = parser.parseFromString(flipContainer.getElementsByClassName("base")[0].outerHTML, "text/html");
+
+      base.getElementsByClassName("album-info")[0].classList.remove("base");
+      base.getElementsByClassName("album-info")[0].classList.add("album-info-" + numItem);
+      base.getElementsByClassName("album-info")[0].classList.remove("album-info");
+      backDiv.appendChild(base.getElementsByClassName("album-info-" + numItem)[0]);
+
+      for (var idx = 1; idx<=numItems; idx++){
+        let albumInfoIdx = flipContainer.getElementsByClassName("album-info-" + idx)[0];
+        if (albumInfoIdx){
+          if (idx === numItem){
+            albumInfoIdx.style.display = "";
+          }
+          else{
+            albumInfoIdx.style.display = "none";
+          }
+        }
+      }
+
+      //eventos de la paginación.
+      let currentAlbumInfo = flipContainer.getElementsByClassName("album-info-" + numItem)[0];
+      let trackList = currentAlbumInfo.getElementsByClassName("table-tracklist")[0];
+      let infoList = currentAlbumInfo.getElementsByClassName("table-info")[0];
+
+
+      getDiscogsInfo(gtin, numItem).then((salida) => {
+
+        Array.from(currentAlbumInfo.getElementsByClassName("item-skeleton")).forEach(it => {
             it.style.display = "none";
         });
         
+        if (salida.numItems){
+          backDiv.setAttribute("total-items", salida.numItems);
+          backDiv.setAttribute("current-item", numItem);
+          numItems = salida.numItems;
+
+          //Gestión de la paginación.
+          let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
+          if (numItems > 1){
+            paginationContainer.style.display = "";
+          }
+          else{
+            paginationContainer.style.display = "none";
+          }
+
+        }
+
         if (salida.artists && salida.artists.length > 0){
 
           let sello = salida.labels && salida.labels.length > 0 ? salida.labels.map(it => it.name).join("/") : "";
@@ -343,7 +421,7 @@ const flip = function(obj, gtin) {
 
           infoList.appendChild(newInfoIonItem("Año", salida.year));
 
-          let formato = salida.formats && salida.formats.length > 0 ? salida.formats.map(it => it.qty + " x " + it.name + "(" + it.descriptions.join("/") +")").join("/") : "";
+          let formato = salida.formats && salida.formats.length > 0 ? salida.formats.map(it => it.qty + " x " + it.name + "(" + it.descriptions.join("/") +")").join(" / ") : "";
           infoList.appendChild(newInfoIonItem("Formato", formato ));
 
           let genero = salida.genres && salida.genres.length > 0  ? salida.genres.join("/") : "";
@@ -355,37 +433,40 @@ const flip = function(obj, gtin) {
           infoList.appendChild(newInfoIonItem("Notas", salida.notes ? salida.notes : ""));
 
         //tracklist
-        if (salida.tracklist && salida.tracklist.length > 0){
-      
-            salida.tracklist.forEach((item) => {
-              let ionItem = document.createElement("ion-item");
-              let artists = item.artists && item.artists.length > 0 ? item.artists.map(it => it.name) : [];
-              let extraartist = item.extraartists && item.extraartists.length > 0 ? item.extraartists.map(it => it.role + " " + it.name) : [];
-              let artistas = artists.concat(extraartist).join("/");
+          if (salida.tracklist && salida.tracklist.length > 0){
+        
+              salida.tracklist.forEach((item) => {
 
-              ionItem.classList.add("ion-no-padding");
-              ionItem.classList.add("discogs");
-              ionItem.innerHTML =  "<ion-text class='w700' color='tertiary'>" + item.position + ".</ion-text>" 
-                                 + "<p><ion-text>" + item.title + "</ion-text>" 
-                                 + (item.duration !== "" ? "<ion-text>(" + item.duration + ")</ion-text>" : "")
-                                 + "<ion-text color='tertiary'>" + artistas + "</ion-text></p>";
+                let ionItem = document.createElement("ion-item");
+                let artistas = (item.artists && item.artists.length > 0 ? item.artists.map(it => it.name) : []).join("/");
+                let extraartist = (item.extraartists && item.extraartists.length > 0 ? item.extraartists.map(it => it.role + " " + it.name) : []).join("/");
 
-              trackList.appendChild(ionItem);
-            });
-        }
+
+                if (extraartist !== ""){
+                  ionItem.setAttribute("onclick", "toggleArtist(this);");
+                }
+
+                ionItem.classList.add("ion-no-padding");
+                ionItem.classList.add("discogs");
+                ionItem.innerHTML =  "<ion-text class='w700 is-infoalbum' color='tertiary'>" + item.position + ".</ion-text>" 
+                                  + "<p><ion-text class='is-infoalbum'>" + item.title + "</ion-text>" 
+                                  + (item.duration !== "" ? "<ion-text class='is-infoalbum'>(" + item.duration + ")</ion-text>" : "")
+                                  + (artistas !== "" ? "<ion-text class='is-infoalbum' color='tertiary'>" + artistas + "</ion-text>" : "")
+                                  + (extraartist !== "" ? "<ion-icon class='is-infoalbum' name='caret-forward-outline'></ion-icon> <ion-text class='base' color='tertiary'>" + extraartist + "</ion-text>" : "")
+                                  + "</p>";
+                trackList.appendChild(ionItem);
+              });
+          }
       }
       });
+
     }
 
-     backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
-     backDiv.style.height = frontDiv.offsetHeight + "px;";
-     backDiv.style.display = "";
-     frontDiv.style.display = "none";
-   }
-   else{
-      backDiv.style.display = "none"; 
-      frontDiv.style.display = "";
-   }
+    backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
+    backDiv.style.height = frontDiv.offsetHeight + "px;";
+    backDiv.style.display = "";
+    frontDiv.style.display = "none";
+  }
 
   obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
 

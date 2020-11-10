@@ -85,6 +85,10 @@
             <ion-label>DVD</ion-label>
             <ion-toggle slot="start" id="dvd" name="dvd" color="secondary" class="formato"></ion-toggle>
           </ion-item>
+          <ion-item>
+            <ion-label>Blu-Ray</ion-label>
+            <ion-toggle slot="start" id="bluray" name="bluray" color="secondary" class="formato"></ion-toggle>
+          </ion-item>
         </ion-list>
       </ion-content>
 
@@ -166,6 +170,15 @@
                         <ion-fab-button id="a-spotify" class="spotify" color="secondary"><ion-icon name="musical-notes-outline"></ion-icon></ion-fab-button>
                       </ion-fab-list>
                   </ion-fab>
+                  <ion-fab class="pagination-button" style="display: none;" vertical="bottom" activated="true" horizontal="end" slot="fixed">
+                    <ion-fab-button size="small" color="primary">
+                      <ion-icon name="code-outline"></ion-icon>
+                    </ion-fab-button>
+                    <ion-fab-list side="top">
+                      <ion-fab-button class="pagination-forward" color="tertiary"><ion-icon name="chevron-forward-outline"></ion-icon></ion-fab-button>
+                      <ion-fab-button class="pagination-back" color="tertiary"><ion-icon name="chevron-back-outline"></ion-icon></ion-fab-button>
+                    </ion-fab-list>
+                </ion-fab>
                   <div class="flip-container">
                     <div class="flipper">
                         <div style="display;" class="front">
@@ -174,7 +187,8 @@
                             <!--Se rellena dinámicamente.-->
                           </ion-list>
                       </div>
-                      <div style="display:none" class="back scrollable-content">
+                      <div total-items="0" style="display:none" class="back scrollable-content">
+                        <div class="album-info base">
                         <ion-list class="table-info">
                           <ion-list-header>
                             <ion-label class="is-title-list">Info</ion-label>
@@ -205,6 +219,7 @@
                             </ion-label>
                           </ion-item>
                         </ion-list>
+                      </div>
                     </div>
                     </div>
                   </div>   
