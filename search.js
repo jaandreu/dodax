@@ -211,11 +211,17 @@ const getUrlsDodax = function (updateAlbum, servers){
 
     let ficha = document.getElementById(idAlbum);
     ficha.getElementsByClassName("pagination-forward")[0].addEventListener("click", (ev) => {
+        var image = ficha.getElementsByClassName("img-album-cover")[0];
+        var backDiv = ficha.getElementsByClassName("back")[0];
+        flip(image, ficha.getAttribute("gtin-ficha"), parseInt(backDiv.getAttribute("current-item")) + 1, true);
       ev.stopPropagation();
     });
     ficha.getElementsByClassName("pagination-back")[0].addEventListener("click", (ev) => {
+      var image = ficha.getElementsByClassName("img-album-cover")[0];
+      var backDiv = ficha.getElementsByClassName("back")[0];
+      flip(image, ficha.getAttribute("gtin-ficha"), parseInt(backDiv.getAttribute("current-item")) - 1, true);
       ev.stopPropagation();
-    });
+  });
 
   }
   const setHTMLPrice = function(idAlbum, price, gtin){
@@ -235,7 +241,7 @@ const getUrlsDodax = function (updateAlbum, servers){
          (ficha.getElementsByClassName("amazon")[0]).setAttribute("disabled", "false");
 
          let imagen = document.getElementById("img-cover-" +  idAlbum);
-         imagen.setAttribute("onclick", "flip(this, '" + gtin + "');");
+         imagen.setAttribute("onclick", "flip(this, '" + gtin + "',1,false);");
 
        }
 
@@ -306,7 +312,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     imagen.setAttribute("src", disco.image);
   
     if (disco.gtin != ""){
-      imagen.setAttribute("onclick", "flip(this, '" + disco.gtin + "', 1);");
+      imagen.setAttribute("onclick", "flip(this, '" + disco.gtin + "', 1, false);");
     }
 
     urlsDodax.forEach(url => {

@@ -318,11 +318,11 @@ const toggleArtist = function(element){
   element.lastElementChild.lastElementChild.classList.toggle('base');
 }
 
-const flip = function(obj, gtin, numItem) {
+const flip = function(obj, gtin, numItem, paginating) {
 
   let flipContainer = obj.parentNode.getElementsByClassName("flip-container")[0];
 
-  let imFlip = flipContainer.classList.contains("flip");
+  let imFlip = flipContainer.classList.contains("flip") && !paginating;
   let frontDiv = flipContainer.getElementsByClassName("front")[0];
   let backDiv = flipContainer.getElementsByClassName("back")[0];
 
@@ -341,7 +341,9 @@ const flip = function(obj, gtin, numItem) {
 
     //Si existe la mostramos y ocultamos el resto.
     if (albumInfo){
-      
+
+      backDiv.setAttribute("current-item", numItem);
+
       for (var idx = 1; idx<=numItems; idx++){
         let albumInfoIdx = flipContainer.getElementsByClassName("album-info-" + idx)[0];
         if (albumInfoIdx){
@@ -362,7 +364,6 @@ const flip = function(obj, gtin, numItem) {
         paginationContainer.style.display = "none";
       }
 
-
     }
     else{
 
@@ -372,6 +373,18 @@ const flip = function(obj, gtin, numItem) {
       base.getElementsByClassName("album-info")[0].classList.add("album-info-" + numItem);
       base.getElementsByClassName("album-info")[0].classList.remove("album-info");
       backDiv.appendChild(base.getElementsByClassName("album-info-" + numItem)[0]);
+
+      for (var idx = 1; idx<=numItems; idx++){
+        let albumInfoIdx = flipContainer.getElementsByClassName("album-info-" + idx)[0];
+        if (albumInfoIdx){
+          if (idx === numItem){
+            albumInfoIdx.style.display = "";
+          }
+          else{
+            albumInfoIdx.style.display = "none";
+          }
+        }
+      }
 
       //eventos de la paginación.
       let currentAlbumInfo = flipContainer.getElementsByClassName("album-info-" + numItem)[0];
@@ -387,6 +400,7 @@ const flip = function(obj, gtin, numItem) {
         
         if (salida.numItems){
           backDiv.setAttribute("total-items", salida.numItems);
+          backDiv.setAttribute("current-item", numItem);
           numItems = salida.numItems;
 
           //Gestión de la paginación.
@@ -422,12 +436,10 @@ const flip = function(obj, gtin, numItem) {
           if (salida.tracklist && salida.tracklist.length > 0){
         
               salida.tracklist.forEach((item) => {
+
                 let ionItem = document.createElement("ion-item");
-                // let artists = item.artists && item.artists.length > 0 ? item.artists.map(it => it.name) : [];
-                // let extraartist = item.extraartists && item.extraartists.length > 0 ? item.extraartists.map(it => it.role + " " + it.name) : [];
-                // let artistas = artists.concat(extraartist).join("/");
-                 let artistas = (item.artists && item.artists.length > 0 ? item.artists.map(it => it.name) : []).join("/");
-                 let extraartist = (item.extraartists && item.extraartists.length > 0 ? item.extraartists.map(it => it.role + " " + it.name) : []).join("/");
+                let artistas = (item.artists && item.artists.length > 0 ? item.artists.map(it => it.name) : []).join("/");
+                let extraartist = (item.extraartists && item.extraartists.length > 0 ? item.extraartists.map(it => it.role + " " + it.name) : []).join("/");
 
 
                 if (extraartist !== ""){
