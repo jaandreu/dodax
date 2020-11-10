@@ -18,13 +18,13 @@ const urlsDodax = [
     electronica: "/de-at/elektronik-cPPEA17VBM7",
     all: "/de-at/search/"
   },
-  // {
-  //   text: "DE",
-  //   url: "https://www.dodax.de",
-  //   musica: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H",
-  //   electronica: "/de-de/elektronik-cPPEA17VBM7",
-  //   all: "/de-de/search/"
-  //   },
+  {
+    text: "DE",
+    url: "https://www.dodax.de",
+    musica: "/de-de/musik-cds-dvds-vinyl-cLOFV6FFU7H",
+    electronica: "/de-de/elektronik-cPPEA17VBM7",
+    all: "/de-de/search/"
+    },
    {
      text: "FR",
      url: "https://www.dodax.fr",
