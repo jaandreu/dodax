@@ -4,7 +4,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     //Obtenemos las opciones de búsqueda.
     let filtro = "";
 
-    let seccion = document.getElementById("opt-seccion").value;
+    let seccion = "all";
 
       filtro = tiposBusqueda.filter((t) => {
           return document.getElementById(t.name).checked;
