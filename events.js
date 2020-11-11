@@ -365,6 +365,7 @@ const flip = function(obj, gtin, numItem, paginating) {
 
       if (numItem == 1){
         paginationBack.style.display = "none";
+        (obj.parentNode.getElementsByClassName("pagination-current")[0]).innerText = numItem + "/" + numItems;
       }
       else{
         paginationBack.style.display = "";
@@ -430,6 +431,7 @@ const flip = function(obj, gtin, numItem, paginating) {
           let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
           if (numItems > 1){
             paginationContainer.style.display = "";
+            (obj.parentNode.getElementsByClassName("pagination-current")[0]).innerText = numItem + "/" + numItems;
           }
           else{
             paginationContainer.style.display = "none";
