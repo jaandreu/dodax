@@ -323,6 +323,8 @@ const flip = function(obj, gtin, numItem, paginating) {
     frontDiv.style.display = "";
     let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
     paginationContainer.style.display = "none";
+    obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
+
 
   }
   else{
@@ -360,6 +362,9 @@ const flip = function(obj, gtin, numItem, paginating) {
       backDiv.style.height = frontDiv.offsetHeight + "px;";
       backDiv.style.display = "";
       frontDiv.style.display = "none";
+      obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
+
+      
   
 
     }
@@ -460,13 +465,14 @@ const flip = function(obj, gtin, numItem, paginating) {
           backDiv.style.height = frontDiv.offsetHeight + "px;";
           backDiv.style.display = "";
           frontDiv.style.display = "none";
-      });
+          obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
+
+        });
 
     }
 
  
   }
 
-  obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
 
 }
