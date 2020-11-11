@@ -319,10 +319,12 @@ const flip = function(obj, gtin, numItem, paginating) {
   let backDiv = flipContainer.getElementsByClassName("back")[0];
 
   if (imFlip){
+
     backDiv.style.display = "none"; 
     frontDiv.style.display = "";
     let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
     paginationContainer.style.display = "none";
+
     obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
 
 
@@ -362,7 +364,10 @@ const flip = function(obj, gtin, numItem, paginating) {
       backDiv.style.height = frontDiv.offsetHeight + "px;";
       backDiv.style.display = "";
       frontDiv.style.display = "none";
-      obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
+      
+      if (!paginating){
+        obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
+      }
 
       
   
@@ -465,7 +470,9 @@ const flip = function(obj, gtin, numItem, paginating) {
           backDiv.style.height = frontDiv.offsetHeight + "px;";
           backDiv.style.display = "";
           frontDiv.style.display = "none";
-          obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
+          if (!paginating){
+            obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
+          }
 
         });
 
