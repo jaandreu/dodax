@@ -211,7 +211,7 @@ const getUrlsDodax = function (updateAlbum, servers){
 
     let ficha = document.getElementById(idAlbum);
 
- /*    ficha.getElementsByClassName("pagination-forward")[0].addEventListener("click", (ev) => {
+    ficha.getElementsByClassName("pagination-forward")[0].addEventListener("click", (ev) => {
         var image = ficha.getElementsByClassName("img-album-cover")[0];
         var backDiv = ficha.getElementsByClassName("back")[0];
         flip(image, ficha.getAttribute("gtin-ficha"), parseInt(backDiv.getAttribute("current-item")) + 1, true);
@@ -223,7 +223,8 @@ const getUrlsDodax = function (updateAlbum, servers){
       var backDiv = ficha.getElementsByClassName("back")[0];
       flip(image, ficha.getAttribute("gtin-ficha"), parseInt(backDiv.getAttribute("current-item")) - 1, true);
       ev.stopPropagation();
-  }); */
+
+    }); 
 
   }
   const setHTMLPrice = function(idAlbum, price, gtin){
