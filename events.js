@@ -360,17 +360,12 @@ const flip = function(obj, gtin, numItem, paginating) {
         paginationContainer.style.display = "none";
       }
 
-      backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
-      backDiv.style.height = frontDiv.offsetHeight + "px;";
       backDiv.style.display = "";
       frontDiv.style.display = "none";
       
       if (!paginating){
         obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
       }
-
-      
-  
 
     }
     else{
@@ -466,11 +461,16 @@ const flip = function(obj, gtin, numItem, paginating) {
               });
           }
       }
+       
+         if (numItem == 1){
           backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
           backDiv.style.height = frontDiv.offsetHeight + "px;";
-          backDiv.style.display = "";
-          frontDiv.style.display = "none";
-          if (!paginating){
+         }
+
+         backDiv.style.display = "";
+         frontDiv.style.display = "none";
+
+         if (!paginating){
             obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
           }
 
