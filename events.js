@@ -356,6 +356,12 @@ const flip = function(obj, gtin, numItem, paginating) {
         paginationContainer.style.display = "none";
       }
 
+      backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
+      backDiv.style.height = frontDiv.offsetHeight + "px;";
+      backDiv.style.display = "";
+      frontDiv.style.display = "none";
+  
+
     }
     else{
 
@@ -450,14 +456,15 @@ const flip = function(obj, gtin, numItem, paginating) {
               });
           }
       }
+          backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
+          backDiv.style.height = frontDiv.offsetHeight + "px;";
+          backDiv.style.display = "";
+          frontDiv.style.display = "none";
       });
 
     }
 
-    backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
-    backDiv.style.height = frontDiv.offsetHeight + "px;";
-    backDiv.style.display = "";
-    frontDiv.style.display = "none";
+ 
   }
 
   obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
