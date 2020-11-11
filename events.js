@@ -353,12 +353,32 @@ const flip = function(obj, gtin, numItem, paginating) {
       }
 
       let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
+       
       if (numItems > 1){
         paginationContainer.style.display = "";
       }
       else{
         paginationContainer.style.display = "none";
       }
+
+      let paginationBack = obj.parentNode.getElementsByClassName("pagination-back")[0];
+
+      if (numItem == 1){
+        paginationBack.style.display = "none";
+      }
+      else{
+        paginationBack.style.display = "";
+      }
+
+      let paginationForward = obj.parentNode.getElementsByClassName("pagination-forward")[0];
+
+      if (numItem == numItems){
+        paginationForward.style.display = "none";
+      }
+      else{
+        paginationForward.style.display = "";
+      }
+
 
       backDiv.style.display = "";
       frontDiv.style.display = "none";
@@ -413,6 +433,24 @@ const flip = function(obj, gtin, numItem, paginating) {
           }
           else{
             paginationContainer.style.display = "none";
+          }
+
+          let paginationBack = obj.parentNode.getElementsByClassName("pagination-back")[0];
+
+          if (numItem == 1){
+            paginationBack.style.display = "none";
+          }
+          else{
+            paginationBack.style.display = "";
+          }
+    
+          let paginationForward = obj.parentNode.getElementsByClassName("pagination-forward")[0];
+    
+          if (numItem == numItems){
+            paginationForward.style.display = "none";
+          }
+          else{
+            paginationForward.style.display = "";
           }
 
         }
