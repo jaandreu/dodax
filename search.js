@@ -1,42 +1,27 @@
 //Obtiene la lista de servidores a los que nos conectaremos.
-const getUrlsDodax = function (updateAlbum, servers){
+const getUrlsDodax = function (servers){
 
     //Obtenemos las opciones de búsqueda.
     let filtro = "";
 
-    let seccion = "all";
+    filtro = tiposBusqueda.filter((t) => {
+        return document.getElementById(t.name).checked;
+    }).map( tb => {
+      return tb.filter;
+    }).join("-");
 
-      filtro = tiposBusqueda.filter((t) => {
-          return document.getElementById(t.name).checked;
-      }).map( tb => {
-        return tb.filter;
-      }).join("-");
-
-      if (filtro == ""){
-        return [];
-      }
-
-    return urlsDodax
-        .filter(fil => {
-           if (typeof servers !== "undefined" && servers.length > 0){
-              return servers.includes(fil.text);
-           }
-           else {
-             return true;
-           }
-        })
-        .map(urlDodax => {
-
-            let p = urlDodax[seccion];
-
-            return {
-                url: urlDodax.url,
-                text: urlDodax.text,
-                params: p + ( p.slice(-1) == "/" ? "" : "-" ) + "f-"  + filtro + "/?s="
-            };
-
-          });
-
+    return (filtro == "") ? [] : 
+              urlsDodax
+                .filter(fil => {
+                  return (typeof servers !== "undefined" && servers.length > 0) ? servers.includes(fil.text) : true;
+                })
+                .map(urlDodax => {
+                    return {
+                        url: urlDodax.url,
+                        text: urlDodax.text,
+                        params: urlDodax.all + "f-"  + filtro + "/?s="
+                    };
+                });
   };
 
   //Obtiene un JSON con los rates de las monedas en base al EUR.
@@ -48,18 +33,18 @@ const getUrlsDodax = function (updateAlbum, servers){
 
   }  
 
+  //Obtiene información sobre un album de discogs.
   const getDiscogsInfo = async(barcode, item) => {
     
     let url = "https://vinilo.herokuapp.com/discogs/" + barcode + "/" + item + "/tracklist";
     let respuesta = await fetch(url);
-
     let data = await respuesta.json();
 
     return data;
 
   }
   
-  //Obtiene un importe en euros.
+  //Obtiene un importe en euros, en función de la moneda hace la conversión con el rate indicado.
   const getPrice = function (price, codigo) {
     if (rates != null) {
 
@@ -102,7 +87,7 @@ const getUrlsDodax = function (updateAlbum, servers){
     const controller = new AbortController();
     const signal = controller.signal;
 
-    //Aborta el controlador al pasar n milisegundos.
+    //Aborta el controlador al pasar 10 segundos.
     const timer = setTimeout(() => {
       controller.abort();
     }, 10000);
@@ -354,7 +339,7 @@ const getUrlsDodax = function (updateAlbum, servers){
   //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
   const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum, servers) => {
 
-    let urls = firstCall || updateAlbum ? getUrlsDodax(updateAlbum, servers) : (JSON.parse(sessionStorage.getItem("nextUrls")));
+    let urls = firstCall || updateAlbum ? getUrlsDodax(servers) : (JSON.parse(sessionStorage.getItem("nextUrls")));
 
     const requests = urls.map((urlDodax) => {
 

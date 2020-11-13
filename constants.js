@@ -46,11 +46,11 @@ const urlsDodax = [
      url: "https://www.dodax.pl",
      all: "/pl-pl/search/"
    }, 
-  // {
-  //   text: "NL",
-  //   url: "https://www.dodax.nl",
-  //   all: "/nl-nl/search/"
-  // }
+   {
+     text: "NL",
+     url: "https://www.dodax.nl",
+     all: "/nl-nl/search/"
+   }
   ];
   
 //Proxy para evitar el CORS
