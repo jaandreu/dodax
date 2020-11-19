@@ -107,6 +107,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     deleteAlbums();
   });
 
+  document.getElementById('numfavoritos').addEventListener('ionChange', function(){
+
+    localStorage.setItem("numfavoritos", this.value);
+
+  });
 
   //Click para guardar la configuración.
   document.getElementById('button-check').addEventListener('click', function(){
@@ -236,6 +241,9 @@ const addHistory = function(searchMessage, isFavorite){
       evt.stopPropagation();
     });
   
+
+
+
     baseChip.getElementById(newId).addEventListener("click", function(evt){
       console.log('chip search');
       document.getElementById("search").value = evt.target.innerText;
@@ -247,8 +255,9 @@ const addHistory = function(searchMessage, isFavorite){
       showElement("div-resultados");
     });
 
+    var maxItems = parseInt(document.getElementById("numfavoritos").value);
 
-    if (numItems < 10){
+    if (numItems < maxItems){
 
       document.getElementById("div-history").prepend(baseChip.getElementById(newId));
       document.getElementById("div-history").setAttribute("num-items", numItems + 1);
@@ -286,7 +295,10 @@ const createHistoryFromStorage = function() {
         addHistory(chip.text, chip.isFavorite);
       });
    }
-}
+
+   document.getElementById("numfavoritos").value = localStorage.getItem("numfavoritos");
+
+  }
 
 
 // Listen for ionChange on all segments
