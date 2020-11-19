@@ -92,10 +92,25 @@
       <!-- Pestaña Otros.-->
       <ion-content id="content-otros" style="display: none;">
         <ion-list lines="none">
-          <ion-item>
-            <ion-label>Modo Metal!</ion-label>
-            <ion-toggle slot="start" id="themeToggle" name="themeToggle" color="secondary" class="themeToggle"></ion-toggle>
+          <ion-item-group>
+            <ion-item-divider>
+              <ion-label>Modo metal!</ion-label>
+            </ion-item-divider>
+
+            <ion-item>
+              <ion-toggle slot="start" id="themeToggle" name="themeToggle" color="secondary" class="themeToggle"></ion-toggle>
           </ion-item>
+              <ion-item-divider>
+                <ion-label>Favoritos</ion-label>
+              </ion-item-divider>
+              <ion-item>
+                <ion-range id="numfavoritos" class="numfavoritos" color="tertiary" min="10" max="30" step="5" pin="true" snaps="true" ticks="true">
+                  <ion-icon color="tertiary" name="remove-outline" slot="start"></ion-icon>
+                  <ion-icon color="tertiary" name="add-outline" slot="end"></ion-icon>
+                </ion-range>
+                 </ion-item>
+                </ion-item-group>
+
         </ion-list> 
       </ion-content>
     
