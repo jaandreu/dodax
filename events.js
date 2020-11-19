@@ -295,8 +295,13 @@ const createHistoryFromStorage = function() {
         addHistory(chip.text, chip.isFavorite);
       });
    }
+   
+   let numFavoritos =  localStorage.getItem("numfavoritos");
+   
+   if (numFavoritos != null){
+    document.getElementById("numfavoritos").value = numFavoritos;
+   }
 
-   document.getElementById("numfavoritos").value = localStorage.getItem("numfavoritos");
 
   }
 
