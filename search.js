@@ -17,9 +17,10 @@ const getUrlsDodax = function (servers){
                 })
                 .map(urlDodax => {
                     return {
-                        url: urlDodax.url,
+                        url: (urlDodax.useProxy ? urlDodax.proxy : urlDodax.url),
                         text: urlDodax.text,
-                        params: urlDodax.all + "f-"  + filtro + "/?s="
+                        params: urlDodax.all + "f-"  + filtro + "/?s=",
+                        proxy: urlDodax.useProxy
                     };
                 });
   };
@@ -95,7 +96,7 @@ const getUrlsDodax = function (servers){
     console.log("Conectando:" + url);
 
     let error = "Vaya! algo ha pasado...:";
-    
+
     let respuesta = await fetch(url, { signal })
                          .finally(() => {
                               clearTimeout(timer);
@@ -343,7 +344,7 @@ const getUrlsDodax = function (servers){
 
     const requests = urls.map((urlDodax) => {
 
-      const urlCompleta = proxyurl + urlDodax.url + urlDodax.params + (firstCall || updateAlbum ? cadenaBusqueda : "");
+      const urlCompleta = (urlDodax.proxy ? "" : proxyurl) + urlDodax.url + urlDodax.params + (firstCall || updateAlbum ? cadenaBusqueda : "");
 
       return getDodaxAlbums(urlCompleta)
         .then((salida) => {

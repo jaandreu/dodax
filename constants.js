@@ -14,48 +14,67 @@ const urlsDodax = [
      {
     text: "AT",
     url: "https://www.dodax.at",
-    all: "/de-at/search/"
+    proxy: "https://dodaxat.vinilo.workers.dev",
+    all: "/de-at/search/",
+    useProxy: true
   },
   {
     text: "DE",
     url: "https://www.dodax.de",
-    all: "/de-de/search/"
+    proxy: "https://dodaxde.vinilo.workers.dev",
+    all: "/de-de/search/",
+    useProxy: true
     },
    {
      text: "FR",
      url: "https://www.dodax.fr",
-     all: "/fr-fr/search/"
+     proxy: "https://dodaxfr.vinilo.workers.dev",
+     all: "/fr-fr/search/",
+     useProxy: true
    },
    {
      text: "UK",
      url: "https://www.dodax.co.uk",
-     all: "/en-gb/search/"
+     proxy: "https://dodaxuk.vinilo.workers.dev",
+     all: "/en-gb/search/",
+     useProxy: true
    }, 
    {
      text: "ES",
      url: "https://www.dodax.es",
-     all: "/es-es/search/"
+     proxy: "https://dodaxes.vinilo.workers.dev",
+     all: "/es-es/search/",
+     useProxy: true
    }, 
   {
      text: "IT",
      url: "https://www.dodax.it",
-     all: "/it-it/search/"
+     proxy: "https://dodaxit.vinilo.workers.dev",
+     all: "/it-it/search/",
+     useProxy: true
    },
    {
      text: "PL",
      url: "https://www.dodax.pl",
-     all: "/pl-pl/search/"
+     proxy: "https://dodaxpl.vinilo.workers.dev",
+     all: "/pl-pl/search/",
+     useProxy: true
    }, 
    {
      text: "NL",
      url: "https://www.dodax.nl",
-     all: "/nl-nl/search/"
+     proxy: "https://dodaxnl.vinilo.workers.dev",
+     all: "/nl-nl/search/",
+     useProxy: true
    }
   ];
   
 //Proxy para evitar el CORS
-let proxyurl = window.location.host.includes('netlify') ? "https://dodax-proxy.herokuapp.com/" : "https://cors-anywhere.herokuapp.com/";
+let proxyurl = window.location.host.includes('netlify') ? "https://dodax-proxy.herokuapp.com/" : "https://api.codetabs.com/v1/proxy?quest=";
 
+//https://api.codetabs.com/v1/proxy?quest=
+//https://cors-anywhere.herokuapp.com/
+//https://www.ryadel.com/en/corsflare-free-cors-reverse-proxy-bypass-same-origin/
 //Parser para tratar el html que obtenemos.
 let parser = new DOMParser();
 
