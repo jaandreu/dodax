@@ -372,6 +372,7 @@ const getUrlsDodax = function (servers){
             ,listaAlbums: vlistaAlbums
             ,nextUrl: vnextUrl
             ,error: (salida.status !== 200 ? salida.data : "")
+            ,proxy: urlDodax.proxy
             };
 
         });
@@ -407,6 +408,7 @@ const getUrlsDodax = function (servers){
                   url: resultado.url
                 ,params: resultado.nextUrl
                 ,text: resultado.text
+                ,proxy: resultado.proxy
                 });
 
               }
