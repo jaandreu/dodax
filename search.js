@@ -18,6 +18,7 @@ const getUrlsDodax = function (servers){
                 .map(urlDodax => {
                     return {
                         url: (urlDodax.useProxy ? urlDodax.proxy : urlDodax.url),
+                        urlLink: urlDodax.url,
                         text: urlDodax.text,
                         params: urlDodax.all + "f-"  + filtro + "/?s=",
                         proxy: urlDodax.useProxy
@@ -373,6 +374,7 @@ const getUrlsDodax = function (servers){
             ,nextUrl: vnextUrl
             ,error: (salida.status !== 200 ? salida.data : "")
             ,proxy: urlDodax.proxy
+            ,urlLink: urlDodax.urlLink
             };
 
         });
@@ -454,7 +456,7 @@ const getUrlsDodax = function (servers){
 
                 //Datos del precio.
                 let precioObj = {
-                  url: resultado.url + urlRelativa,
+                  url: resultado.urlLink + urlRelativa,
                   price: getPrice(precio, resultado.text).replace(".", ","),
                   priceInt: getPrice(precio, resultado.text),
                   priceOriginal: getCurrency(precio, resultado.text),
