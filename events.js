@@ -330,7 +330,6 @@ const toggleArtist = function(element){
 const flip = function(obj, gtin, numItem, paginating) {
 
   let flipContainer = obj.parentNode.getElementsByClassName("flip-container")[0];
-
   let imFlip = flipContainer.classList.contains("flip") && !paginating;
   let frontDiv = flipContainer.getElementsByClassName("front")[0];
   let backDiv = flipContainer.getElementsByClassName("back")[0];
@@ -342,11 +341,17 @@ const flip = function(obj, gtin, numItem, paginating) {
     let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
     paginationContainer.style.display = "none";
 
-    obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
-
-
   }
   else{
+
+    if (numItem == 1 && !paginating){
+      backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
+      backDiv.style.height = frontDiv.offsetHeight + "px;";
+     }
+
+
+    backDiv.style.display = "";
+    frontDiv.style.display = "none";
 
     //Vemos si existe la info que nos piden.
     let albumInfo = flipContainer.getElementsByClassName("album-info-" + numItem)[0];
@@ -357,6 +362,7 @@ const flip = function(obj, gtin, numItem, paginating) {
 
       backDiv.setAttribute("current-item", numItem);
 
+      //Ocultamos todos menos la pagina que toca.
       for (var idx = 1; idx<=numItems; idx++){
         let albumInfoIdx = flipContainer.getElementsByClassName("album-info-" + idx)[0];
         if (albumInfoIdx){
@@ -369,6 +375,7 @@ const flip = function(obj, gtin, numItem, paginating) {
         }
       }
 
+      //Mostramos u ocultamos el paginador.  
       let paginationContainer = obj.parentNode.getElementsByClassName("pagination-button")[0];
        
       if (numItems > 1){
@@ -378,7 +385,7 @@ const flip = function(obj, gtin, numItem, paginating) {
       else{
         paginationContainer.style.display = "none";
       }
-
+      
       let paginationBack = obj.parentNode.getElementsByClassName("pagination-back")[0];
 
       if (numItem == 1){
@@ -397,13 +404,8 @@ const flip = function(obj, gtin, numItem, paginating) {
         paginationForward.style.display = "";
       }
 
-
-      backDiv.style.display = "";
-      frontDiv.style.display = "none";
-      
-      if (!paginating){
-        obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
-      }
+      //backDiv.style.display = "";
+      //frontDiv.style.display = "none";
 
     }
     else{
@@ -440,6 +442,7 @@ const flip = function(obj, gtin, numItem, paginating) {
         });
         
         if (salida.numItems){
+
           backDiv.setAttribute("total-items", salida.numItems);
           backDiv.setAttribute("current-item", numItem);
           numItems = salida.numItems;
@@ -519,18 +522,9 @@ const flip = function(obj, gtin, numItem, paginating) {
           }
       }
        
-         if (numItem == 1){
-          backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
-          backDiv.style.height = frontDiv.offsetHeight + "px;";
-         }
-
-         backDiv.style.display = "";
-         frontDiv.style.display = "none";
-
-         if (!paginating){
-            obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
-          }
-
+         //backDiv.style.display = "";
+         //frontDiv.style.display = "none";
+ 
         });
 
     }
@@ -538,5 +532,8 @@ const flip = function(obj, gtin, numItem, paginating) {
  
   }
 
+  if (!paginating){
+    obj.parentNode.getElementsByClassName("flip-container")[0].classList.toggle('flip');
+  }
 
 }
