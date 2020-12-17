@@ -27,7 +27,13 @@ const getUrlsDodax = function (servers){
                         url: (urlDodax.useProxy ? urlDodax.proxy : urlDodax.url),
                         urlLink: urlDodax.url,
                         text: urlDodax.text,
-                        params: urlDodax.all + (["UK", "IT", "FR", "PL", "ES"].includes(urlDodax.text) ? "f-'" + (urlDodax.text == "ES" ? filtro2.replace("LP%20(Vinyl)","LP%20(Vinilo)"): filtro2) : "f-"  + filtro) + "/?s=",
+                        params: urlDodax.all + 
+                            (["UK", "IT", "FR", "PL", "ES"].includes(urlDodax.text) 
+                                ? "f-'" + (urlDodax.text == "ES" 
+                                              ? filtro2.replace("LP%20(Vinyl)","LP%20(Vinilo)")
+                                              : filtro2
+                                           ) 
+                                : "f-"  + filtro) + "/?s=",
                         proxy: urlDodax.useProxy
                     };
                 });
