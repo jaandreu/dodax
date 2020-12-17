@@ -10,7 +10,7 @@ const getUrlsDodax = function (servers){
       return tb.filter;
     }).join("-");
 
-    filtro = tiposBusqueda.filter((t) => {
+    filtro2 = tiposBusqueda.filter((t) => {
       return document.getElementById(t.name).checked;
     }).map( tb => {
       return "productTypeName-" + tb.filter2;
