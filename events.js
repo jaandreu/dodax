@@ -347,7 +347,7 @@ const flip = function(obj, gtin, numItem, paginating) {
     if (numItem == 1 && !paginating){
       backDiv.setAttribute("style", "height:" + frontDiv.offsetHeight + "px;");
       backDiv.style.height = frontDiv.offsetHeight + "px;";
-     }
+    }
 
 
     backDiv.style.display = "";
@@ -403,9 +403,6 @@ const flip = function(obj, gtin, numItem, paginating) {
       else{
         paginationForward.style.display = "";
       }
-
-      //backDiv.style.display = "";
-      //frontDiv.style.display = "none";
 
     }
     else{
@@ -522,8 +519,6 @@ const flip = function(obj, gtin, numItem, paginating) {
           }
       }
        
-         //backDiv.style.display = "";
-         //frontDiv.style.display = "none";
  
         });
 
