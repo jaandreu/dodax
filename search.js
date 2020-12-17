@@ -10,6 +10,13 @@ const getUrlsDodax = function (servers){
       return tb.filter;
     }).join("-");
 
+    filtro = tiposBusqueda.filter((t) => {
+      return document.getElementById(t.name).checked;
+    }).map( tb => {
+      return "productTypeName-" + tb.filter2;
+    }).join("-");
+
+
     return (filtro == "") ? [] : 
               urlsDodax
                 .filter(fil => {
@@ -20,7 +27,7 @@ const getUrlsDodax = function (servers){
                         url: (urlDodax.useProxy ? urlDodax.proxy : urlDodax.url),
                         urlLink: urlDodax.url,
                         text: urlDodax.text,
-                        params: urlDodax.all + "f-"  + filtro + "/?s=",
+                        params: urlDodax.all + (urlDodax.text == "UK" ? "f-'" + filtro2 : "f-"  + filtro) + "/?s=",
                         proxy: urlDodax.useProxy
                     };
                 });
