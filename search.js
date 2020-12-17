@@ -27,7 +27,7 @@ const getUrlsDodax = function (servers){
                         url: (urlDodax.useProxy ? urlDodax.proxy : urlDodax.url),
                         urlLink: urlDodax.url,
                         text: urlDodax.text,
-                        params: urlDodax.all + (urlDodax.text == "UK" ? "f-'" + filtro2 : "f-"  + filtro) + "/?s=",
+                        params: urlDodax.all + (["UK", "IT", "FR", "PL", "ES"].includes(urlDodax.text) ? "f-'" + filtro2 : "f-"  + filtro) + "/?s=",
                         proxy: urlDodax.useProxy
                     };
                 });
