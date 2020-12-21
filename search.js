@@ -28,7 +28,7 @@ const getUrlsDodax = function (servers){
                         urlLink: urlDodax.url,
                         text: urlDodax.text,
                         params: urlDodax.all + 
-                            (["UK", "IT", "FR", "PL", "ES"].includes(urlDodax.text) 
+                            (["UK", "IT", "FR", "PL", "ES", "AT","DE","NL" ].includes(urlDodax.text) 
                                 ? "f-'" + (urlDodax.text == "ES" 
                                               ? filtro2.replace("LP%20(Vinyl)","LP%20(Vinilo)")
                                               : filtro2
