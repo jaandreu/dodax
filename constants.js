@@ -11,13 +11,13 @@ const tiposBusqueda = [
 
 //Listado de servidores a los que consultaremos.
 const urlsDodax = [
-     {
+  /*   {
     text: "AT",
     url: "https://www.dodax.at",
     proxy: "https://dodaxat.vinilo.workers.dev",
     all: "/de-at/search/",
     useProxy: true
-  },
+  },*/
   {
     text: "DE",
     url: "https://www.dodax.de",

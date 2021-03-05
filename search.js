@@ -13,7 +13,7 @@ const getUrlsDodax = function (servers){
     filtro2 = tiposBusqueda.filter((t) => {
       return document.getElementById(t.name).checked;
     }).map( tb => {
-      return "productTypeName-" + tb.filter2;
+      return "cnt.productTypeName-" + tb.filter2;
     }).join("-");
 
 
