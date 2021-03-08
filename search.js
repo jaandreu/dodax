@@ -4,7 +4,7 @@ const getUrlsDodax = function (servers){
     //Obtenemos las opciones de búsqueda.
     let filtro = "";
 
-    filtro2 = tiposBusqueda.filter((t) => {
+    filtro = tiposBusqueda.filter((t) => {
       return document.getElementById(t.name).checked;
     }).map( tb => {
       return "cnt.productTypeName-" + tb.filter;
@@ -23,8 +23,8 @@ const getUrlsDodax = function (servers){
                         text: urlDodax.text,
                         params: urlDodax.all + 
                                         "f-'" + (urlDodax.text == "ES" 
-                                              ? filtro2.replace("LP%20(Vinyl)","LP%20(Vinilo)")
-                                              : filtro2
+                                              ? filtro.replace("LP%20(Vinyl)","LP%20(Vinilo)")
+                                              : filtro
                                            )  + "/?s=",
                         proxy: urlDodax.useProxy
                     };
