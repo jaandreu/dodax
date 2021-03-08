@@ -4,16 +4,10 @@ const getUrlsDodax = function (servers){
     //Obtenemos las opciones de búsqueda.
     let filtro = "";
 
-    filtro = tiposBusqueda.filter((t) => {
-        return document.getElementById(t.name).checked;
-    }).map( tb => {
-      return tb.filter;
-    }).join("-");
-
     filtro2 = tiposBusqueda.filter((t) => {
       return document.getElementById(t.name).checked;
     }).map( tb => {
-      return "cnt.productTypeName-" + tb.filter2;
+      return "cnt.productTypeName-" + tb.filter;
     }).join("-");
 
 
@@ -28,12 +22,10 @@ const getUrlsDodax = function (servers){
                         urlLink: urlDodax.url,
                         text: urlDodax.text,
                         params: urlDodax.all + 
-                            (["UK", "IT", "FR", "PL", "ES", "AT","DE","NL" ].includes(urlDodax.text) 
-                                ? "f-'" + (urlDodax.text == "ES" 
+                                        "f-'" + (urlDodax.text == "ES" 
                                               ? filtro2.replace("LP%20(Vinyl)","LP%20(Vinilo)")
                                               : filtro2
-                                           ) 
-                                : "f-"  + filtro) + "/?s=",
+                                           )  + "/?s=",
                         proxy: urlDodax.useProxy
                     };
                 });

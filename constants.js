@@ -1,11 +1,11 @@
 //Tipos de búsqueda
 const tiposBusqueda = [
-  {"name":"lp-vinyl", "filter": "lpvinyl-K6IQQ1BLV9", "filter2":"LP%20(Vinyl)"},
-  {"name":"single-vinyl", "filter":"singlevinyl-TVBN098J7D", "filter2":"Single%20(Vinyl)"},
-  {"name":"cd", "filter":"cd-QQQ6F29MQA", "filter2": "CD"},
-  {"name":"dvd", "filter":"dvd-DBRGQD0GK", "filter2": "DVD"},
-  {"name" :"sacd", "filter":"sacd-TKLFV1USKM", "filter2": "SACD"},
-  {"name" : "bluray", "filter":"bluray-FG3LG5QH90", "filter2": "Blu--Ray"}
+  {"name":"lp-vinyl", "filter":"LP%20(Vinyl)"},
+  {"name":"single-vinyl", "filter":"Single%20(Vinyl)"},
+  {"name":"cd", "filter": "CD"},
+  {"name":"dvd", "filter": "DVD"},
+  {"name" :"sacd", "filter": "SACD"},
+  {"name" : "bluray", "filter": "Blu--Ray"}
 ];
 
 
