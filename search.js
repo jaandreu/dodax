@@ -34,8 +34,9 @@ const getUrlsDodax = function (servers){
   //Obtiene un JSON con los rates de las monedas en base al EUR.
   const getCurrencyRates = async () => {
 
-      let respuesta = await fetch("https://api.exchangeratesapi.io/latest");
+      let respuesta = await fetch("https://free.currconv.com/api/v7/convert?q=EUR_GBP,EUR_PLN&compact=ultra&apiKey=3e980f987660439cbf77");
       let data = await respuesta.json();
+      console.log(data);
       return data;
 
   }  
@@ -57,10 +58,10 @@ const getUrlsDodax = function (servers){
 
       switch (codigo) {
         case "UK":
-          salida = (parseFloat(price.replace(",", ".")) * (1 / rates.rates["GBP"])).toFixed(2);
+          salida = (parseFloat(price.replace(",", ".")) * (1 / rates["EUR_GBP"])).toFixed(2);
           break;
         case "PL":
-          salida = (parseFloat(price.replace(",", ".")) * (1 / rates.rates["PLN"])).toFixed(2);
+          salida = (parseFloat(price.replace(",", ".")) * (1 / rates["EUR_PLN"])).toFixed(2);
           break;
         default:
           salida = parseFloat(price.replace(",", ".")).toFixed(2);
