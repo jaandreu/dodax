@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     showSpinner(true);
     hideElement("div-resultados");
     deleteAlbums();
-    getAlbums(cadenaBusqueda, true, false, []);
+    getAlbums(cadenaBusqueda, true, false, [], null, true);
     showElement("div-resultados");
 
   });
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       let cadenaBusquedaActual = sessionStorage.getItem("lastSearch");
       getAlbums(cadenaBusquedaActual, false, false, [], function(){
         infiniteScroll.complete();
-      });
+      }, true);
     }
     else{
         infiniteScroll.disabled = true;
@@ -251,7 +251,7 @@ const addHistory = function(searchMessage, isFavorite){
       showSpinner(true);
       hideElement("div-resultados");
       deleteAlbums();
-      getAlbums( evt.target.innerText, true, false, []);
+      getAlbums( evt.target.innerText, true, false, [], null, false);
       showElement("div-resultados");
     });
 

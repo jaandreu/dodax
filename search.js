@@ -1,5 +1,5 @@
 //Obtiene la lista de servidores a los que nos conectaremos.
-const getUrlsDodax = function (servers){
+const getUrlsDodax = function (servers, withfilter){
 
     //Obtenemos las opciones de búsqueda.
     let filtro = "";
@@ -7,7 +7,7 @@ const getUrlsDodax = function (servers){
     filtro = tiposBusqueda.filter((t) => {
       return document.getElementById(t.name).checked;
     }).map( tb => {
-      return "cnt.productTypeName-" + tb.filter;
+      return tb.filter;
     }).join("-");
 
 
@@ -22,10 +22,7 @@ const getUrlsDodax = function (servers){
                         urlLink: urlDodax.url,
                         text: urlDodax.text,
                         params: urlDodax.all + 
-                                        "f-'" + (urlDodax.text == "ES" 
-                                              ? filtro.replace("LP%20(Vinyl)","LP%20(Vinilo)")
-                                              : filtro
-                                           )  + "/?s=",
+                                        (withfilter ? "f-'" + filtro: "") + "/?s=",
                         proxy: urlDodax.useProxy
                     };
                 });
@@ -145,7 +142,7 @@ const getUrlsDodax = function (servers){
         removePrices(idAlbum);
     }
 
-    getAlbums(idAlbum, false, true, servers);
+    getAlbums(idAlbum, false, true, servers, null,  false);
 
   };
 
@@ -345,9 +342,9 @@ const getUrlsDodax = function (servers){
   };
 
   //Invoca a todas las urls de Dodax al mismo tiempo para obtener su información.
-  const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum, servers) => {
+  const getDodaxSitesAlbums = async (cadenaBusqueda, firstCall, updateAlbum, servers, callback, withfilter) => {
 
-    let urls = firstCall || updateAlbum ? getUrlsDodax(servers) : (JSON.parse(sessionStorage.getItem("nextUrls")));
+    let urls = firstCall || updateAlbum ? getUrlsDodax(servers, withfilter) : (JSON.parse(sessionStorage.getItem("nextUrls")));
 
     const requests = urls.map((urlDodax) => {
 
@@ -390,9 +387,9 @@ const getUrlsDodax = function (servers){
   };
 
   //Obtiene los albums que coinciden con la cadena de búsqueda, a partir de n items (es paginado.)
-  const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum, servers, callback) {
+  const getAlbums = function (cadenaBusqueda, firstCall, updateAlbum, servers, callback, withfilter) {
 
-    getDodaxSitesAlbums(cadenaBusqueda, firstCall, updateAlbum, servers, callback)
+    getDodaxSitesAlbums(cadenaBusqueda, firstCall, updateAlbum, servers, callback, withfilter)
       .then(content => {
 
         let hayResultados = false;

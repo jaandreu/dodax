@@ -1,23 +1,21 @@
 //Tipos de búsqueda
 const tiposBusqueda = [
-  {"name":"lp-vinyl", "filter":"LP%20(Vinyl)"},
-  {"name":"single-vinyl", "filter":"Single%20(Vinyl)"},
-  {"name":"cd", "filter": "CD"},
-  {"name":"dvd", "filter": "DVD"},
-  {"name" :"sacd", "filter": "SACD"},
-  {"name" : "bluray", "filter": "Blu--Ray"}
+  {"name":"vinilo", "filter":"art.articleTypeId-vinyl--18-art.articleTypeId-vinyl--boxset--2855-art.articleTypeId-vinyl--single--493"},
+  {"name":"cd", "filter": "art.articleTypeId-cd--20-art.articleTypeId-cd--box--set--23-art.articleTypeId-cd--plus--dvd--22-art.articleTypeId-cd--plus--book--21-art.articleTypeId-cd--plus--dvd--boxset--2854-art.articleTypeId-blu----ray--plus--cd--31-art.articleTypeId-cd--mini----album--25-art.articleTypeId-cdplusdvdplusbook--3520"},
+  {"name":"dvd", "filter": "art.articleTypeId-dvd--33-art.articleTypeId-cd--plus--dvd--22-art.articleTypeId-dvd--boxset--2884-art.articleTypeId-cd--plus--dvd--boxset--2854-art.articleTypeId-dvd--plus--book--35"},
+  {"name" : "bluray", "filter": "art.articleTypeId-blu----ray--disc--30-art.articleTypeId-blu----ray--plus--cd--31-art.articleTypeId-blu----ray--boxset--2883-art.articleTypeId-blu----ray--plus--book--32"}
 ];
 
 
 //Listado de servidores a los que consultaremos.
 const urlsDodax = [
-  /*   {
+     {
     text: "AT",
     url: "https://www.dodax.at",
     proxy: "https://dodaxat.vinilo.workers.dev",
     all: "/de-at/search/",
     useProxy: true
-  },*/
+  },
   {
     text: "DE",
     url: "https://www.dodax.de",
