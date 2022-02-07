@@ -12,49 +12,49 @@ const urlsDodax = [
      {
     text: "AT",
     url: "https://www.dodax.at",
-    proxy: "https://dodaxat.vinilo.workers.dev",
+    proxy: "https://dodaxat.wideiscastilla.workers.dev",
     all: "/de-at/search/",
     useProxy: true
   },
   {
     text: "DE",
     url: "https://www.dodax.de",
-    proxy: "https://dodaxde.vinilo.workers.dev",
+    proxy: "https://dodaxde.wideiscastilla.workers.dev",
     all: "/de-de/search/",
     useProxy: true
     },
    {
      text: "FR",
      url: "https://www.dodax.fr",
-     proxy: "https://dodaxfr.vinilo.workers.dev",
+     proxy: "https://dodaxfr.wideiscastilla.workers.dev",
      all: "/fr-fr/search/",
      useProxy: true
    },
    {
      text: "UK",
      url: "https://www.dodax.co.uk",
-     proxy: "https://dodaxuk.vinilo.workers.dev",
+     proxy: "https://dodaxuk.wideiscastilla.workers.dev",
      all: "/en-gb/search/",
      useProxy: true
    }, 
    {
      text: "ES",
      url: "https://www.dodax.es",
-     proxy: "https://dodaxes.vinilo.workers.dev",
+     proxy: "https://dodaxes.wideiscastilla.workers.dev",
      all: "/es-es/search/",
      useProxy: true
    }, 
   {
      text: "IT",
      url: "https://www.dodax.it",
-     proxy: "https://dodaxit.vinilo.workers.dev",
+     proxy: "https://dodaxit.wideiscastilla.workers.dev",
      all: "/it-it/search/",
      useProxy: true
    },
    {
      text: "PL",
      url: "https://www.dodax.pl",
-     proxy: "https://dodaxpl.vinilo.workers.dev",
+     proxy: "https://dodaxpl.wideiscastilla.workers.dev",
      all: "/pl-pl/search/",
      useProxy: true
    }, 
