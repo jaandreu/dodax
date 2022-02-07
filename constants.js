@@ -61,7 +61,7 @@ const urlsDodax = [
    {
      text: "NL",
      url: "https://www.dodax.nl",
-     proxy: "https://dodaxnl.vinilo.workers.dev",
+     proxy: "https://dodaxnl.wideiscastilla.workers.dev",
      all: "/nl-nl/search/",
      useProxy: true
    }
